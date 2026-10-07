@@ -5,6 +5,11 @@
 # Dùng: ./scripts/seed.sh [--dev]
 set -euo pipefail
 
+# Git Bash / MSYS trên Windows tự đổi "/seed/..." thành đường dẫn Windows.
+# Tắt chuyển đổi để cypher-shell nhận đúng đường dẫn trong container.
+export MSYS_NO_PATHCONV=1
+export MSYS2_ARG_CONV_EXCL='*'
+
 GOC="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$GOC"
 
@@ -27,27 +32,33 @@ chay_thu_muc() {
     return 0
   fi
 
-  local co_file=0
+  # Doc het danh sach file vao mang truoc khi chay, de "docker compose exec -T"
+  # khong doc mat phan stdin con lai.
+  local files=()
+  local f
   while IFS= read -r f; do
-    co_file=1
-    local ten
+    files+=("$f")
+  done < <(find "$thu_muc_may" -maxdepth 1 -name '*.cypher' -type f | LC_ALL=C sort)
+
+  if [ "${#files[@]}" -eq 0 ]; then
+    echo "  (bo qua) Khong co file .cypher trong $thu_muc_may"
+    return 0
+  fi
+
+  local ten
+  for f in "${files[@]}"; do
     ten="$(basename "$f")"
     echo "==> $ten"
-    if ! docker compose exec -T neo4j cypher-shell -u "$NGUOI_DUNG" -p "$MAT_KHAU" \
-        --format plain -f "$thu_muc_container/$ten"; then
+    if ! docker compose exec -T neo4j cypher-shell -u "$NGUOI_DUNG" -p "$MAT_KHAU"          --format plain -f "$thu_muc_container/$ten" </dev/null; then
       echo "LOI khi chay $ten. Dung lai." >&2
       exit 1
     fi
-  done < <(find "$thu_muc_may" -maxdepth 1 -name '*.cypher' -type f | LC_ALL=C sort)
-
-  if [ "$co_file" -eq 0 ]; then
-    echo "  (bo qua) Khong co file .cypher trong $thu_muc_may"
-  fi
+  done
 }
 
 echo 'Kiem tra Neo4j da san sang...'
 if ! docker compose exec -T neo4j cypher-shell -u "$NGUOI_DUNG" -p "$MAT_KHAU" \
-     --format plain 'RETURN 1 AS ok' >/dev/null; then
+     --format plain 'RETURN 1 AS ok' </dev/null >/dev/null; then
   echo 'Khong ket noi duoc Neo4j. Chay truoc: docker compose up -d neo4j' >&2
   exit 1
 fi
