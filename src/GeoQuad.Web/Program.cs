@@ -24,6 +24,7 @@ builder.Services.AddSingleton<IGraphDb, GraphDb>();
 // ---- Xác thực bằng cookie (US-05, US-06) ----
 builder.Services.AddScoped<IAuthHelper, AuthHelper>();
 builder.Services.AddScoped<ITaiKhoanRepository, TaiKhoanRepository>();
+builder.Services.AddScoped<DemoAccountSeeder>();
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>
@@ -34,7 +35,7 @@ builder.Services
         o.Cookie.IsEssential = true;
         o.LoginPath = "/TaiKhoan/DangNhap";
         o.LogoutPath = "/TaiKhoan/DangXuat";
-        o.AccessDeniedPath = "/Home/Loi?maTrangThai=403";
+        o.AccessDeniedPath = "/Home/TuChoi";   // PathString không nhận chuỗi truy vấn
         o.ExpireTimeSpan = TimeSpan.FromDays(30);
         o.SlidingExpiration = true;
     });
@@ -46,6 +47,24 @@ builder.Services.AddQuanTri();    // Phần B – Quản trị bài tập
 builder.Services.AddHocTap();     // Phần C – Học tập cá nhân
 
 var app = builder.Build();
+
+// ---- Tài khoản demo, chỉ ở Development (US-06) ----
+if (app.Environment.IsDevelopment())
+{
+    using var pham = app.Services.CreateScope();
+    var seeder = pham.ServiceProvider.GetRequiredService<DemoAccountSeeder>();
+    try
+    {
+        await seeder.ChayAsync();
+    }
+    catch (Exception ex)
+    {
+        // Chưa có Neo4j hoặc chưa chạy seed khung thì vẫn cho ứng dụng khởi động.
+        app.Logger.LogWarning(ex,
+            "Chưa tạo được tài khoản demo. Em chạy \"docker compose up -d neo4j\" và "
+            + "\"scripts/seed\" rồi khởi động lại.");
+    }
+}
 
 if (!app.Environment.IsDevelopment())
 {

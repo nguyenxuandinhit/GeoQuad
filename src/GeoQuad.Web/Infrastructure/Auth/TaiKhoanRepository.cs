@@ -21,6 +21,18 @@ public interface ITaiKhoanRepository
 
     /// <summary>Tìm tài khoản theo tên đăng nhập; null nếu không có (FR-02).</summary>
     Task<TaiKhoanBanGhi?> TimTheoTenAsync(string tenDangNhap);
+
+    /// <summary>
+    /// Ghi nhận một lần đăng nhập sai; tới ngưỡng thì đặt <c>khoaDen</c> (US-06).
+    /// Trả về số lần sai mới và thời điểm hết khóa.
+    /// </summary>
+    Task<(int SoLanSai, DateTimeOffset? KhoaDen)> GhiNhanSaiAsync(string tenDangNhap);
+
+    /// <summary>Đặt lại <c>soLanSai = 0</c> và bỏ khóa sau khi đăng nhập đúng (US-06).</summary>
+    Task DatLaiSoLanSaiAsync(string tenDangNhap);
+
+    /// <summary>Tạo tài khoản demo nếu chưa có, không ghi đè tài khoản đang có (US-06).</summary>
+    Task TaoNeuChuaCoAsync(string tenDangNhap, string matKhauBam, string bietDanh, string vaiTro, int lop);
 }
 
 /// <summary>
@@ -44,6 +56,38 @@ public sealed class TaiKhoanRepository : ITaiKhoanRepository
         RETURN tk.id AS id, tk.tenDangNhap AS tenDangNhap, tk.matKhauBam AS matKhauBam,
                tk.bietDanh AS bietDanh, tk.vaiTro AS vaiTro, l.so AS lop,
                coalesce(tk.soLanSai, 0) AS soLanSai, tk.khoaDen AS khoaDen
+        """;
+
+    // US-06: đếm số lần sai liên tiếp và khóa tạm thời. Nếu lần khóa trước đã hết hạn
+    // thì đếm lại từ đầu.
+    private const string CypherGhiNhanSai = """
+        MATCH (tk:TaiKhoan {tenDangNhap: $ten})
+        WITH tk, CASE
+                   WHEN tk.khoaDen IS NOT NULL AND tk.khoaDen <= datetime() THEN 0
+                   ELSE coalesce(tk.soLanSai, 0)
+                 END AS truoc
+        SET tk.soLanSai = truoc + 1,
+            tk.khoaDen  = CASE
+                            WHEN truoc + 1 >= $soLanToiDa
+                              THEN datetime() + duration({minutes: $phutKhoa})
+                            ELSE null
+                          END
+        RETURN tk.soLanSai AS soLanSai, tk.khoaDen AS khoaDen
+        """;
+
+    // US-06: đăng nhập đúng thì xóa bộ đếm sai.
+    private const string CypherDatLaiSoLanSai = """
+        MATCH (tk:TaiKhoan {tenDangNhap: $ten})
+        SET tk.soLanSai = 0, tk.khoaDen = null
+        """;
+
+    // US-06: tài khoản demo cho môi trường Development; ON CREATE nên chạy lại không ghi đè.
+    private const string CypherTaoNeuChuaCo = """
+        MATCH (l:Lop {so: $lop})
+        MERGE (tk:TaiKhoan {tenDangNhap: $ten})
+          ON CREATE SET tk.id = randomUUID(), tk.matKhauBam = $bam, tk.bietDanh = $bietDanh,
+                        tk.vaiTro = $vaiTro, tk.ngayTao = datetime(), tk.soLanSai = 0
+        MERGE (tk)-[:HOC_LOP]->(l)
         """;
 
     private readonly IGraphDb _db;
@@ -83,6 +127,37 @@ public sealed class TaiKhoanRepository : ITaiKhoanRepository
             r["soLanSai"].As<int>(),
             DocThoiDiem(r["khoaDen"]));
     }
+
+    public async Task<(int SoLanSai, DateTimeOffset? KhoaDen)> GhiNhanSaiAsync(string tenDangNhap)
+    {
+        var ban = await _db.WriteAsync(CypherGhiNhanSai, new
+        {
+            ten = tenDangNhap,
+            soLanToiDa = QuyTacTaiKhoan.SoLanSaiToiDa,
+            phutKhoa = (int)QuyTacTaiKhoan.ThoiGianKhoa.TotalMinutes
+        });
+
+        if (ban.Count == 0)
+        {
+            return (0, null);
+        }
+
+        return (ban[0]["soLanSai"].As<int>(), DocThoiDiem(ban[0]["khoaDen"]));
+    }
+
+    public Task DatLaiSoLanSaiAsync(string tenDangNhap)
+        => _db.WriteAsync(CypherDatLaiSoLanSai, new { ten = tenDangNhap });
+
+    public Task TaoNeuChuaCoAsync(
+        string tenDangNhap, string matKhauBam, string bietDanh, string vaiTro, int lop)
+        => _db.WriteAsync(CypherTaoNeuChuaCo, new
+        {
+            ten = tenDangNhap,
+            bam = matKhauBam,
+            bietDanh,
+            vaiTro,
+            lop
+        });
 
     /// <summary>Đổi <c>datetime</c> của Neo4j sang <see cref="DateTimeOffset"/>.</summary>
     internal static DateTimeOffset? DocThoiDiem(object? gia)

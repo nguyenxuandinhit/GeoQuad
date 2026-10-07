@@ -1,8 +1,11 @@
+using GeoQuad.Web.Infrastructure.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeoQuad.Web.Areas.QuanTri.Controllers;
 
 [Area("QuanTri")]
+[Authorize(Roles = VaiTro.QuanTri)]
 public sealed class HomeController : Controller
 {
     // Vào /QuanTri thì đưa về danh sách bài tập.

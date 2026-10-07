@@ -1,13 +1,16 @@
+using GeoQuad.Web.Infrastructure.Auth;
 using GeoQuad.Web.Infrastructure.Trang;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeoQuad.Web.Areas.QuanTri.Controllers;
 
 /// <summary>
 /// Khung rỗng do PHẦN 0 tạo (US-01). Phần B hoàn thiện ở US-25.
-/// Quyền chỉ quản trị viên được thêm ở US-06.
+/// Chỉ quản trị viên vào được (US-06).
 /// </summary>
 [Area("QuanTri")]
+[Authorize(Roles = VaiTro.QuanTri)]
 public sealed class BaiTapController : Controller
 {
     // SCR-18 · /QuanTri/BaiTap

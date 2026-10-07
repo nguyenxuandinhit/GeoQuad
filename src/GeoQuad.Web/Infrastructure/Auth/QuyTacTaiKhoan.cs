@@ -40,6 +40,28 @@ public static partial class QuyTacTaiKhoan
     public static bool LopHopLe(int lop)
         => lop is >= QuyUoc.LopNhoNhat and <= QuyUoc.LopLonNhat;
 
+    /// <summary>Tài khoản đang bị khóa tại thời điểm <paramref name="bayGio"/> hay không (US-06).</summary>
+    public static bool DangBiKhoa(DateTimeOffset? khoaDen, DateTimeOffset bayGio)
+        => khoaDen.HasValue && khoaDen.Value > bayGio;
+
+    /// <summary>Thời gian còn phải chờ, làm tròn lên phút để báo cho học sinh (US-06).</summary>
+    public static int SoPhutConPhaiCho(DateTimeOffset? khoaDen, DateTimeOffset bayGio)
+    {
+        if (!DangBiKhoa(khoaDen, bayGio))
+        {
+            return 0;
+        }
+
+        return (int)Math.Ceiling((khoaDen!.Value - bayGio).TotalMinutes);
+    }
+
+    /// <summary>
+    /// Thời điểm hết khóa sau lần sai thứ <paramref name="soLanSaiMoi"/>;
+    /// null nghĩa là chưa tới ngưỡng nên không khóa (US-06).
+    /// </summary>
+    public static DateTimeOffset? TinhKhoaDen(int soLanSaiMoi, DateTimeOffset bayGio)
+        => soLanSaiMoi >= SoLanSaiToiDa ? bayGio + ThoiGianKhoa : null;
+
     /// <summary>Biệt danh: bắt buộc, tối đa 50 ký tự.</summary>
     public static bool BietDanhHopLe(string? bietDanh)
     {

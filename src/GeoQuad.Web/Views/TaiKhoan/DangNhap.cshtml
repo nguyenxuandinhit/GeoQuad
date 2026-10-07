@@ -1,0 +1,40 @@
+@model DangNhapViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <h1 class="h3">Đăng nhập</h1>
+
+        <form method="post" novalidate>
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="TiepTuc" />
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="mb-3">
+                <label class="form-label" asp-for="TenDangNhap"></label>
+                <input class="form-control gq-nut" asp-for="TenDangNhap" autocomplete="username" />
+                <span class="text-danger" asp-validation-for="TenDangNhap"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" asp-for="MatKhau"></label>
+                <input class="form-control gq-nut" asp-for="MatKhau" type="password"
+                       autocomplete="current-password" />
+                <span class="text-danger" asp-validation-for="MatKhau"></span>
+            </div>
+
+            <button class="btn btn-primary btn-lg gq-nut w-100" type="submit">Đăng nhập</button>
+        </form>
+
+        <p class="mt-3">Em chưa có tài khoản? <a href="/TaiKhoan/DangKy">Đăng ký</a></p>
+        <p class="text-body-secondary small">
+            Em cũng có thể dùng GeoQuad ở <a href="/">chế độ khách</a> — chỉ là tiến độ sẽ không được lưu.
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

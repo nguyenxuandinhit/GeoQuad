@@ -43,6 +43,7 @@ public sealed class HomeController : Controller
 
         return View(new TrangChuViewModel
         {
+            BietDanh = User.Identity?.IsAuthenticated == true ? User.Identity.Name : null,
             KetNoiOk = ok,
             SoNut = soNut,
             LoiKetNoi = loi
@@ -83,6 +84,10 @@ public sealed class HomeController : Controller
     [HttpGet]
     public IActionResult QuyenRiengTu() => View();
 
+    // Đã đăng nhập nhưng không đủ quyền (ví dụ học sinh mở /QuanTri) — US-06.
+    [HttpGet]
+    public IActionResult TuChoi() => Loi(403);
+
     // Trang lỗi thân thiện, dùng cho cả 404 và lỗi chưa xử lý.
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Loi(int? maTrangThai)
@@ -99,7 +104,9 @@ public sealed class HomeController : Controller
         };
 
         Response.StatusCode = ma;
-        return View(new LoiViewModel
+
+        // Nêu rõ tên view: action TuChoi cũng dùng lại view này.
+        return View("Loi", new LoiViewModel
         {
             MaTrangThai = ma,
             TieuDe = tieuDe,
