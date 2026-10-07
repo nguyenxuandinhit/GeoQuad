@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using GeoQuad.Web.Infrastructure;
+using GeoQuad.Web.Infrastructure.Auth;
 using GeoQuad.Web.Infrastructure.Neo4j;
 using GeoQuad.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ public sealed class HomeController : Controller
     private const string DemSoNut = "MATCH (n) RETURN count(n) AS soNut";
 
     private readonly IGraphDb _db;
+    private readonly ICurrentUser _nguoiDung;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(IGraphDb db, ILogger<HomeController> logger)
+    public HomeController(IGraphDb db, ICurrentUser nguoiDung, ILogger<HomeController> logger)
     {
         _db = db;
+        _nguoiDung = nguoiDung;
         _logger = logger;
     }
 
@@ -43,7 +46,9 @@ public sealed class HomeController : Controller
 
         return View(new TrangChuViewModel
         {
-            BietDanh = User.Identity?.IsAuthenticated == true ? User.Identity.Name : null,
+            BietDanh = _nguoiDung.BietDanh,
+            DaDangNhap = _nguoiDung.DaDangNhap,
+            Lop = _nguoiDung.Lop,
             KetNoiOk = ok,
             SoNut = soNut,
             LoiKetNoi = loi

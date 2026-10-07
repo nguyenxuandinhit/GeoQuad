@@ -1,22 +1,15 @@
 @using GeoQuad.Web.Infrastructure.Auth
-@*
-    Khối tài khoản trên thanh điều hướng (US-05, US-06).
-    US-07 sẽ đổi phần đọc User sang ICurrentUser.
-*@
-@{
-    var daDangNhap = User.Identity?.IsAuthenticated == true;
-    var laQuanTri = User.IsInRole(VaiTro.QuanTri);
-    var bietDanh = User.Identity?.Name;
-}
+@inject ICurrentUser NguoiDung
+@* Khối tài khoản trên thanh điều hướng (US-05, US-06, US-07). *@
 
 <div class="d-flex flex-wrap align-items-center gap-2 ms-lg-3">
-    @if (daDangNhap)
+    @if (NguoiDung.DaDangNhap)
     {
-        @if (laQuanTri)
+        @if (NguoiDung.LaQuanTri)
         {
             <a class="btn btn-sm btn-outline-danger gq-nut" href="/QuanTri/BaiTap">Quản trị</a>
         }
-        <span class="navbar-text">Chào <strong>@bietDanh</strong></span>
+        <span class="navbar-text">Chào <strong>@NguoiDung.BietDanh</strong></span>
         <form method="post" action="/TaiKhoan/DangXuat" class="m-0">
             @Html.AntiForgeryToken()
             <button class="btn btn-sm btn-outline-secondary gq-nut" type="submit">Đăng xuất</button>
@@ -24,6 +17,7 @@
     }
     else
     {
+        <span class="navbar-text">Chế độ khách</span>
         <a class="btn btn-sm btn-outline-primary gq-nut" href="/TaiKhoan/DangNhap">Đăng nhập</a>
         <a class="btn btn-sm btn-primary gq-nut" href="/TaiKhoan/DangKy">Đăng ký</a>
     }

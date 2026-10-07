@@ -25,6 +25,10 @@ builder.Services.AddSingleton<IGraphDb, GraphDb>();
 builder.Services.AddScoped<IAuthHelper, AuthHelper>();
 builder.Services.AddScoped<ITaiKhoanRepository, TaiKhoanRepository>();
 builder.Services.AddScoped<DemoAccountSeeder>();
+
+// ---- Người đang dùng: học sinh đã đăng nhập hoặc khách (US-07) ----
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(o =>

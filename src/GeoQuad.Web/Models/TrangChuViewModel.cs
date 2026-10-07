@@ -5,6 +5,12 @@ public sealed class TrangChuViewModel
 {
     public string? BietDanh { get; init; }
 
+    /// <summary>Khách thì được mời đăng nhập để lưu tiến độ (US-07).</summary>
+    public bool DaDangNhap { get; init; }
+
+    /// <summary>Lớp đang dùng để lọc nội dung (BR-04).</summary>
+    public int Lop { get; init; }
+
     /// <summary>Đúng khi truy vấn Neo4j thành công.</summary>
     public bool KetNoiOk { get; init; }
 

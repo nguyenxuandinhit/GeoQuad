@@ -18,6 +18,11 @@ máy tính hình học, bài tập có chấm tự động và lộ trình học
     <div class="form-text" id="gq-tim-mo-ta">Em gõ có dấu hay không dấu đều được.</div>
 </form>
 
+@if (!Model.DaDangNhap)
+{
+    <partial name="_MoiDangNhap" model="@("/")" />
+}
+
 <h2 class="h4 mt-4">Lối tắt</h2>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
     @foreach (var (url, ten, moTa) in new[]

@@ -1,0 +1,29 @@
+@*
+    Mời khách đăng nhập khi bấm một chức năng cần lưu dữ liệu học tập (US-07, BR-09).
+    Dùng chung cho cả ba phần:
+        <partial name="_MoiDangNhap" />
+        <partial name="_MoiDangNhap" model="@("/HocTap/BaiTap/Lam/BT-001")" />
+    Model (tùy chọn) là đường dẫn quay lại sau khi đăng nhập.
+*@
+@model string?
+@{
+    var tiepTuc = string.IsNullOrWhiteSpace(Model)
+        ? $"{Context.Request.Path}{Context.Request.QueryString}"
+        : Model;
+    var urlDangNhap = $"/TaiKhoan/DangNhap?tiepTuc={Uri.EscapeDataString(tiepTuc!)}";
+    var urlDangKy = "/TaiKhoan/DangKy";
+}
+
+<div class="alert alert-info d-flex flex-wrap align-items-center gap-3" role="status">
+    <div class="flex-grow-1">
+        <strong>Đăng nhập để lưu tiến độ của em</strong>
+        <div class="small">
+            Ở chế độ khách em vẫn tra cứu, tính toán và làm bài được, nhưng GeoQuad không lưu
+            kết quả nên lần sau mở lại sẽ không thấy tiến độ.
+        </div>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-primary gq-nut" href="@urlDangNhap">Đăng nhập</a>
+        <a class="btn btn-outline-primary gq-nut" href="@urlDangKy">Đăng ký</a>
+    </div>
+</div>

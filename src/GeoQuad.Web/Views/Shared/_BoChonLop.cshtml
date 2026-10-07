@@ -1,39 +1,46 @@
+@using GeoQuad.Web.Infrastructure.Auth
+@inject ICurrentUser NguoiDung
 @*
-    Bộ chọn lớp của khách và công tắc "Xem trước kiến thức nâng cao" (US-01).
-    US-07 sẽ thay phần đọc cookie trực tiếp ở đây bằng ICurrentUser.
+    Bộ chọn lớp của khách và công tắc "Xem trước kiến thức nâng cao" (US-01, US-07).
+    Học sinh đã đăng nhập đổi lớp ở trang Hồ sơ (US-08), nên không hiện bộ chọn ở đây.
 *@
 @{
-    var lopCookie = Context.Request.Cookies[GqCookie.Lop];
-    var lopHienTai = int.TryParse(lopCookie, out var l)
-                     && l >= QuyUoc.LopNhoNhat && l <= QuyUoc.LopLonNhat
-        ? l
-        : QuyUoc.LopMacDinh;
-    var nangCao = Context.Request.Cookies[GqCookie.NangCao] == "1";
     var duongDanHienTai = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
 <div class="d-flex flex-wrap align-items-center gap-3">
-    <form method="post" action="/Home/ChonLop" class="d-flex align-items-center gap-2">
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
-        <label class="form-label mb-0" for="gq-chon-lop">Em học lớp</label>
-        <select class="form-select gq-nut w-auto" id="gq-chon-lop" name="lop"
-                onchange="this.form.submit()">
-            @for (var i = QuyUoc.LopNhoNhat; i <= QuyUoc.LopLonNhat; i++)
-            {
-                <option value="@i" selected="@(i == lopHienTai)">@i</option>
-            }
-        </select>
-        <noscript><button type="submit" class="btn btn-sm btn-outline-primary gq-nut">Chọn</button></noscript>
-    </form>
+    @if (!NguoiDung.DaDangNhap)
+    {
+        <form method="post" action="/Home/ChonLop" class="d-flex align-items-center gap-2">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
+            <label class="form-label mb-0" for="gq-chon-lop">Em học lớp</label>
+            <select class="form-select gq-nut w-auto" id="gq-chon-lop" name="lop"
+                    onchange="this.form.submit()">
+                @for (var i = QuyUoc.LopNhoNhat; i <= QuyUoc.LopLonNhat; i++)
+                {
+                    <option value="@i" selected="@(i == NguoiDung.Lop)">@i</option>
+                }
+            </select>
+            <noscript><button type="submit" class="btn btn-sm btn-outline-primary gq-nut">Chọn</button></noscript>
+        </form>
+    }
+    else
+    {
+        <span class="navbar-text">Lớp @NguoiDung.Lop</span>
+    }
 
     <form method="post" action="/Home/NangCao" class="form-check form-switch mb-0">
         @Html.AntiForgeryToken()
         <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
-        <input type="hidden" name="bat" value="@(nangCao ? "false" : "true")" />
+        <input type="hidden" name="bat" value="@(NguoiDung.XemNangCao ? "false" : "true")" />
         <input class="form-check-input" type="checkbox" role="switch" id="gq-nang-cao"
-               checked="@nangCao" onchange="this.form.submit()" />
+               checked="@NguoiDung.XemNangCao" onchange="this.form.submit()"
+               aria-describedby="gq-nang-cao-mo-ta" />
         <label class="form-check-label" for="gq-nang-cao">Xem trước kiến thức nâng cao</label>
+        <span class="visually-hidden" id="gq-nang-cao-mo-ta">
+            Bật để xem cả nội dung của lớp trên; nội dung đó được đánh dấu "Nâng cao".
+        </span>
         <noscript><button type="submit" class="btn btn-sm btn-outline-secondary gq-nut">Đổi</button></noscript>
     </form>
 </div>
