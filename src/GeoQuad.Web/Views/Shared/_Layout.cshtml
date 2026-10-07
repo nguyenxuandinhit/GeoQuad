@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] – GeoQuad</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/katex/katex.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <a class="gq-bo-qua" href="#noi-dung">Bỏ qua, đến nội dung chính</a>
+
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom" aria-label="Điều hướng chính">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="/">GeoQuad</a>
+                <button class="navbar-toggler gq-nut" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#gq-nav" aria-controls="gq-nav" aria-expanded="false"
+                        aria-label="Mở menu điều hướng">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="gq-nav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link" href="/KienThuc/ThuVien">Thư viện</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/KienThuc/BanDo">Bản đồ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/KienThuc/MayTinh">Máy tính</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/ApDung/GoiY">Nên dùng định lý nào?</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/ApDung/TinhHuong">Hình học quanh ta</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/HocTap/BaiTap">Bài tập</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/HocTap/LoTrinh">Lộ trình</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/HocTap/TienDo">Tiến độ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/HocTap/HoSo">Hồ sơ</a></li>
+                    </ul>
+                    <partial name="_BoChonLop" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="noi-dung" class="container py-4">
+        @RenderBody()
+    </main>
+
+    <footer class="container border-top py-3 text-body-secondary">
+        <small>GeoQuad · Hình học phẳng – tứ giác · Dữ liệu lưu trong Neo4j</small>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="~/lib/katex/katex.min.js"></script>
+    <script defer src="~/lib/katex/contrib/auto-render.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

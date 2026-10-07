@@ -1,0 +1,15 @@
+@model LoiViewModel
+@{
+    ViewData["Title"] = Model.TieuDe;
+}
+
+<div class="text-center py-5">
+    <p class="display-6 text-body-secondary">@Model.MaTrangThai</p>
+    <h1 class="h3">@Model.TieuDe</h1>
+    <p>@Model.MoTa</p>
+    <a class="btn btn-primary gq-nut" href="/">Về trang chủ</a>
+    @if (!string.IsNullOrEmpty(Model.MaYeuCau))
+    {
+        <p class="mt-4 small text-body-secondary">Mã yêu cầu: <code>@Model.MaYeuCau</code></p>
+    }
+</div>

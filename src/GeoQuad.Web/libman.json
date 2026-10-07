@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap/dist/",
+      "files": [
+        "css/bootstrap.css",
+        "css/bootstrap.css.map",
+        "css/bootstrap.min.css",
+        "css/bootstrap.min.css.map",
+        "js/bootstrap.bundle.js",
+        "js/bootstrap.bundle.js.map",
+        "js/bootstrap.bundle.min.js",
+        "js/bootstrap.bundle.min.js.map"
+      ]
+    },
+    {
+      "library": "KaTeX@0.16.11",
+      "destination": "wwwroot/lib/katex/",
+      "files": [
+        "katex.min.css",
+        "katex.min.js",
+        "contrib/auto-render.min.js",
+        "fonts/KaTeX_Main-Regular.woff2",
+        "fonts/KaTeX_Main-Bold.woff2",
+        "fonts/KaTeX_Main-Italic.woff2",
+        "fonts/KaTeX_Math-Italic.woff2",
+        "fonts/KaTeX_Math-BoldItalic.woff2",
+        "fonts/KaTeX_Size1-Regular.woff2",
+        "fonts/KaTeX_Size2-Regular.woff2",
+        "fonts/KaTeX_Size3-Regular.woff2",
+        "fonts/KaTeX_Size4-Regular.woff2",
+        "fonts/KaTeX_AMS-Regular.woff2",
+        "fonts/KaTeX_Caligraphic-Regular.woff2",
+        "fonts/KaTeX_Caligraphic-Bold.woff2",
+        "fonts/KaTeX_Fraktur-Regular.woff2",
+        "fonts/KaTeX_Fraktur-Bold.woff2",
+        "fonts/KaTeX_SansSerif-Regular.woff2",
+        "fonts/KaTeX_SansSerif-Bold.woff2",
+        "fonts/KaTeX_SansSerif-Italic.woff2",
+        "fonts/KaTeX_Script-Regular.woff2",
+        "fonts/KaTeX_Typewriter-Regular.woff2"
+      ]
+    },
+    {
+      "library": "cytoscape@3.30.2",
+      "destination": "wwwroot/lib/cytoscape/",
+      "files": [ "cytoscape.min.js" ]
+    },
+    {
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/lib/jquery/dist/",
+      "files": [ "jquery.js", "jquery.min.js", "jquery.min.map" ]
+    },
+    {
+      "library": "jquery-validate@1.21.0",
+      "destination": "wwwroot/lib/jquery-validation/dist/",
+      "files": [ "jquery.validate.js", "jquery.validate.min.js", "additional-methods.js", "additional-methods.min.js" ]
+    },
+    {
+      "library": "jquery-validation-unobtrusive@4.0.0",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/",
+      "files": [ "jquery.validate.unobtrusive.js", "jquery.validate.unobtrusive.min.js" ]
+    }
+  ]
+}

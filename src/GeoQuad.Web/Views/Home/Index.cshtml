@@ -1,0 +1,54 @@
+@model TrangChuViewModel
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<h1 class="h2">Chào em@(string.IsNullOrEmpty(Model.BietDanh) ? "" : ", " + Model.BietDanh)!</h1>
+<p class="lead">GeoQuad giúp em học hình học phẳng chủ đề <strong>tứ giác</strong>: tra cứu, bản đồ kiến thức,
+máy tính hình học, bài tập có chấm tự động và lộ trình học.</p>
+
+<form class="my-4" method="get" action="/KienThuc/ThuVien/TimKiem" role="search">
+    <label class="form-label fs-5" for="gq-tim">Em muốn tìm gì?</label>
+    <div class="input-group input-group-lg">
+        <input class="form-control" type="search" id="gq-tim" name="q"
+               placeholder="Ví dụ: hình thoi, dấu hiệu hình chữ nhật, công thức diện tích"
+               aria-describedby="gq-tim-mo-ta" />
+        <button class="btn btn-primary gq-nut" type="submit">Tìm kiếm</button>
+    </div>
+    <div class="form-text" id="gq-tim-mo-ta">Em gõ có dấu hay không dấu đều được.</div>
+</form>
+
+<h2 class="h4 mt-4">Lối tắt</h2>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+    @foreach (var (url, ten, moTa) in new[]
+    {
+        ("/KienThuc/BanDo",    "Bản đồ kiến thức",       "Xem hình nào là trường hợp đặc biệt của hình nào."),
+        ("/ApDung/GoiY",       "Nên dùng định lý nào?",  "Nhập giả thiết em có, nhận gợi ý dấu hiệu nhận biết."),
+        ("/ApDung/TinhHuong",  "Hình học quanh ta",      "Tứ giác trong nhà cửa, mảnh vườn và đồ dùng."),
+        ("/HocTap/BaiTap",     "Bài tập",                "Luyện tập và được chấm ngay kèm giải thích."),
+        ("/KienThuc/MayTinh",  "Máy tính hình học",      "Tính chu vi, diện tích, đường chéo và vẽ hình.")
+    })
+    {
+        <div class="col">
+            <a class="card h-100 text-decoration-none gq-the-loi-tat" href="@url">
+                <div class="card-body">
+                    <h3 class="h5 card-title">@ten</h3>
+                    <p class="card-text text-body-secondary">@moTa</p>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+
+<p class="mt-4 small" role="status">
+    @if (Model.KetNoiOk)
+    {
+        <span class="badge text-bg-success">Kết nối Neo4j: OK</span>
+        <span class="ms-1 text-body-secondary">– @Model.SoNut nút</span>
+    }
+    else
+    {
+        <span class="badge text-bg-danger">Kết nối Neo4j: LỖI</span>
+        <span class="ms-1">@Model.LoiKetNoi</span>
+    }
+</p>

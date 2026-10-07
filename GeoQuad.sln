@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoQuad.Web", "src\GeoQuad.Web\GeoQuad.Web.csproj", "{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoQuad.Tests", "tests\GeoQuad.Tests\GeoQuad.Tests.csproj", "{893CECA0-C3A7-484F-BB21-683EDC37C940}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Debug|x64.Build.0 = Debug|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Debug|x86.Build.0 = Debug|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Release|x64.ActiveCfg = Release|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Release|x64.Build.0 = Release|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Release|x86.ActiveCfg = Release|Any CPU
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD}.Release|x86.Build.0 = Release|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Debug|x64.Build.0 = Debug|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Debug|x86.Build.0 = Debug|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Release|x64.ActiveCfg = Release|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Release|x64.Build.0 = Release|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Release|x86.ActiveCfg = Release|Any CPU
+		{893CECA0-C3A7-484F-BB21-683EDC37C940}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{951DFD42-FE5F-4A64-AB9A-D6C32C3D72DD} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{893CECA0-C3A7-484F-BB21-683EDC37C940} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+EndGlobal

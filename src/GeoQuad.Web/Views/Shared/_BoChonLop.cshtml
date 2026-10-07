@@ -1,0 +1,39 @@
+@*
+    Bộ chọn lớp của khách và công tắc "Xem trước kiến thức nâng cao" (US-01).
+    US-07 sẽ thay phần đọc cookie trực tiếp ở đây bằng ICurrentUser.
+*@
+@{
+    var lopCookie = Context.Request.Cookies[GqCookie.Lop];
+    var lopHienTai = int.TryParse(lopCookie, out var l)
+                     && l >= QuyUoc.LopNhoNhat && l <= QuyUoc.LopLonNhat
+        ? l
+        : QuyUoc.LopMacDinh;
+    var nangCao = Context.Request.Cookies[GqCookie.NangCao] == "1";
+    var duongDanHienTai = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
+
+<div class="d-flex flex-wrap align-items-center gap-3">
+    <form method="post" action="/Home/ChonLop" class="d-flex align-items-center gap-2">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
+        <label class="form-label mb-0" for="gq-chon-lop">Em học lớp</label>
+        <select class="form-select gq-nut w-auto" id="gq-chon-lop" name="lop"
+                onchange="this.form.submit()">
+            @for (var i = QuyUoc.LopNhoNhat; i <= QuyUoc.LopLonNhat; i++)
+            {
+                <option value="@i" selected="@(i == lopHienTai)">@i</option>
+            }
+        </select>
+        <noscript><button type="submit" class="btn btn-sm btn-outline-primary gq-nut">Chọn</button></noscript>
+    </form>
+
+    <form method="post" action="/Home/NangCao" class="form-check form-switch mb-0">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
+        <input type="hidden" name="bat" value="@(nangCao ? "false" : "true")" />
+        <input class="form-check-input" type="checkbox" role="switch" id="gq-nang-cao"
+               checked="@nangCao" onchange="this.form.submit()" />
+        <label class="form-check-label" for="gq-nang-cao">Xem trước kiến thức nâng cao</label>
+        <noscript><button type="submit" class="btn btn-sm btn-outline-secondary gq-nut">Đổi</button></noscript>
+    </form>
+</div>

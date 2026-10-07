@@ -1,0 +1,18 @@
+* text=auto eol=lf
+
+*.ps1   text eol=crlf
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+*.sh    text eol=lf
+
+*.png   binary
+*.jpg   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.docx  binary
+*.pdf   binary
+
+# Thư viện tải bằng LibMan: commit để chạy được khi mạng yếu, nhưng không tính vào diff.
+src/GeoQuad.Web/wwwroot/lib/** linguist-vendored
