@@ -2,7 +2,9 @@ using GeoQuad.Web.Areas.ApDung;
 using GeoQuad.Web.Areas.HocTap;
 using GeoQuad.Web.Areas.KienThuc;
 using GeoQuad.Web.Areas.QuanTri;
+using GeoQuad.Web.Infrastructure.Auth;
 using GeoQuad.Web.Infrastructure.Neo4j;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using Neo4j.Driver;
 
@@ -18,6 +20,24 @@ builder.Services.AddSingleton<IDriver>(sp =>
     return GraphDatabase.Driver(o.Uri, AuthTokens.Basic(o.User, o.Password));
 });
 builder.Services.AddSingleton<IGraphDb, GraphDb>();
+
+// ---- Xác thực bằng cookie (US-05, US-06) ----
+builder.Services.AddScoped<IAuthHelper, AuthHelper>();
+builder.Services.AddScoped<ITaiKhoanRepository, TaiKhoanRepository>();
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o =>
+    {
+        o.Cookie.Name = "gq_auth";
+        o.Cookie.HttpOnly = true;
+        o.Cookie.SameSite = SameSiteMode.Lax;
+        o.Cookie.IsEssential = true;
+        o.LoginPath = "/TaiKhoan/DangNhap";
+        o.LogoutPath = "/TaiKhoan/DangXuat";
+        o.AccessDeniedPath = "/Home/Loi?maTrangThai=403";
+        o.ExpireTimeSpan = TimeSpan.FromDays(30);
+        o.SlidingExpiration = true;
+    });
 
 // ---- Các Area của A, B, C: PHẦN 0 gọi sẵn, A/B/C không sửa Program.cs ----
 builder.Services.AddKienThuc();   // Phần A – Tra cứu & trực quan
@@ -35,6 +55,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStatusCodePagesWithReExecute("/Home/Loi", "?maTrangThai={0}");
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "areas",

@@ -79,6 +79,10 @@ public sealed class HomeController : Controller
         return RedirectVeTrangTruoc(tiepTuc);
     }
 
+    // Thông báo quyền riêng tư, liên kết từ biểu mẫu đăng ký (US-05, NFR-06).
+    [HttpGet]
+    public IActionResult QuyenRiengTu() => View();
+
     // Trang lỗi thân thiện, dùng cho cả 404 và lỗi chưa xử lý.
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Loi(int? maTrangThai)
