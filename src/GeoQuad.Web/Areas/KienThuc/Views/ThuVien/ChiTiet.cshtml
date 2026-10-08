@@ -1,0 +1,237 @@
+@model GeoQuad.Web.Areas.KienThuc.Models.ChiTietViewModel
+@{
+    var k = Model.ChiTiet.KhaiNiem;
+    ViewData["Title"] = k.Ten;
+
+    // Chỉ dựng tab có nội dung (US-10: tab rỗng thì ẩn).
+    var tabs = new List<(string Id, string Ten, int So)> { ("dinh-nghia", "Định nghĩa", 0) };
+    if (Model.CoTinhChat) tabs.Add(("tinh-chat", "Tính chất", Model.ChiTiet.TinhChat.Count));
+    if (Model.CoDauHieu) tabs.Add(("dau-hieu", "Dấu hiệu nhận biết", Model.ChiTiet.DauHieu.Count));
+    if (Model.CoCongThuc) tabs.Add(("cong-thuc", "Công thức", Model.ChiTiet.CongThuc.Count));
+    if (Model.CoTinhHuong) tabs.Add(("tinh-huong", "Ví dụ thực tế", Model.LienQuan.TinhHuong.Count));
+    if (Model.CoBaiTap) tabs.Add(("bai-tap", "Bài tập", Model.LienQuan.BaiTap.Count));
+}
+
+<div class="@(Model.LaCap1 ? "gq-cap-1" : "")">
+    <nav aria-label="Đường dẫn">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/KienThuc/ThuVien">Thư viện kiến thức</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@k.Ten</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+        <h1 class="h2 mb-0">@k.Ten</h1>
+        <span class="badge text-bg-light text-dark border">Lớp @Model.ChiTiet.Lop</span>
+        @if (Model.NangCao)
+        {
+            <span class="badge text-bg-warning gq-nhan-nang-cao"
+                  title="Nội dung của lớp trên lớp em đang học">Nâng cao</span>
+        }
+        @if (Model.ChiTiet.DaHoc)
+        {
+            <span class="badge text-bg-success">✓ Em đã hiểu</span>
+        }
+    </div>
+
+    @if (Model.MoiDangNhap)
+    {
+        <partial name="_MoiDangNhap" model="@($"/KienThuc/ThuVien/ChiTiet/{k.Ma}")" />
+    }
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-5">
+            @if (Model.Svg is not null)
+            {
+                <figure class="gq-hinh-ve border rounded p-2 mb-3">
+                    @* SVG sinh từ bảng toạ độ cố định trong HinhVeSvg, không chứa dữ liệu người dùng. *@
+                    @Html.Raw(Model.Svg)
+                    <figcaption class="form-text">Hình minh hoạ @k.Ten.ToLower() với bốn đỉnh A, B, C, D.</figcaption>
+                </figure>
+            }
+
+            @if (Model.CoLienKet)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2 class="h6 card-title">Quan hệ với hình khác</h2>
+                        @if (Model.ChiTiet.TongQuatHon.Count > 0)
+                        {
+                            <p class="card-text mb-2">
+                                <span class="text-body-secondary">Tổng quát hơn:</span><br />
+                                @foreach (var c in Model.ChiTiet.TongQuatHon)
+                                {
+                                    <a class="btn btn-sm btn-outline-secondary gq-nut mt-1 me-1"
+                                       href="/KienThuc/ThuVien/ChiTiet/@c.Ma">↑ @c.Ten</a>
+                                }
+                            </p>
+                        }
+                        @if (Model.ChiTiet.DacBietHon.Count > 0)
+                        {
+                            <p class="card-text mb-0">
+                                <span class="text-body-secondary">Đặc biệt hơn:</span><br />
+                                @foreach (var c in Model.ChiTiet.DacBietHon)
+                                {
+                                    <a class="btn btn-sm btn-outline-secondary gq-nut mt-1 me-1"
+                                       href="/KienThuc/ThuVien/ChiTiet/@c.Ma">↓ @c.Ten</a>
+                                }
+                            </p>
+                        }
+                    </div>
+                </div>
+            }
+
+            @* Nút "Em đã hiểu" — khách bấm sẽ được mời đăng nhập (BR-09). *@
+            <form method="post" action="/KienThuc/ThuVien/DaHieu/@k.Ma">
+                @Html.AntiForgeryToken()
+                <button class="btn btn-primary gq-nut w-100" type="submit"
+                        aria-describedby="gq-da-hieu-mo-ta">
+                    @(Model.ChiTiet.DaHoc ? "✓ Em đã hiểu bài này" : "Em đã hiểu")
+                </button>
+                <div class="form-text" id="gq-da-hieu-mo-ta">
+                    @if (Model.DaDangNhap)
+                    {
+                        <span>Bấm để GeoQuad ghi nhớ em đã học khái niệm này.</span>
+                    }
+                    else
+                    {
+                        <span>Em cần đăng nhập để GeoQuad lưu lại.</span>
+                    }
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12 col-lg-7">
+            <ul class="nav nav-tabs flex-nowrap overflow-auto" role="tablist">
+                @for (var i = 0; i < tabs.Count; i++)
+                {
+                    var t = tabs[i];
+                    <li class="nav-item flex-shrink-0" role="presentation">
+                        <button class="nav-link @(i == 0 ? "active" : "")" id="tab-@t.Id"
+                                data-bs-toggle="tab" data-bs-target="#pane-@t.Id" type="button"
+                                role="tab" aria-controls="pane-@t.Id"
+                                aria-selected="@(i == 0 ? "true" : "false")">
+                            @t.Ten@(t.So > 0 ? $" ({t.So})" : "")
+                        </button>
+                    </li>
+                }
+            </ul>
+
+            <div class="tab-content border border-top-0 rounded-bottom p-3">
+                @* ---- Định nghĩa ---- *@
+                <div class="tab-pane fade show active" id="pane-dinh-nghia" role="tabpanel"
+                     aria-labelledby="tab-dinh-nghia">
+                    <p class="fs-5">@k.DinhNghia</p>
+
+                    @if (Model.HienGhiChuTieuHoc)
+                    {
+                        <div class="alert alert-info" role="note">
+                            <strong>Ghi chú cho em ở tiểu học:</strong> @k.GhiChuTieuHoc.
+                        </div>
+                    }
+                </div>
+
+                @* ---- Tính chất ---- *@
+                @if (Model.CoTinhChat)
+                {
+                    <div class="tab-pane fade" id="pane-tinh-chat" role="tabpanel" aria-labelledby="tab-tinh-chat">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var t in Model.ChiTiet.TinhChat)
+                            {
+                                <li class="list-group-item">
+                                    @t.NoiDung
+                                    <span class="badge text-bg-light text-dark border ms-1">Lớp @t.Lop</span>
+                                    @if (t.NangCao)
+                                    {
+                                        <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @* ---- Dấu hiệu nhận biết ---- *@
+                @if (Model.CoDauHieu)
+                {
+                    <div class="tab-pane fade" id="pane-dau-hieu" role="tabpanel" aria-labelledby="tab-dau-hieu">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var d in Model.ChiTiet.DauHieu)
+                            {
+                                <li class="list-group-item">
+                                    @d.NoiDung
+                                    <span class="badge text-bg-light text-dark border ms-1">Lớp @d.Lop</span>
+                                    @if (d.NangCao)
+                                    {
+                                        <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                        <p class="form-text mt-2">
+                            Muốn biết nên dùng dấu hiệu nào cho bài của em?
+                            <a href="/ApDung/GoiY">Thử trang "Nên dùng định lý nào?"</a>
+                        </p>
+                    </div>
+                }
+
+                @* ---- Công thức (KaTeX) ---- *@
+                @if (Model.CoCongThuc)
+                {
+                    <div class="tab-pane fade" id="pane-cong-thuc" role="tabpanel" aria-labelledby="tab-cong-thuc">
+                        <dl>
+                            @foreach (var c in Model.ChiTiet.CongThuc)
+                            {
+                                <dt>
+                                    @c.Ten
+                                    <span class="badge text-bg-light text-dark border">Lớp @c.Lop</span>
+                                    @if (c.NangCao)
+                                    {
+                                        <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>
+                                    }
+                                </dt>
+                                <dd>$$@c.BieuThuc$$</dd>
+                            }
+                        </dl>
+                        <p class="form-text">
+                            <a href="/KienThuc/MayTinh?hinh=@k.Ma">Tính thử bằng máy tính hình học</a>
+                        </p>
+                    </div>
+                }
+
+                @* ---- Ví dụ thực tế (phần B) ---- *@
+                @if (Model.CoTinhHuong)
+                {
+                    <div class="tab-pane fade" id="pane-tinh-huong" role="tabpanel" aria-labelledby="tab-tinh-huong">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var th in Model.LienQuan.TinhHuong)
+                            {
+                                <li class="list-group-item">
+                                    <a href="/ApDung/TinhHuong/Xem/@th.Ma">@th.Ten</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @* ---- Bài tập (phần C) ---- *@
+                @if (Model.CoBaiTap)
+                {
+                    <div class="tab-pane fade" id="pane-bai-tap" role="tabpanel" aria-labelledby="tab-bai-tap">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var bt in Model.LienQuan.BaiTap)
+                            {
+                                <li class="list-group-item">
+                                    <a href="/HocTap/BaiTap/Lam/@bt.Ma">@bt.De…</a>
+                                    <span class="badge text-bg-light text-dark border">Lớp @bt.Lop</span>
+                                    <span class="badge text-bg-secondary">Độ khó @bt.DoKho</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

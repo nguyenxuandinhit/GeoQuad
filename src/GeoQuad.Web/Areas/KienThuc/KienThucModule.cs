@@ -1,3 +1,6 @@
+using GeoQuad.Web.Areas.KienThuc.Repositories;
+using GeoQuad.Web.Areas.KienThuc.Services;
+
 namespace GeoQuad.Web.Areas.KienThuc;
 
 /// <summary>
@@ -9,7 +12,26 @@ public static class KienThucModule
 {
     public static IServiceCollection AddKienThuc(this IServiceCollection services)
     {
-        // Phần A: đăng ký Repository và Service của Area KienThuc tại đây.
+        // US-09: thư viện kiến thức (SCR-04)
+        services.AddScoped<IThuVienRepository, ThuVienRepository>();
+        services.AddScoped<IThuVienService, ThuVienService>();
+
+        // US-10: chi tiết khái niệm và "Em đã hiểu" (SCR-05)
+        services.AddScoped<IChiTietRepository, ChiTietRepository>();
+        services.AddScoped<IChiTietService, ChiTietService>();
+
+        // US-11: tìm kiếm có/không dấu (SCR-06)
+        services.AddScoped<ITimKiemRepository, TimKiemRepository>();
+        services.AddScoped<ITimKiemService, TimKiemService>();
+
+        // US-12: bản đồ kiến thức (SCR-07)
+        services.AddScoped<IBanDoRepository, BanDoRepository>();
+        services.AddScoped<IBanDoService, BanDoService>();
+
+        // US-15, US-16: máy tính hình học và vẽ hình theo số liệu (SCR-10)
+        services.AddScoped<IMayTinhRepository, MayTinhRepository>();
+        services.AddScoped<IMayTinhService, MayTinhService>();
+
         return services;
     }
 }
