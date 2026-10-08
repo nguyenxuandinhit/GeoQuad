@@ -87,7 +87,11 @@ public sealed class MayTinhService : IMayTinhService
 
         var ketQua = MayTinhHinhHoc.Tinh(congThuc.MaCongThuc, soDay, dv);
 
-        return khung with { KetQua = ketQua };
+        // US-16: vẽ hình theo số đo vừa nhập; vẽ đường chéo nét đứt khi đang tính đường chéo.
+        var veCheo = congThuc.DaiLuong == MayTinhHinhHoc.DaiLuongDuongCheo;
+        var hinhVe = VeHinhSvg.Ve(hinhChon.Ma, soDay, dv, veCheo);
+
+        return khung with { KetQua = ketQua, Svg = hinhVe?.Svg };
     }
 
     private static string? LayChuoi(IReadOnlyDictionary<string, string?> soDo, string bien)
