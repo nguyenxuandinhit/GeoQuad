@@ -13,39 +13,62 @@
     <a class="gq-bo-qua" href="#noi-dung">Bỏ qua, đến nội dung chính</a>
 
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom" aria-label="Điều hướng chính">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold" href="/">GeoQuad</a>
-                <button class="navbar-toggler gq-nut" type="button" data-bs-toggle="collapse"
+        <nav class="navbar navbar-expand-lg gq-nav" aria-label="Điều hướng chính">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <span class="gq-logo" aria-hidden="true">◇</span>
+                    <span>GeoQuad</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#gq-nav" aria-controls="gq-nav" aria-expanded="false"
                         aria-label="Mở menu điều hướng">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="gq-nav">
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav gq-nav-chinh me-auto">
                         <li class="nav-item"><a class="nav-link" href="/KienThuc/ThuVien">Thư viện</a></li>
                         <li class="nav-item"><a class="nav-link" href="/KienThuc/BanDo">Bản đồ</a></li>
                         <li class="nav-item"><a class="nav-link" href="/KienThuc/MayTinh">Máy tính</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/ApDung/GoiY">Nên dùng định lý nào?</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/ApDung/TinhHuong">Hình học quanh ta</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/HocTap/BaiTap">Bài tập</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/HocTap/LoTrinh">Lộ trình</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/HocTap/TienDo">Tiến độ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/HocTap/HoSo">Hồ sơ</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Áp dụng</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/ApDung/GoiY">Nên dùng định lý nào?</a></li>
+                                <li><a class="dropdown-item" href="/ApDung/TinhHuong">Hình học quanh ta</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Học tập</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/HocTap/BaiTap">Bài tập</a></li>
+                                <li><a class="dropdown-item" href="/HocTap/LoTrinh">Lộ trình học</a></li>
+                                <li><a class="dropdown-item" href="/HocTap/TienDo">Tiến độ của em</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="/HocTap/HoSo">Hồ sơ của em</a></li>
+                            </ul>
+                        </li>
                     </ul>
-                    <partial name="_BoChonLop" />
+
                     <partial name="_KhoiTaiKhoan" />
                 </div>
             </div>
         </nav>
+
+        @* Thanh ngữ cảnh: luôn cho thấy đang xem nội dung tới lớp nào. *@
+        <partial name="_BoChonLop" />
     </header>
 
-    <main id="noi-dung" class="container py-4">
+    <main id="noi-dung" class="container gq-noi-dung">
         @RenderBody()
     </main>
 
-    <footer class="container border-top py-3 text-body-secondary">
-        <small>GeoQuad · Hình học phẳng – tứ giác · Dữ liệu lưu trong Neo4j</small>
+    <footer class="gq-chan-trang">
+        <div class="container">
+            <small>GeoQuad · Hình học phẳng – chủ đề tứ giác · Dữ liệu lưu trong Neo4j</small>
+        </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

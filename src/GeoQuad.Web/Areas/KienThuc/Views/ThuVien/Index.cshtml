@@ -22,16 +22,12 @@
     </nav>
 
     <h1 class="h2">Thư viện kiến thức</h1>
-    <p class="text-body-secondary">
-        Em đang xem nội dung tới <strong>lớp @Model.LopHienThi</strong>.
+    <p class="gq-ngu-canh-lop">
+        Đang hiện nội dung <strong>tới lớp @Model.LopHienThi</strong>.
         @if (Model.XemNangCao)
         {
-            <span>Công tắc "Xem trước kiến thức nâng cao" đang bật, nên có cả nội dung lớp trên
-            — những mục đó được đánh dấu <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>.</span>
-        }
-        else
-        {
-            <span>Muốn xem thêm kiến thức lớp trên, em bật công tắc "Xem trước kiến thức nâng cao" ở thanh trên.</span>
+            <span>Có cả nội dung trên lớp @Model.LopHocSinh, mang nhãn
+            <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>.</span>
         }
     </p>
 
