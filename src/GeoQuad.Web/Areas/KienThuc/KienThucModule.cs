@@ -28,6 +28,10 @@ public static class KienThucModule
         services.AddScoped<IBanDoRepository, BanDoRepository>();
         services.AddScoped<IBanDoService, BanDoService>();
 
+        // US-15, US-16: máy tính hình học và vẽ hình theo số liệu (SCR-10)
+        services.AddScoped<IMayTinhRepository, MayTinhRepository>();
+        services.AddScoped<IMayTinhService, MayTinhService>();
+
         return services;
     }
 }

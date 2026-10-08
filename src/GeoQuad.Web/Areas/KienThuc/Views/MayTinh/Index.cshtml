@@ -1,0 +1,176 @@
+@using GeoQuad.Web.Areas.KienThuc.Services
+@model GeoQuad.Web.Areas.KienThuc.Models.MayTinhViewModel
+@{
+    ViewData["Title"] = "Máy tính hình học";
+}
+
+<div class="@(Model.LaCap1 ? "gq-cap-1" : "")">
+    <nav aria-label="Đường dẫn">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Máy tính hình học</li>
+        </ol>
+    </nav>
+
+    <h1 class="h2">Máy tính hình học</h1>
+    <p class="text-body-secondary">
+        Em chọn hình, chọn đại lượng muốn tính, nhập số đo rồi bấm "Tính". GeoQuad hiện cả
+        công thức và từng bước thay số để em kiểm tra lại.
+    </p>
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-5">
+            <form method="get" action="/KienThuc/MayTinh">
+                <div class="mb-3">
+                    <label class="form-label" for="gq-hinh">Hình</label>
+                    <select class="form-select gq-nut" id="gq-hinh" name="hinh"
+                            onchange="this.form.submit()">
+                        <option value="">— Em chọn hình —</option>
+                        @foreach (var h in Model.CacHinh)
+                        {
+                            <option value="@h.Ma" selected="@(Model.Hinh == h.Ma)">@h.Ten</option>
+                        }
+                    </select>
+                    <noscript><button class="btn btn-sm btn-outline-primary gq-nut mt-1" type="submit">Chọn hình</button></noscript>
+                </div>
+
+                @if (Model.Hinh is not null && Model.CacDaiLuong.Count > 0)
+                {
+                    <div class="mb-3">
+                        <label class="form-label" for="gq-dai-luong">Em muốn tính</label>
+                        <select class="form-select gq-nut" id="gq-dai-luong" name="daiLuong"
+                                onchange="this.form.submit()">
+                            @foreach (var d in Model.CacDaiLuong)
+                            {
+                                <option value="@d.DaiLuong" selected="@(Model.DaiLuong == d.DaiLuong)">
+                                    @d.TenDaiLuong
+                                </option>
+                            }
+                        </select>
+                        <noscript><button class="btn btn-sm btn-outline-primary gq-nut mt-1" type="submit">Chọn đại lượng</button></noscript>
+                    </div>
+                }
+
+                @if (Model.CongThuc is not null)
+                {
+                    var ct = Model.CongThuc;
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h2 class="h6 card-title">@ct.Ten</h2>
+                            <p class="mb-1">$$@ct.BieuThuc$$</p>
+                            @if (ct.TuHinh != Model.TenHinh)
+                            {
+                                <p class="form-text mb-0">
+                                    Công thức này là của <strong>@ct.TuHinh.ToLower()</strong> —
+                                    @Model.TenHinh?.ToLower() là một trường hợp đặc biệt nên dùng được.
+                                </p>
+                            }
+                        </div>
+                    </div>
+
+                    <fieldset class="mb-3">
+                        <legend class="h6">Số đo</legend>
+                        @foreach (var bien in MayTinhHinhHoc.BienSo(ct.MaCongThuc))
+                        {
+                            var gia = Model.SoDoNhap.TryGetValue(bien, out var v) ? v : null;
+                            <div class="mb-2">
+                                <label class="form-label" for="gq-so-@bien">
+                                    @MayTinhHinhHoc.TenBienTiengViet(bien)
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control gq-nut" type="text" inputmode="decimal"
+                                           id="gq-so-@bien" name="@bien" value="@gia"
+                                           autocomplete="off" />
+                                    <span class="input-group-text">@Model.DonVi</span>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="mb-2">
+                            <label class="form-label" for="gq-don-vi">Đơn vị</label>
+                            <select class="form-select gq-nut" id="gq-don-vi" name="donVi">
+                                @foreach (var dv in MayTinhHinhHoc.CacDonVi)
+                                {
+                                    <option value="@dv" selected="@(Model.DonVi == dv)">@dv</option>
+                                }
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <input type="hidden" name="hinh" value="@Model.Hinh" />
+                    <input type="hidden" name="daiLuong" value="@Model.DaiLuong" />
+                    <button class="btn btn-primary btn-lg gq-nut w-100" type="submit">Tính</button>
+                }
+            </form>
+
+            @if (Model.Hinh is not null && Model.CacDaiLuong.Count == 0)
+            {
+                <div class="alert alert-info" role="status">
+                    <strong>Ở lớp của em chưa có công thức nào cho hình này.</strong>
+                    <div class="small mt-1">
+                        Em thử bật "Xem trước kiến thức nâng cao" ở thanh trên để thấy công thức của lớp trên.
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-12 col-lg-7">
+            @if (Model.CoLoi)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <strong>Em kiểm tra lại số đo nhé:</strong>
+                    <ul class="mb-0 mt-1">
+                        @foreach (var l in Model.Loi)
+                        {
+                            <li>@l</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            @if (Model.CoKetQua)
+            {
+                var kq = Model.KetQua!;
+                <div class="card border-success mb-3">
+                    <div class="card-body">
+                        <h2 class="h6 card-title text-body-secondary">
+                            @Model.CongThuc?.TenDaiLuong @Model.TenHinh?.ToLower()
+                        </h2>
+                        <p class="display-6 mb-0" role="status">
+                            @kq.GiaTriHienThi <span class="fs-4">@kq.DonViKetQua</span>
+                        </p>
+                    </div>
+                </div>
+
+                <h2 class="h6">Các bước làm</h2>
+                <ol class="list-group list-group-numbered mb-3">
+                    @for (var i = 0; i < kq.CacBuoc.Count; i++)
+                    {
+                        <li class="list-group-item">
+                            @if (i == 0)
+                            {
+                                @* Bước đầu là công thức: dựng bằng KaTeX thay vì hiện LaTeX thô (NFR-12). *@
+                                <span>Công thức: </span><span>$@kq.BieuThucLatex$</span>
+                            }
+                            else
+                            {
+                                @kq.CacBuoc[i]
+                            }
+                        </li>
+                    }
+                </ol>
+            }
+
+            @if (!Model.CoKetQua && !Model.CoLoi && Model.CongThuc is not null)
+            {
+                <p class="text-body-secondary">Em nhập số đo bên cạnh rồi bấm "Tính" nhé.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .gq-hinh-so-do { width: 100%; height: auto; max-height: 260px; }
+    </style>
+}
