@@ -794,12 +794,35 @@ không cần Neo4j (quy ước 2, điểm 9).
 
 | Ngày | Đề xuất | Lý do | Cách tạm đang dùng | Trạng thái |
 |---|---|---|---|---|
-| 08/10 | **Phần B**: đổi `trangThai` của seed B từ `'NHAP'` sang `'DA_RA_SOAT'` trong `20-dinhly-B.cypher` (3 chỗ) và `21-chungminh-B.cypher` (các chỗ `ChungMinh` và `Buoc`) | README mục 2 điểm 6 quy định **mọi** nút nội dung do seed tạo phải có `trangThai: 'DA_RA_SOAT'` (BR-13, ghi rõ "nhóm đã rà soát theo Phụ lục B của SRS"). Để `'NHAP'` thì mọi truy vấn hiển thị (của cả A và B) đều lọc bỏ | Không có cách tạm. A **không** nới điều kiện lọc, vì nới là vi phạm BR-13 và sẽ hiện nội dung chưa rà soát cho học sinh | ⏳ Chờ B |
+| 08/10 | **Cả nhóm chốt**: README mục 2 điểm 6 và SRS mục 4 **xung đột** về `trangThai` ban đầu của seed. Cần chọn một hướng rồi sửa tài liệu còn lại cho khớp | SRS mục 4: *"Trạng thái nội dung đặt ban đầu là **NHAP**; chuyển sang DA_RA_SOAT khi đã đối chiếu nguồn và có người thứ hai rà soát (NFR-09)"*. README lại ghi seed thẳng `DA_RA_SOAT` vì "nhóm đã rà soát". Seed của A theo README, seed của B theo SRS → lệch nhau | Không có cách tạm. A **không** nới điều kiện lọc, vì nới là vi phạm BR-13/NFR-09 và sẽ hiện nội dung chưa rà soát cho học sinh | 💬 Cần nhóm chốt |
+| 08/10 | **Phần C**: hoàn tất việc "Rà soát US-03" rồi **đổi `trangThai` trong chính file seed của B** từ `'NHAP'` sang `'DA_RA_SOAT'` (hoặc B tự đổi sau khi C xác nhận) | US-03 giao C việc "Rà soát chéo: chạy hai file trên, đối chiếu từng mục với Phụ lục D/SRS Phụ lục B". `nguon` của B đã ghi sẵn "(chờ C đối chiếu SGK)". Đây là bước quy trình **chưa làm**, không phải lỗi mã của B | Chờ. Tuyệt đối **không** đổi bằng Cypher thủ công trên Neo4j Browser — chạy lại seed là mất | ⏳ Chờ C |
 | 08/10 | **Phần B**: cho các test trong `tests/.../B_ApDung/Integration/**` và `Http/MayChuThuTests` **bỏ qua** (`Assert.Skip` / `ITestOutputHelper` + điều kiện) khi chưa có `GQ_B_INTEGRATION=1`, thay vì ném `InvalidOperationException` | Hiện `dotnet test` trên máy sạch cho **18 test đỏ**, vi phạm Definition of Done của README ("`dotnet test` qua") và mục 2 điểm 12 | A không chạm; khi cần xác nhận phần A thì lọc `--filter FullyQualifiedName~A_TraCuu` | ⏳ Chờ B |
 | 08/10 | **Phần B**: 4 test `BackupFlowTests` gọi `bash`/WSL thật nên đỏ trên máy Windows không có WSL hoạt động | Test phụ thuộc môi trường, không phải lỗi logic | A không chạm | ⏳ Chờ B |
 | 08/10 | **Hợp đồng dữ liệu**: `20-dinhly-B.cypher` thêm quan hệ `THUOC_LOP` cho `DieuKien`, trong khi lược đồ README mục 4.2 không liệt kê quan hệ này cho `DieuKien` | Nếu giữ thì nên bổ sung vào mục 4.2 để A và C biết mà dùng | A không dùng `DieuKien` nên không ảnh hưởng | 💬 Cần nhóm chốt |
 
-### Chi tiết đề xuất số 1 (ảnh hưởng rộng nhất)
+### Chi tiết: xung đột README vs SRS về `trangThai`
+
+**Hai tài liệu nói khác nhau**, đây là gốc của mọi hệ quả bên dưới:
+
+| Tài liệu | Quy định |
+|---|---|
+| **SRS mục 4** | "Trạng thái nội dung đặt ban đầu là **NHAP**; chuyển sang `DA_RA_SOAT` khi đã đối chiếu nguồn và có người thứ hai rà soát (NFR-09)" |
+| **SRS NFR-09** | "Mọi tính chất, dấu hiệu, công thức có nguồn đối chiếu và được **ít nhất một người khác** trong nhóm rà soát (lý tưởng: giáo viên Toán) trước khi đặt `DA_RA_SOAT`" |
+| **README mục 2 điểm 6** | "Mọi nút nội dung do seed tạo có `nguon` và `trangThai: 'DA_RA_SOAT'` (BR-13; **nhóm đã rà soát** theo Phụ lục B của SRS)" |
+
+Seed của A (`10-`, `11-`, `12-`) theo README → `DA_RA_SOAT`.
+Seed của B (`20-`, `21-`) theo SRS → `NHAP`, `nguon` ghi "(chờ C đối chiếu SGK)".
+
+**Cả hai đều có cơ sở.** SRS là tài liệu được chấm nên cách của B chặt chẽ hơn về quy trình;
+README thì giả định việc rà soát đã xong từ trước. Nhóm cần chốt một hướng:
+
+- **Hướng 1 (theo SRS)**: giữ `NHAP`, C làm xong rà soát US-03 rồi sửa `trangThai` **trong file
+  seed**. Đúng NFR-09, nhưng trước khi C xong thì demo trống — nên phải làm ngay.
+- **Hướng 2 (theo README)**: coi việc rà soát Phụ lục B đã hoàn tất, seed thẳng `DA_RA_SOAT`,
+  và sửa lại câu trong SRS mục 4 cho khớp. Nhanh, nhưng phải giải thích được với thầy rằng
+  NFR-09 đã thỏa (ai là "người thứ hai" đã rà soát).
+
+### Hệ quả đo được khi còn `NHAP` (ảnh hưởng rộng nhất)
 
 Đo trên dữ liệu sau khi seed cả A và B (133 nút / 297 quan hệ):
 
