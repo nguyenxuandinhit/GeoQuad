@@ -592,6 +592,201 @@ MATCH ()-[h:DA_HOC]->() DELETE h;   -- dọn sau khi thử
 nguồn, có `<title>` và `<desc>` (NFR-11), đường chéo vẽ **nét đứt** và ký hiệu góc vuông để không
 chỉ dựa vào màu. Tách ra lớp thuần nên unit test được bằng cách phân tích XML (quy ước 2, điểm 9).
 
+### US-11 · Tìm kiếm có/không dấu (FR-12, UC-04, SCR-06, NFR-14)
+
+Hằng `CypherTim` trong `Areas/KienThuc/Repositories/TimKiemRepository.cs`.
+
+```cypher
+CALL db.index.fulltext.queryNodes('kienThucTimKiem', $q) YIELD node, score
+WHERE node.trangThai = 'DA_RA_SOAT'
+MATCH (node)-[:THUOC_LOP]->(l:Lop) WHERE l.so <= $lop
+OPTIONAL MATCH (h:KhaiNiem)-[:CO_TINH_CHAT|CO_CONG_THUC]->(node)
+OPTIONAL MATCH (node)-[:KHANG_DINH]->(dich:KhaiNiem)
+RETURN labels(node) AS nhan, node.ma AS ma, coalesce(node.ten, node.noiDung) AS tieuDe,
+       coalesce(node.dinhNghia, node.noiDung, node.bieuThuc) AS doanTrich,
+       l.so AS lop, score,
+       coalesce(CASE WHEN node:KhaiNiem THEN node.ma END, h.ma, dich.ma) AS maHinh
+ORDER BY score DESC LIMIT 30
+```
+
+**Giải thích ký hiệu**
+
+| Ký hiệu trong câu | Nghĩa |
+|---|---|
+| `CALL ... YIELD node, score` | gọi **thủ tục** có sẵn của Neo4j; `YIELD` khai báo các cột nó trả về để dùng ở bước sau |
+| `db.index.fulltext.queryNodes('tên', $q)` | tìm trong chỉ mục toàn văn `kienThucTimKiem` tạo ở `00-schema.cypher` |
+| `$q` | **chuỗi truy vấn Lucene**, dựng ở `TimKiemQuyTac` rồi truyền vào như tham số — không nối chuỗi (NFR-05) |
+| `score` | điểm khớp do Lucene tính; càng cao càng sát từ khoá |
+| `LIMIT 30` | giới hạn 30 kết quả để trang không quá dài |
+
+**Chuỗi Lucene được dựng thế nào**
+
+`TimKiemQuyTac` thoát 19 ký tự đặc biệt của Lucene (`+ - && || ! ( ) { } [ ] ^ " ~ * ? : \ /`)
+cho **từng từ**, rồi nối bằng ` AND `. Không có kết quả thì thử lại bằng ` OR `.
+
+| Em gõ | Chuỗi gửi vào `$q` |
+|---|---|
+| `hinh thoi` | `hinh AND thoi` |
+| `hinh thoi` (lần hai, nếu rỗng) | `hinh OR thoi` |
+| `hinh(1) thoi*` | `hinh\(1\) AND thoi\*` |
+| (rỗng) | **không gửi truy vấn**, chỉ nhắc em nhập |
+
+**Kết quả mong đợi trên dữ liệu seed**
+
+`hinh thoi` và `hình thoi` cho **cùng 6 mục** (analyzer `standard-folding` bỏ dấu):
+
+| Nhóm | Mục |
+|---|---|
+| Khái niệm (1) | Hình thoi (lớp 4) |
+| Tính chất & dấu hiệu (3) | TC_THOI_1, TC_THOI_2, TC_HV_1 (lớp 8) |
+| Công thức (2) | Chu vi hình thoi, Diện tích hình thoi (lớp 4) |
+
+> **Rủi ro README nêu đã kiểm tra xong:** analyzer `standard-folding` **bỏ được cả chữ "đ"**.
+> Thử `queryNodes('kienThucTimKiem', 'duong cheo')` cho `DUONG_CHEO` ("Đường chéo") ở hạng
+> đầu. Vậy **không cần** thêm thuộc tính `tenKhongDau` như phương án tạm của README.
+
+### US-12 · Bản đồ kiến thức (FR-13, UC-05, SCR-07)
+
+Ba câu trong `Areas/KienThuc/Repositories/BanDoRepository.cs`.
+
+```cypher
+-- 1. Dữ liệu nút và quan hệ cho Cytoscape.js
+MATCH (a:KhaiNiem {loai:'HINH', trangThai:'DA_RA_SOAT'})-[:THUOC_LOP]->(la:Lop)-[:THUOC_CAP]->(cap:CapHoc)
+WHERE la.so <= $lop
+OPTIONAL MATCH (a)-[:LA_TRUONG_HOP_DAC_BIET_CUA]->(b:KhaiNiem {trangThai:'DA_RA_SOAT'})-[:THUOC_LOP]->(lb:Lop)
+  WHERE lb.so <= $lop
+RETURN a.ma AS ma, a.ten AS ten, a.dinhNghia AS dinhNghia, la.so AS lop, cap.ma AS cap,
+       collect(b.ma) AS laDacBietCua,
+       EXISTS { MATCH (:TaiKhoan {id: $tk})-[:DA_HOC]->(a) } AS daHoc
+```
+
+Điều kiện `lb.so <= $lop` ở `OPTIONAL MATCH` rất quan trọng: nó bỏ luôn mũi tên trỏ tới hình
+**không hiển thị**, nên lọc theo lớp không để lại mũi tên "treo".
+
+```cypher
+-- 2. Mọi hình tổng quát hơn, đi nhiều bước
+MATCH (:KhaiNiem {ma: $ma})-[:LA_TRUONG_HOP_DAC_BIET_CUA*1..]->(t:KhaiNiem)
+RETURN DISTINCT t.ma AS ma, t.ten AS ten
+```
+
+```cypher
+-- 3. "Vì sao Hình vuông là Hình thang?"
+MATCH p = shortestPath((a:KhaiNiem {ma: $tu})-[:LA_TRUONG_HOP_DAC_BIET_CUA*]->(b:KhaiNiem {ma: $den}))
+RETURN [n IN nodes(p) | n.ten] AS chuoi
+```
+
+**Giải thích ký hiệu**
+
+| Ký hiệu trong câu | Nghĩa |
+|---|---|
+| `*1..` | đi theo quan hệ **từ 1 bước trở lên**, không giới hạn số bước — "đường đi độ dài thay đổi" |
+| `*` | như `*1..` nhưng không chặn đầu nào cả |
+| `*0..` | kể cả **0 bước**, tức chính nút đó cũng được tính (dùng ở US-15) |
+| `DISTINCT` | bỏ kết quả trùng; cần vì có nhiều đường đi tới cùng một hình (hình vuông tới hình bình hành qua hình chữ nhật **và** qua hình thoi) |
+| `p = (...)` | đặt tên cho **đường đi**, không chỉ cho nút |
+| `shortestPath(...)` | lấy đường đi **ngắn nhất** giữa hai nút; nhanh hơn nhiều so với liệt kê mọi đường |
+| `nodes(p)` | danh sách các nút trên đường đi, theo thứ tự |
+| `[n IN nodes(p) \| n.ten]` | **list comprehension**: `\|` ở đây không phải "hoặc" mà là dấu tách giữa biến và biểu thức, nghĩa là "với mỗi n lấy n.ten" |
+
+**Kết quả mong đợi trên dữ liệu seed**
+
+Lọc tới lớp 12 — **7 nút, 7 mũi tên** (đúng bảy quan hệ của Phụ lục D.2):
+
+| Hình | Lớp | Là trường hợp đặc biệt của |
+|---|---|---|
+| Hình chữ nhật | 1 | Hình bình hành |
+| Hình vuông | 1 | **Hình thoi, Hình chữ nhật** |
+| Tứ giác | 3 | — |
+| Hình bình hành | 4 | Hình thang |
+| Hình thoi | 4 | Hình bình hành |
+| Hình thang | 5 | Tứ giác |
+| Hình thang cân | 6 | Hình thang |
+
+→ **đúng AC** "hình vuông nối tới hình chữ nhật và hình thoi".
+
+Lọc tới **lớp 3**: chỉ còn Hình chữ nhật, Hình vuông, Tứ giác và một mũi tên
+(Hình vuông → Hình chữ nhật). **Không có Hình thang cân** — đúng AC.
+
+Đồ thị **không có chu trình**, kiểm bằng:
+
+```cypher
+MATCH (a:KhaiNiem)-[:LA_TRUONG_HOP_DAC_BIET_CUA*1..]->(a) RETURN count(*) AS soChuTrinh;  -- 0
+```
+
+Ô "Vì sao Hình vuông là Hình thang?":
+
+```cypher
+MATCH p = shortestPath((a:KhaiNiem {ma:'HINH_VUONG'})-[:LA_TRUONG_HOP_DAC_BIET_CUA*]->(b:KhaiNiem {ma:'HINH_THANG'}))
+RETURN [n IN nodes(p) | n.ten] AS chuoi;
+-- ["Hình vuông", "Hình chữ nhật", "Hình bình hành", "Hình thang"]
+```
+
+→ **chuỗi 4 hình**, đúng AC. Giao diện ghép thành câu: "Hình vuông là một trường hợp đặc biệt
+của hình chữ nhật; Hình chữ nhật là một trường hợp đặc biệt của hình bình hành; Hình bình hành
+là một trường hợp đặc biệt của hình thang."
+
+### US-15 · Danh sách đại lượng và công thức của máy tính (FR-30, UC-08, SCR-10)
+
+Hằng `CypherDaiLuong` trong `Areas/KienThuc/Repositories/MayTinhRepository.cs`.
+
+```cypher
+MATCH p = (h:KhaiNiem {ma: $hinh})-[:LA_TRUONG_HOP_DAC_BIET_CUA*0..]->(g:KhaiNiem)
+          -[:CO_CONG_THUC]->(c:CongThuc {trangThai:'DA_RA_SOAT'})
+MATCH (c)-[:THUOC_LOP]->(l:Lop) WHERE l.so <= $lop
+WITH c, g, length(p) AS khoangCach ORDER BY khoangCach
+WITH c.daiLuong AS daiLuong,
+     head(collect({ma: c.ma, ten: c.ten, bieuThuc: c.bieuThuc, bienSo: c.bienSo, tuHinh: g.ten})) AS congThuc
+RETURN daiLuong, congThuc
+ORDER BY daiLuong
+```
+
+**Giải thích ký hiệu**
+
+| Ký hiệu trong câu | Nghĩa |
+|---|---|
+| `*0..` | **kể cả 0 bước**: công thức của chính hình đó cũng được tính, không chỉ của hình tổng quát |
+| `length(p)` | số quan hệ trên đường đi — ở đây là "hình này cách hình sở hữu công thức mấy bước" |
+| `ORDER BY khoangCach` trong `WITH` | sắp xếp **trước khi gom**, nhờ vậy `collect` giữ thứ tự gần → xa |
+| `head(collect(...))` | lấy phần tử đầu của danh sách, tức công thức của hình **gần nhất** |
+| `WITH c.daiLuong AS daiLuong, head(...)` | `daiLuong` không nằm trong hàm gom nên trở thành **khoá nhóm**: mỗi đại lượng lấy đúng một công thức |
+
+Đó là mẹo để "hình vuông dùng chu vi hình vuông, không dùng chu vi tứ giác".
+
+**Kết quả mong đợi trên dữ liệu seed** (lớp 12)
+
+| `$hinh` | CHU_VI | DIEN_TICH | DUONG_CHEO |
+|---|---|---|---|
+| HINH_CHU_NHAT | CT_HCN_CV (a, b) | CT_HCN_DT (a, b) | CT_HCN_CHEO (a, b) |
+| HINH_VUONG | **CT_HV_CV** (a) | CT_HV_DT (a) | CT_HV_CHEO (a) |
+| HINH_BINH_HANH | CT_HBH_CV (a, b) | CT_HBH_DT (a, h) | — |
+| HINH_THOI | CT_THOI_CV (a) | CT_THOI_DT (d1, d2) | — |
+| HINH_THANG | CT_TG_CHUVI (a, b, c, d) *từ Tứ giác* | CT_HT_DT (a, b, h) | — |
+| HINH_THANG_CAN | CT_TG_CHUVI *từ Tứ giác* | CT_HT_DT *từ Hình thang* | — |
+
+Hình vuông lấy `CT_HV_CV` (khoảng cách 0) chứ không lấy `CT_TG_CHUVI` (khoảng cách 4) —
+**đúng yêu cầu của US-15**. Hình thang cân không có công thức riêng nên mượn của hình thang
+và tứ giác, giao diện ghi rõ "Công thức này là của hình thang — hình thang cân là một trường
+hợp đặc biệt nên dùng được".
+
+Với `$lop = 4` thì HINH_CHU_NHAT chỉ còn **Chu vi và Diện tích** (`CT_HCN_CHEO` là lớp 8),
+đúng yêu cầu "học sinh cấp 1 chỉ thấy đại lượng có công thức lớp ≤ 5".
+
+Câu lấy danh sách hình chọn được:
+
+```cypher
+MATCH (h:KhaiNiem {loai:'HINH', trangThai:'DA_RA_SOAT'})-[:THUOC_LOP]->(l:Lop)
+WHERE l.so <= $lop AND h.ma IN $maChoPhep
+RETURN h.ma AS ma, h.ten AS ten
+ORDER BY l.so, h.ten
+```
+
+`IN $maChoPhep` nhận danh sách sáu hình máy tính hỗ trợ, truyền vào như **một tham số** là
+danh sách — không ghép chuỗi.
+
+**Phần tính toán và vẽ hình không dùng Cypher.** `MayTinhHinhHoc` (US-15) tính và kiểm tra
+BR-10, `VeHinhSvg` (US-16) dựng SVG theo số đo; cả hai là lớp thuần nên unit test được mà
+không cần Neo4j (quy ước 2, điểm 9).
+
 ## Đề xuất thay đổi chung
 
 > README mục 2, điểm 1: nếu thấy cần sửa file của PHẦN 0 hoặc của phần khác thì **không sửa**,
