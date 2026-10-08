@@ -20,6 +20,10 @@ public static class KienThucModule
         services.AddScoped<IChiTietRepository, ChiTietRepository>();
         services.AddScoped<IChiTietService, ChiTietService>();
 
+        // US-11: tìm kiếm có/không dấu (SCR-06)
+        services.AddScoped<ITimKiemRepository, TimKiemRepository>();
+        services.AddScoped<ITimKiemService, TimKiemService>();
+
         return services;
     }
 }

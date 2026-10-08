@@ -1,5 +1,4 @@
 using GeoQuad.Web.Areas.KienThuc.Services;
-using GeoQuad.Web.Infrastructure.Trang;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeoQuad.Web.Areas.KienThuc.Controllers;
@@ -10,11 +9,14 @@ public sealed class ThuVienController : Controller
 {
     private readonly IThuVienService _thuVien;
     private readonly IChiTietService _chiTiet;
+    private readonly ITimKiemService _timKiem;
 
-    public ThuVienController(IThuVienService thuVien, IChiTietService chiTiet)
+    public ThuVienController(
+        IThuVienService thuVien, IChiTietService chiTiet, ITimKiemService timKiem)
     {
         _thuVien = thuVien;
         _chiTiet = chiTiet;
+        _timKiem = timKiem;
     }
 
     // SCR-04 · /KienThuc/ThuVien?loai=&cap=&lop=
@@ -47,6 +49,6 @@ public sealed class ThuVienController : Controller
     }
 
     // SCR-06 · /KienThuc/ThuVien/TimKiem?q=
-    public IActionResult TimKiem(string? q)
-        => this.DangXayDung("Kết quả tìm kiếm", "US-11", "A", "Tìm kiếm kiến thức, gõ có dấu hay không dấu đều được.");
+    public async Task<IActionResult> TimKiem(string? q)
+        => View(await _timKiem.TimAsync(q));
 }
