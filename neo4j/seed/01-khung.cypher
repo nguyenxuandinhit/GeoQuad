@@ -66,7 +66,9 @@ SET k.ten           = row.ten,
     k.loai          = 'HINH',
     k.dinhNghia     = row.dinhNghia,
     k.ghiChuTieuHoc = row.ghiChuTieuHoc,
-    k.nguon         = 'CT GDPT 2018 – Toán ' + toString(row.lop),
+    k.nguon         = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.1; '
+                      + 'đối chiếu CT GDPT 2018 – Toán ' + toString(row.lop)
+                      + '; thành viên C rà soát 08/10/2026',
     k.trangThai     = 'DA_RA_SOAT'
 WITH k, row
 MATCH (l:Lop {so: row.lop})
@@ -91,7 +93,8 @@ MERGE (k:KhaiNiem {ma: row.ma})
 SET k.ten       = row.ten,
     k.loai      = 'YEU_TO',
     k.dinhNghia = row.dinhNghia,
-    k.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop),
+    k.nguon     = 'Nhóm GeoQuad tự soạn định nghĩa (SRS Phụ lục B.1 không có cột định nghĩa); '
+                  + 'đối chiếu CT GDPT 2018 – Toán ' + toString(row.lop),
     k.trangThai = 'DA_RA_SOAT'
 WITH k, row
 MATCH (l:Lop {so: row.lop})
