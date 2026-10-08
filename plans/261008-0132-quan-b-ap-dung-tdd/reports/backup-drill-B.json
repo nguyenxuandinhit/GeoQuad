@@ -1,0 +1,9 @@
+{
+  "archive": "backups/20261008T093138Z-34656-31778/neo4j.dump",
+  "target": "geoquad-b-restore-49fe9db83790",
+  "nodes": 134,
+  "edges": 301,
+  "historyPreserved": true,
+  "applicationPasswordVerified": true,
+  "systemDatabaseRestored": false
+}

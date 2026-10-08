@@ -1,0 +1,996 @@
+{
+  "files_reread": [
+    "plans/261008-0132-quan-b-ap-dung-tdd/plan.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/phase-01-start.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/phase-02-goi-y-dinh-ly.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/phase-03-chung-minh-mau.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/phase-04-tinh-huong-thuc-te.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/phase-05-thuc-hanh-do-dac.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/phase-06-quan-tri-bai-tap.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/phase-07-backup-kiem-thu-ban-giao.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/research/requirements-B.md",
+    "plans/261008-0132-quan-b-ap-dung-tdd/research/tdd-architecture-B.md"
+  ],
+  "checks": 195,
+  "verified": 195,
+  "failed": 0,
+  "failures": [],
+  "effort_hours": 26,
+  "details": [
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> ../../docs/GeoQuad_Jira_2ngay.csv",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> reports/traceability.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> phase-02-goi-y-dinh-ly.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> phase-03-chung-minh-mau.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> phase-04-tinh-huong-thuc-te.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> phase-05-thuc-hanh-do-dac.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> phase-06-quan-tri-bai-tap.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> phase-07-backup-kiem-thu-ban-giao.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> research/requirements-B.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> research/tdd-architecture-B.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> reports/validation.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "plan.md -> reports/red-team.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-01-start.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-01-start.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-01-start.md -> ../../src/GeoQuad.Web/Infrastructure/Neo4j/IGraphDb.cs",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-01-start.md -> ../../src/GeoQuad.Web/Infrastructure/Neo4j/GraphDb.cs",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-01-start.md -> ../../src/GeoQuad.Web/Infrastructure/Auth/ICurrentUser.cs",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-01-start.md: Tests Before",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-01-start.md: Refactor",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-01-start.md: Tests After",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-01-start.md: File inventory",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-01-start.md: phase",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-01-start.md: title",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-01-start.md: status",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-01-start.md: priority",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-01-start.md: effort",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-01-start.md: dependencies",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-01-start.md: Task A",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-01-start.md: Task B",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-01-start.md: Step 1\n",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-01-start.md: _Define done._",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-01-start.md: _TBD_",
+      "verified": true
+    },
+    {
+      "kind": "regression-command",
+      "subject": "phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "todo",
+      "subject": "phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "matrix",
+      "subject": "phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-02-goi-y-dinh-ly.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-02-goi-y-dinh-ly.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-02-goi-y-dinh-ly.md -> ../../docs/GeoQuad_Jira_2ngay.csv",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-02-goi-y-dinh-ly.md -> ./phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-02-goi-y-dinh-ly.md -> ./phase-03-chung-minh-mau.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-02-goi-y-dinh-ly.md -> ./research/requirements-B.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-02-goi-y-dinh-ly.md -> ./research/tdd-architecture-B.md",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-02-goi-y-dinh-ly.md: Tests Before",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-02-goi-y-dinh-ly.md: Refactor",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-02-goi-y-dinh-ly.md: Tests After",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-02-goi-y-dinh-ly.md: File inventory",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-02-goi-y-dinh-ly.md: phase",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-02-goi-y-dinh-ly.md: title",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-02-goi-y-dinh-ly.md: status",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-02-goi-y-dinh-ly.md: priority",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-02-goi-y-dinh-ly.md: effort",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-02-goi-y-dinh-ly.md: dependencies",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-02-goi-y-dinh-ly.md: Task A",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-02-goi-y-dinh-ly.md: Task B",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-02-goi-y-dinh-ly.md: Step 1\n",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-02-goi-y-dinh-ly.md: _Define done._",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-02-goi-y-dinh-ly.md: _TBD_",
+      "verified": true
+    },
+    {
+      "kind": "regression-command",
+      "subject": "phase-02-goi-y-dinh-ly.md",
+      "verified": true
+    },
+    {
+      "kind": "todo",
+      "subject": "phase-02-goi-y-dinh-ly.md",
+      "verified": true
+    },
+    {
+      "kind": "matrix",
+      "subject": "phase-02-goi-y-dinh-ly.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-03-chung-minh-mau.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-03-chung-minh-mau.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-03-chung-minh-mau.md -> ../../docs/GeoQuad_Jira_2ngay.csv",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-03-chung-minh-mau.md -> ./phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-03-chung-minh-mau.md -> ./phase-02-goi-y-dinh-ly.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-03-chung-minh-mau.md -> ./research/requirements-B.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-03-chung-minh-mau.md -> ./research/tdd-architecture-B.md",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-03-chung-minh-mau.md: Tests Before",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-03-chung-minh-mau.md: Refactor",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-03-chung-minh-mau.md: Tests After",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-03-chung-minh-mau.md: File inventory",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-03-chung-minh-mau.md: phase",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-03-chung-minh-mau.md: title",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-03-chung-minh-mau.md: status",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-03-chung-minh-mau.md: priority",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-03-chung-minh-mau.md: effort",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-03-chung-minh-mau.md: dependencies",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-03-chung-minh-mau.md: Task A",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-03-chung-minh-mau.md: Task B",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-03-chung-minh-mau.md: Step 1\n",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-03-chung-minh-mau.md: _Define done._",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-03-chung-minh-mau.md: _TBD_",
+      "verified": true
+    },
+    {
+      "kind": "regression-command",
+      "subject": "phase-03-chung-minh-mau.md",
+      "verified": true
+    },
+    {
+      "kind": "todo",
+      "subject": "phase-03-chung-minh-mau.md",
+      "verified": true
+    },
+    {
+      "kind": "matrix",
+      "subject": "phase-03-chung-minh-mau.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ../../docs/GeoQuad_Jira_2ngay.csv",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ./phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ./phase-05-thuc-hanh-do-dac.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ./phase-07-backup-kiem-thu-ban-giao.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ./research/requirements-B.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-04-tinh-huong-thuc-te.md -> ./research/tdd-architecture-B.md",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-04-tinh-huong-thuc-te.md: Tests Before",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-04-tinh-huong-thuc-te.md: Refactor",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-04-tinh-huong-thuc-te.md: Tests After",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-04-tinh-huong-thuc-te.md: File inventory",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-04-tinh-huong-thuc-te.md: phase",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-04-tinh-huong-thuc-te.md: title",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-04-tinh-huong-thuc-te.md: status",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-04-tinh-huong-thuc-te.md: priority",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-04-tinh-huong-thuc-te.md: effort",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-04-tinh-huong-thuc-te.md: dependencies",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-04-tinh-huong-thuc-te.md: Task A",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-04-tinh-huong-thuc-te.md: Task B",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-04-tinh-huong-thuc-te.md: Step 1\n",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-04-tinh-huong-thuc-te.md: _Define done._",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-04-tinh-huong-thuc-te.md: _TBD_",
+      "verified": true
+    },
+    {
+      "kind": "regression-command",
+      "subject": "phase-04-tinh-huong-thuc-te.md",
+      "verified": true
+    },
+    {
+      "kind": "todo",
+      "subject": "phase-04-tinh-huong-thuc-te.md",
+      "verified": true
+    },
+    {
+      "kind": "matrix",
+      "subject": "phase-04-tinh-huong-thuc-te.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-05-thuc-hanh-do-dac.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-05-thuc-hanh-do-dac.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-05-thuc-hanh-do-dac.md -> ../../docs/GeoQuad_Jira_2ngay.csv",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-05-thuc-hanh-do-dac.md -> ./phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-05-thuc-hanh-do-dac.md -> ./phase-04-tinh-huong-thuc-te.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-05-thuc-hanh-do-dac.md -> ./research/requirements-B.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-05-thuc-hanh-do-dac.md -> ./research/tdd-architecture-B.md",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-05-thuc-hanh-do-dac.md: Tests Before",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-05-thuc-hanh-do-dac.md: Refactor",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-05-thuc-hanh-do-dac.md: Tests After",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-05-thuc-hanh-do-dac.md: File inventory",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-05-thuc-hanh-do-dac.md: phase",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-05-thuc-hanh-do-dac.md: title",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-05-thuc-hanh-do-dac.md: status",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-05-thuc-hanh-do-dac.md: priority",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-05-thuc-hanh-do-dac.md: effort",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-05-thuc-hanh-do-dac.md: dependencies",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-05-thuc-hanh-do-dac.md: Task A",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-05-thuc-hanh-do-dac.md: Task B",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-05-thuc-hanh-do-dac.md: Step 1\n",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-05-thuc-hanh-do-dac.md: _Define done._",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-05-thuc-hanh-do-dac.md: _TBD_",
+      "verified": true
+    },
+    {
+      "kind": "regression-command",
+      "subject": "phase-05-thuc-hanh-do-dac.md",
+      "verified": true
+    },
+    {
+      "kind": "todo",
+      "subject": "phase-05-thuc-hanh-do-dac.md",
+      "verified": true
+    },
+    {
+      "kind": "matrix",
+      "subject": "phase-05-thuc-hanh-do-dac.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-06-quan-tri-bai-tap.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-06-quan-tri-bai-tap.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-06-quan-tri-bai-tap.md -> ../../docs/GeoQuad_Jira_2ngay.csv",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-06-quan-tri-bai-tap.md -> ./phase-01-start.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-06-quan-tri-bai-tap.md -> ./phase-07-backup-kiem-thu-ban-giao.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-06-quan-tri-bai-tap.md -> ./research/requirements-B.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-06-quan-tri-bai-tap.md -> ./research/tdd-architecture-B.md",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-06-quan-tri-bai-tap.md: Tests Before",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-06-quan-tri-bai-tap.md: Refactor",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-06-quan-tri-bai-tap.md: Tests After",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-06-quan-tri-bai-tap.md: File inventory",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-06-quan-tri-bai-tap.md: phase",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-06-quan-tri-bai-tap.md: title",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-06-quan-tri-bai-tap.md: status",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-06-quan-tri-bai-tap.md: priority",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-06-quan-tri-bai-tap.md: effort",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-06-quan-tri-bai-tap.md: dependencies",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-06-quan-tri-bai-tap.md: Task A",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-06-quan-tri-bai-tap.md: Task B",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-06-quan-tri-bai-tap.md: Step 1\n",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-06-quan-tri-bai-tap.md: _Define done._",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-06-quan-tri-bai-tap.md: _TBD_",
+      "verified": true
+    },
+    {
+      "kind": "regression-command",
+      "subject": "phase-06-quan-tri-bai-tap.md",
+      "verified": true
+    },
+    {
+      "kind": "todo",
+      "subject": "phase-06-quan-tri-bai-tap.md",
+      "verified": true
+    },
+    {
+      "kind": "matrix",
+      "subject": "phase-06-quan-tri-bai-tap.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md -> ../../docs/GeoQuad_Jira_2ngay.csv",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md -> ../../README.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md -> ../../docs/GeoQuad_SRS.md",
+      "verified": true
+    },
+    {
+      "kind": "local-link",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md -> research/tdd-architecture-B.md",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: Tests Before",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: Refactor",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: Tests After",
+      "verified": true
+    },
+    {
+      "kind": "phase-section",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: File inventory",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: phase",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: title",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: status",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: priority",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: effort",
+      "verified": true
+    },
+    {
+      "kind": "frontmatter",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: dependencies",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: Task A",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: Task B",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: Step 1\n",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: _Define done._",
+      "verified": true
+    },
+    {
+      "kind": "no-scaffold",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md: _TBD_",
+      "verified": true
+    },
+    {
+      "kind": "regression-command",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md",
+      "verified": true
+    },
+    {
+      "kind": "todo",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md",
+      "verified": true
+    },
+    {
+      "kind": "matrix",
+      "subject": "phase-07-backup-kiem-thu-ban-giao.md",
+      "verified": true
+    },
+    {
+      "kind": "effort",
+      "subject": "26h total",
+      "verified": true
+    },
+    {
+      "kind": "dependency",
+      "subject": "5 -> [1, 4]",
+      "verified": true
+    },
+    {
+      "kind": "dependency",
+      "subject": "3 -> [1, 2]",
+      "verified": true
+    },
+    {
+      "kind": "dependency",
+      "subject": "7 -> [1, 2, 3, 4, 5, 6]",
+      "verified": true
+    },
+    {
+      "kind": "dependency",
+      "subject": "1 -> []",
+      "verified": true
+    },
+    {
+      "kind": "dependency",
+      "subject": "6 -> [1]",
+      "verified": true
+    },
+    {
+      "kind": "dependency",
+      "subject": "4 -> [1]",
+      "verified": true
+    },
+    {
+      "kind": "dependency",
+      "subject": "2 -> [1]",
+      "verified": true
+    },
+    {
+      "kind": "phase-count",
+      "subject": "7",
+      "verified": true
+    }
+  ]
+}

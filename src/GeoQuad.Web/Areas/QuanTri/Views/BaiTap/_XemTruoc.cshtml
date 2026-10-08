@@ -1,0 +1,7 @@
+@model GeoQuad.Web.Areas.QuanTri.Models.BaiTapForm
+<section class="card p-3 mt-4" style="overflow-wrap:anywhere"><h2>Xem trước bài tập</h2><p>Lớp @Model.Lop · Độ khó @Model.DoKho</p><p>@Model.De</p>
+@if(Model.Loai == "TRAC_NGHIEM"){<fieldset><legend class="fs-5">Chọn một đáp án</legend>@for(var i=0;i<Model.PhuongAn.Length;i++){<label class="d-block p-2"><input type="radio" name="preview-answer" /> @((char)('A'+i)). @Model.PhuongAn[i]</label>}</fieldset>}
+@if(Model.Loai == "DAP_AN_SO"){<label for="preview-number">Đáp án (@Model.DonVi)</label><input class="form-control" id="preview-number" inputmode="decimal" />}
+@if(Model.Loai == "CHUNG_MINH"){<p>Hãy tự trình bày lời giải trước khi mở lời giải mẫu.</p><details><summary>Lời giải mẫu</summary><p>@Model.LoiGiaiMau</p></details>}
+<details><summary>Giải thích</summary><p>@Model.GiaiThich</p></details>
+</section>

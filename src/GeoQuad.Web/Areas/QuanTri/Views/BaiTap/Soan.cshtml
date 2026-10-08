@@ -1,0 +1,31 @@
+@model GeoQuad.Web.Areas.QuanTri.Models.BaiTapForm
+@{ var catalog=(GeoQuad.Web.Areas.QuanTri.Models.QuanTriCatalog)ViewData["Catalog"]!; var sua=(bool)ViewData["Sua"]!; ViewData["Title"]=sua ? "Sửa bài tập" : "Thêm bài tập"; }
+<style>.editor-b input,.editor-b select,.editor-b button,.editor-b a {min-height:48px;font-size:16px}.editor-b textarea {font-size:16px;min-height:110px}.editor-b label {display:block;padding:.6rem 0;overflow-wrap:anywhere}.editor-b fieldset {border:1px solid #ccd;padding:1rem;margin:1rem 0;min-width:0}</style>
+<main class="editor-b"><h1>@ViewData["Title"]</h1>
+<form asp-action="@(sua ? "Sua" : "Them")" asp-route-id="@(sua ? Model.Ma : null)" method="post">
+<div asp-validation-summary="All" role="alert" class="text-danger"></div>
+<label asp-for="Ma">Mã bài</label><input asp-for="Ma" class="form-control" readonly="@sua" maxlength="64" required />
+<label asp-for="De">Đề bài</label><textarea asp-for="De" class="form-control" maxlength="10000" required></textarea>
+<label asp-for="Loai">Loại bài</label><select asp-for="Loai" class="form-select">@foreach(var type in GeoQuad.Web.Areas.QuanTri.Services.KiemTraBaiTap.Loai){<option value="@type">@GeoQuad.Web.Areas.QuanTri.Models.BaiTapNhan.Loai(type)</option>}</select>
+<fieldset><legend>Trắc nghiệm</legend>
+@for(var i=0;i<4;i++){<label for="option-@i">Phương án @((char)('A'+i))</label><input class="form-control" name="PhuongAn[@i]" id="option-@i" value="@((Model.PhuongAn ?? []).ElementAtOrDefault(i))" maxlength="2000" />}
+<label asp-for="DapAnDung">Một đáp án đúng</label><select asp-for="DapAnDung" class="form-select"><option value="">Chưa chọn</option>@foreach(var answer in new[]{"A","B","C","D"}){<option value="@answer">@answer</option>}</select>
+</fieldset>
+<fieldset><legend>Đáp án số</legend>
+<label asp-for="DapAnSo">Đáp án số</label><input asp-for="DapAnSo" class="form-control" inputmode="decimal" maxlength="128" />
+<label asp-for="SaiSo">Sai số tuyệt đối cho phép (mặc định 0,01)</label><input asp-for="SaiSo" class="form-control" inputmode="decimal" maxlength="128" />
+<label asp-for="DonVi">Đơn vị</label><input asp-for="DonVi" class="form-control" maxlength="64" />
+</fieldset>
+<fieldset><legend>Chứng minh</legend><label asp-for="LoiGiaiMau">Lời giải mẫu</label><textarea asp-for="LoiGiaiMau" class="form-control" maxlength="20000"></textarea></fieldset>
+<label asp-for="GiaiThich">Giải thích</label><textarea asp-for="GiaiThich" class="form-control" maxlength="10000" required></textarea>
+<div class="row g-2"><div class="col-6"><label asp-for="Lop">Lớp</label><select asp-for="Lop" class="form-select">@for(var i=1;i<=12;i++){<option value="@i">Lớp @i</option>}</select></div>
+<div class="col-6"><label asp-for="DoKho">Độ khó</label><select asp-for="DoKho" class="form-select">@for(var i=1;i<=3;i++){<option value="@i">@i</option>}</select></div></div>
+<label><input asp-for="HienThi" /> Hiển thị với học sinh</label>
+<label asp-for="Nguon">Nguồn</label><input asp-for="Nguon" class="form-control" maxlength="500" required />
+<label asp-for="TrangThai">Trạng thái nội dung</label><select asp-for="TrangThai" class="form-select">@foreach(var status in GeoQuad.Web.Areas.QuanTri.Services.KiemTraBaiTap.TrangThai){<option value="@status">@GeoQuad.Web.Areas.QuanTri.Models.BaiTapNhan.TrangThai(status)</option>}</select>
+<fieldset><legend>Khái niệm liên quan (ít nhất một)</legend>@foreach(var k in catalog.KhaiNiem){<label><input type="checkbox" name="KhaiNiem" value="@k.Ma" checked="@((Model.KhaiNiem ?? []).Contains(k.Ma))" /> @k.Ten · @k.Ma</label>}</fieldset>
+<fieldset><legend>Định lý / công thức sử dụng</legend>@foreach(var k in catalog.SuDung){<label><input type="checkbox" name="SuDung" value="@k.Ma" checked="@((Model.SuDung ?? []).Contains(k.Ma))" /> @k.Ten · @k.Ma</label>}</fieldset>
+<button class="btn btn-primary">Lưu bài tập</button><button class="btn btn-outline-primary" formaction="@Url.Action("XemTruoc",new { id=sua ? Model.Ma : null })">Xem trước</button><a class="btn btn-outline-secondary" asp-action="Index">Quay lại danh sách</a>
+</form>
+@if((bool)ViewData["XemTruoc"]!){<partial name="_XemTruoc" model="Model" />}
+</main>

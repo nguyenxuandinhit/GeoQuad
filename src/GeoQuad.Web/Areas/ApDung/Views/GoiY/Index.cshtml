@@ -1,0 +1,36 @@
+@model GeoQuad.Web.Areas.ApDung.Models.GoiYViewModel
+@{ ViewData["Title"] = "Nên dùng định lý nào?"; }
+<style>
+    .goiy input,.goiy select,.goiy button,.goiy .btn { min-height:48px; font-size:16px }
+    .goiy label { display:block; padding:.5rem 0; overflow-wrap:anywhere }
+    .goiy article { padding:1rem; border:1px solid #ccd; border-radius:.5rem; margin:1rem 0; overflow-wrap:anywhere }
+</style>
+<main class="goiy">
+<h1>Nên dùng định lý nào?</h1>
+@if (Model.NangCao) { <p class="badge bg-info text-dark">Nâng cao</p> }
+<form method="get">
+    <label for="nen">1. Tứ giác ABCD đã biết là</label>
+    <select id="nen" name="nen" class="form-select">
+        @foreach (var h in Model.Catalog.Hinh) { <option value="@h.Ma" selected="@(h.Ma == Model.Request.Nen)">@h.Ten · Lớp @h.Lop</option> }
+    </select>
+    <fieldset><legend class="fs-5 mt-3">2. Điều kiện đã có</legend>
+        @foreach (var d in Model.Catalog.DieuKien) {
+            <label><input type="checkbox" name="co" value="@d.Ma" checked="@Model.Request.Co.Contains(d.Ma)" /> @d.NoiDung</label>
+        }
+    </fieldset>
+    <label for="dich">3. Cần chứng minh ABCD là</label>
+    <select id="dich" name="dich" class="form-select" required>
+        <option value="">Chọn hình cần chứng minh</option>
+        @foreach (var h in Model.Catalog.Hinh) { <option value="@h.Ma" selected="@(h.Ma == Model.Request.Dich)">@h.Ten</option> }
+    </select>
+    <button class="btn btn-primary mt-3">Tìm gợi ý</button>
+</form>
+@if (Model.ThongBao != null) { <p class="alert alert-info mt-3" role="status">@Model.ThongBao</p> }
+@foreach (var card in Model.The) { <partial name="_The" model="card" /> }
+@foreach (var chain in Model.Chuoi) {
+    <section><h2 class="fs-4">Chuỗi @chain.Count bước</h2>
+    @for (var i = 0; i < chain.Count; i++) { <h3 class="fs-5">Bước @(i+1)</h3><partial name="_The" model="chain[i]" /> }
+    </section>
+}
+<a class="btn btn-outline-secondary mt-3" href="/KienThuc/BanDo">Bản đồ kiến thức</a>
+</main>

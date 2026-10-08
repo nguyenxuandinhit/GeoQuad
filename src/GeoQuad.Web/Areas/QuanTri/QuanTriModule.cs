@@ -1,3 +1,5 @@
+using GeoQuad.Web.Areas.QuanTri.Repositories;
+
 namespace GeoQuad.Web.Areas.QuanTri;
 
 /// <summary>
@@ -9,7 +11,7 @@ public static class QuanTriModule
 {
     public static IServiceCollection AddQuanTri(this IServiceCollection services)
     {
-        // Phần B: đăng ký Repository và Service của Area QuanTri tại đây.
+        services.AddScoped<IBaiTapQuanTriRepository,BaiTapQuanTriRepository>();
         return services;
     }
 }

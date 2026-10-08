@@ -1,3 +1,6 @@
+using GeoQuad.Web.Areas.ApDung.Repositories;
+using GeoQuad.Web.Areas.ApDung.Services;
+
 namespace GeoQuad.Web.Areas.ApDung;
 
 /// <summary>
@@ -9,7 +12,13 @@ public static class ApDungModule
 {
     public static IServiceCollection AddApDung(this IServiceCollection services)
     {
-        // Phần B: đăng ký Repository và Service của Area ApDung tại đây.
+        services.AddScoped<IGoiYRepository, GoiYRepository>();
+        services.AddScoped<GoiYService>();
+        services.AddScoped<IChungMinhRepository, ChungMinhRepository>();
+        services.AddScoped<ChungMinhService>();
+        services.AddScoped<ITinhHuongRepository, TinhHuongRepository>();
+        services.AddScoped<TinhHuongService>();
+        services.AddScoped<DoDacRepository>();
         return services;
     }
 }
