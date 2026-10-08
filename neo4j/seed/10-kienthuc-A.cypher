@@ -116,3 +116,71 @@ MERGE (h)-[:CO_CONG_THUC]->(c)
 WITH c, row
 MATCH (l:Lop {so: row.lop})
 MERGE (c)-[:THUOC_LOP]->(l);
+
+// ---- Tính chất bổ sung (ngoài Phụ lục D/B) --------------------------------
+// Lý do bổ sung: Phụ lục B không có mục nào về ĐỐI XỨNG, trong khi trục đối xứng và
+// tâm đối xứng là một phần của chương tứ giác ở SGK Toán 8; thiếu cả tổng góc ngoài
+// và đường trung bình hình thang. AC của US-03 ghi "đủ 12 tính chất" — hiểu là mức
+// tối thiểu, nên bổ sung chỉ làm dày thêm, không bỏ mục nào của Phụ lục B.
+UNWIND [
+  {ma: 'TC_TG_2',    hinh: 'TU_GIAC',         lop: 8,
+   noiDung: 'Tổng bốn góc ngoài của một tứ giác, mỗi đỉnh lấy một góc ngoài, bằng 360°.'},
+  {ma: 'TC_HT_2',    hinh: 'HINH_THANG',      lop: 8,
+   noiDung: 'Đường trung bình của hình thang song song với hai đáy và bằng nửa tổng hai đáy.'},
+  {ma: 'TC_HTC_3',   hinh: 'HINH_THANG_CAN',  lop: 8,
+   noiDung: 'Hình thang cân có một trục đối xứng là đường thẳng đi qua trung điểm của hai đáy.'},
+  {ma: 'TC_HBH_4',   hinh: 'HINH_BINH_HANH',  lop: 8,
+   noiDung: 'Giao điểm hai đường chéo của hình bình hành là tâm đối xứng của hình bình hành đó.'},
+  {ma: 'TC_HCN_3',   hinh: 'HINH_CHU_NHAT',   lop: 8,
+   noiDung: 'Hình chữ nhật có hai trục đối xứng là hai đường thẳng đi qua trung điểm của hai cặp cạnh đối, và có tâm đối xứng là giao điểm hai đường chéo.'},
+  {ma: 'TC_THOI_3',  hinh: 'HINH_THOI',       lop: 8,
+   noiDung: 'Hình thoi có hai trục đối xứng là hai đường chéo và có tâm đối xứng là giao điểm hai đường chéo.'},
+  {ma: 'TC_HV_2',    hinh: 'HINH_VUONG',      lop: 8,
+   noiDung: 'Hình vuông có bốn trục đối xứng: hai đường chéo và hai đường thẳng đi qua trung điểm của hai cặp cạnh đối; tâm đối xứng là giao điểm hai đường chéo.'},
+  {ma: 'TC_HV_3',    hinh: 'HINH_VUONG',      lop: 8,
+   noiDung: 'Hai đường chéo của hình vuông bằng nhau, vuông góc với nhau và là các đường phân giác của các góc của hình vuông.'}
+] AS row
+MERGE (t:DinhLy {ma: row.ma})
+SET t:TinhChat,
+    t.noiDung   = row.noiDung,
+    t.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
+    t.trangThai = 'DA_RA_SOAT'
+WITH t, row
+MATCH (h:KhaiNiem {ma: row.hinh})
+MERGE (h)-[:CO_TINH_CHAT]->(t)
+WITH t, row
+MATCH (l:Lop {so: row.lop})
+MERGE (t)-[:THUOC_LOP]->(l);
+
+// ---- Công thức bổ sung (ngoài Phụ lục D/B) --------------------------------
+// Lý do: hình thang thiếu chu vi (phải mượn công thức tứ giác) và thiếu đường trung
+// bình; hình thoi không có đại lượng đường chéo nào, dù bài BT-023 của C hỏi đúng
+// phép tính đó.
+//
+// KHÔNG thêm công thức đường trung bình hình thang vào đây: máy tính hình học mượn
+// công thức của hình tổng quát gần nhất, nên hình thoi và hình chữ nhật sẽ mượn luôn
+// công thức đó và hỏi học sinh "hai đáy" — với các hình ấy hai cạnh song song bằng
+// nhau nên nhập chiều dài và chiều rộng là ra kết quả sai. Kiến thức này giữ ở dạng
+// tính chất TC_HT_2 để vẫn có trong thư viện.
+UNWIND [
+  {ma: 'CT_HT_CV',     hinh: 'HINH_THANG', lop: 5, daiLuong: 'CHU_VI',
+   ten: 'Chu vi hình thang',          bieuThuc: 'P = a + b + c + d',
+   bienSo: ['a', 'b', 'c', 'd']},
+  {ma: 'CT_THOI_CHEO', hinh: 'HINH_THOI',  lop: 8, daiLuong: 'DUONG_CHEO',
+   ten: 'Đường chéo còn lại của hình thoi',
+   bieuThuc: 'd_2 = 2\\sqrt{a^2 - \\frac{d_1^2}{4}}',
+   bienSo: ['a', 'd1']}
+] AS row
+MERGE (c:CongThuc {ma: row.ma})
+SET c.ten       = row.ten,
+    c.bieuThuc  = row.bieuThuc,
+    c.bienSo    = row.bienSo,
+    c.daiLuong  = row.daiLuong,
+    c.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
+    c.trangThai = 'DA_RA_SOAT'
+WITH c, row
+MATCH (h:KhaiNiem {ma: row.hinh})
+MERGE (h)-[:CO_CONG_THUC]->(c)
+WITH c, row
+MATCH (l:Lop {so: row.lop})
+MERGE (c)-[:THUOC_LOP]->(l);
