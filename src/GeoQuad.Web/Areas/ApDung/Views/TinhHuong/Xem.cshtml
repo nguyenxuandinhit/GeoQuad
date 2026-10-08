@@ -1,0 +1,46 @@
+@model GeoQuad.Web.Areas.ApDung.Models.TinhHuongViewModel
+@{ ViewData["Title"] = Model.TinhHuong.Ten; }
+<style>.scenario a,.scenario summary,.scenario button,.scenario input,.scenario select {min-height:48px;font-size:16px}.scenario p,.scenario li {overflow-wrap:anywhere}.scenario summary {padding:.7rem}</style>
+<main class="scenario">
+<h1>@Model.TinhHuong.Ten</h1>
+<p>@Model.TinhHuong.BoiCanh · Lớp @Model.TinhHuong.Lop @if(Model.NangCao) { <span class="badge bg-info text-dark">Nâng cao</span> }</p>
+<p>@Model.TinhHuong.MoTa</p>
+<partial name="_TuGiac" />
+<h2>Kiến thức dùng ở đây</h2>
+<ul>
+@foreach(var k in Model.TinhHuong.KienThuc) {
+    <li>
+        <details><summary>@k.Ma · @k.NoiDung</summary>
+        @if(k.BieuThuc != null) { <p>$@k.BieuThuc$</p> }
+        @if(k.MaHinh != null) { <a class="btn btn-outline-primary" asp-area="KienThuc" asp-controller="ThuVien" asp-action="ChiTiet" asp-route-id="@k.MaHinh">Xem hình liên quan</a> }
+        </details>
+    </li>
+}
+</ul>
+<h2>Vì sao cách này đúng</h2><p>@Model.TinhHuong.LoiGiai</p>
+@if(Model.TinhHuong.ThucHanh) {
+    var form=Model.DoDac ?? new GeoQuad.Web.Areas.ApDung.Models.DoDacForm();
+    <section><h2>Thử với số đo của em</h2>
+    <p>Kết luận dựa trên số đo, sai số đã chọn và giả định tứ giác ABCD lồi. Dùng cùng một đơn vị cho tất cả số đo.</p>
+    <form asp-action="DoDac" asp-route-id="@Model.TinhHuong.Ma" method="post">
+        <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+        <div class="row g-2">
+        @foreach(var (name,value) in new[] {("AB",form.AB),("BC",form.BC),("CD",form.CD),("DA",form.DA),("AC",form.AC),("BD",form.BD)}) {
+            <div class="col-6 col-md-4"><label for="do-@name">@name</label><input class="form-control" id="do-@name" name="@name" value="@value" inputmode="decimal" required maxlength="128" /></div>
+        }
+        </div>
+        <label for="donvi">Đơn vị</label><select class="form-select" id="donvi" name="DonVi"><option value="cm" selected="@(form.DonVi == "cm")">cm</option><option value="m" selected="@(form.DonVi == "m")">m</option></select>
+        <label for="saiso">Sai số cho phép (%)</label><input class="form-control" id="saiso" name="SaiSo" value="@form.SaiSo" inputmode="decimal" required maxlength="128" />
+        <button class="btn btn-primary mt-3">Kiểm tra số đo</button>
+    </form>
+    @if(Model.KetQua != null) {
+        <div class="alert alert-info mt-3" role="status"><h3 class="fs-4">@Model.KetQua.TenHinh</h3>
+        <p>Theo sai số @form.SaiSo%, với giả định hình lồi.</p>
+        @if(Model.KetQua.Hinh == "KHONG_XAC_DINH") { <p>Cặp lệch lớn nhất: @Model.KetQua.CapLech · @((Model.KetQua.Lech*100).ToString("0.##"))%. Em thử đo lại.</p> }
+        <ol>@foreach(var ma in Model.KetQua.DauHieu) { var ground=Model.CanCu!.Single(g => g.Ma == ma); <li><code>@ma</code> · @ground.NoiDung</li> }</ol>
+        </div>
+    }
+    </section>
+}
+<a class="btn btn-outline-secondary" asp-action="Index">Quay lại tình huống</a>
+</main>

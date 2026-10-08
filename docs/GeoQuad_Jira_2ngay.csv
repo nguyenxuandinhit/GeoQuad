@@ -1,15 +1,15 @@
-﻿Issue Id,Parent Id,Issue Type,Summary,Description,Assignee,Priority,Story Points,Sprint,Due Date,Epic Name,Epic Link,Labels,Labels,Labels,Labels
-1,,Epic,EP-00 – Nền tảng & dữ liệu,Epic EP-00 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-00 – Nền tảng & dữ liệu,,geoquad,R1,,
-2,,Epic,EP-01 – Tài khoản & phân quyền,Epic EP-01 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-01 – Tài khoản & phân quyền,,geoquad,R1,,
-3,,Epic,EP-02 – Tra cứu kiến thức,Epic EP-02 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-02 – Tra cứu kiến thức,,geoquad,R1,,
-4,,Epic,EP-03 – Hỗ trợ chứng minh,Epic EP-03 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-03 – Hỗ trợ chứng minh,,geoquad,R1,,
-5,,Epic,EP-04 – Tính toán & trực quan,Epic EP-04 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-04 – Tính toán & trực quan,,geoquad,R1,,
-6,,Epic,EP-05 – Bài toán thực tế,Epic EP-05 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-05 – Bài toán thực tế,,geoquad,R1,,
-7,,Epic,EP-06 – Bài tập & chấm bài,Epic EP-06 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-06 – Bài tập & chấm bài,,geoquad,R1,,
-8,,Epic,EP-07 – Học tập cá nhân hóa,Epic EP-07 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-07 – Học tập cá nhân hóa,,geoquad,R1,,
-9,,Epic,EP-08 – Quản trị nội dung,Epic EP-08 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-08 – Quản trị nội dung,,geoquad,R1,,
-10,,Epic,EP-09 – Chất lượng & bàn giao,Epic EP-09 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-09 – Chất lượng & bàn giao,,geoquad,R1,,
-11,,Epic,EP-10 – Mở rộng (Release 2),Epic EP-10 trong SRS GeoQuad (Phụ lục C).,,Low,,,,EP-10 – Mở rộng (Release 2),,geoquad,R2,,
+﻿Issue Id,Parent Id,Issue Type,Summary,Description,Assignee,Priority,Story Points,Sprint,Due Date,Epic Name,Epic Link,Labels,Labels,Labels,Labels,Status,Comment
+1,,Epic,EP-00 – Nền tảng & dữ liệu,Epic EP-00 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-00 – Nền tảng & dữ liệu,,geoquad,R1,,,,
+2,,Epic,EP-01 – Tài khoản & phân quyền,Epic EP-01 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-01 – Tài khoản & phân quyền,,geoquad,R1,,,,
+3,,Epic,EP-02 – Tra cứu kiến thức,Epic EP-02 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-02 – Tra cứu kiến thức,,geoquad,R1,,,,
+4,,Epic,EP-03 – Hỗ trợ chứng minh,Epic EP-03 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-03 – Hỗ trợ chứng minh,,geoquad,R1,,,,
+5,,Epic,EP-04 – Tính toán & trực quan,Epic EP-04 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-04 – Tính toán & trực quan,,geoquad,R1,,,,
+6,,Epic,EP-05 – Bài toán thực tế,Epic EP-05 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-05 – Bài toán thực tế,,geoquad,R1,,,,
+7,,Epic,EP-06 – Bài tập & chấm bài,Epic EP-06 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-06 – Bài tập & chấm bài,,geoquad,R1,,,,
+8,,Epic,EP-07 – Học tập cá nhân hóa,Epic EP-07 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-07 – Học tập cá nhân hóa,,geoquad,R1,,,,
+9,,Epic,EP-08 – Quản trị nội dung,Epic EP-08 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-08 – Quản trị nội dung,,geoquad,R1,,,,
+10,,Epic,EP-09 – Chất lượng & bàn giao,Epic EP-09 trong SRS GeoQuad (Phụ lục C).,,High,,,2026-10-08,EP-09 – Chất lượng & bàn giao,,geoquad,R1,,,,
+11,,Epic,EP-10 – Mở rộng (Release 2),Epic EP-10 trong SRS GeoQuad (Phụ lục C).,,Low,,,,EP-10 – Mở rộng (Release 2),,geoquad,R2,,,,
 12,1,Task,"US-01 Khởi tạo dự án ASP.NET Core MVC, Docker Compose (web + Neo4j) và kết nối Neo4j","Là nhóm phát triển, chúng tôi muốn khởi tạo dự án ASP.NET Core MVC, Docker Compose (web + Neo4j) và kết nối Neo4j để có nền tảng chạy được bằng một lệnh.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -18,8 +18,8 @@ Yêu cầu SRS: NFR-08, NFR-13
 
 Tiêu chí chấp nhận:
 - Chạy docker compose up khởi động đủ Neo4j và web.
-- Trang chủ rỗng truy vấn được Neo4j (kiểm tra kết nối).",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom
-13,12,Sub-task,"[US-01] Kickoff: giải thích cho nhóm cấu trúc solution, Docker Compose, IGraphDb (C# gọi Cypher thế nào)",Làm PHẦN 0 trên một máy; sau đó trình bày 15 phút.,Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a
+- Trang chủ rỗng truy vấn được Neo4j (kiểm tra kết nối).",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom,,
+13,12,Sub-task,"[US-01] Kickoff: giải thích cho nhóm cấu trúc solution, Docker Compose, IGraphDb (C# gọi Cypher thế nào)",Làm PHẦN 0 trên một máy; sau đó trình bày 15 phút.,Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a,,
 14,1,Task,"US-02 Nạp khung dữ liệu (cấp, lớp, 7 hình, quan hệ đặc biệt hóa, ràng buộc, chỉ mục)","Là nhóm phát triển, chúng tôi muốn nạp khung dữ liệu (cấp, lớp, 7 hình, quan hệ đặc biệt hóa, ràng buộc, chỉ mục) để các tính năng có dữ liệu nền.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -28,8 +28,8 @@ Yêu cầu SRS: NFR-08, NFR-10
 
 Tiêu chí chấp nhận:
 - Script dùng MERGE, chạy hai lần không sinh node trùng.
-- Có ràng buộc UNIQUE cho thuộc tính ma và chỉ mục full-text.",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom
-15,14,Sub-task,"[US-02] Kickoff: giải thích 00-schema (ràng buộc, chỉ mục full-text) và 01-khung (MERGE, đặc biệt hóa, cần biết trước); chạy seed 2 lần",Chạy thử trên Neo4j Browser trước mặt nhóm.,Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b
+- Có ràng buộc UNIQUE cho thuộc tính ma và chỉ mục full-text.",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom,,
+15,14,Sub-task,"[US-02] Kickoff: giải thích 00-schema (ràng buộc, chỉ mục full-text) và 01-khung (MERGE, đặc biệt hóa, cần biết trước); chạy seed 2 lần",Chạy thử trên Neo4j Browser trước mặt nhóm.,Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,Cập nhật B 08/10/2026 — Schema 13 UNIQUE/fulltext/core và seed lặp/đảo A-B đã đạt trên Neo4j thật; còn kickoff/trình bày trước nhóm trong Neo4j Browser. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
 16,1,Task,"US-03 Nạp tính chất, dấu hiệu nhận biết, điều kiện, công thức, định lý nền","Là nhóm phát triển, chúng tôi muốn nạp tính chất, dấu hiệu nhận biết, điều kiện, công thức, định lý nền để phục vụ tra cứu và gợi ý.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -38,10 +38,10 @@ Yêu cầu SRS: NFR-09
 
 Tiêu chí chấp nhận:
 - Đủ 14 điều kiện, 20 dấu hiệu, 12 tính chất, 12 công thức theo Phụ lục B.
-- Mỗi mục có nguồn đối chiếu và trạng thái rà soát.",,High,5,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom
-17,16,Sub-task,[US-03] Seed 12 tính chất + 12 công thức (neo4j/seed/10-kienthuc-A.cypher),"README mục 6. MERGE theo ma, SET nhãn TinhChat; công thức có bieuThuc LaTeX, bienSo, daiLuong.",Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a
-18,16,Sub-task,[US-03] Seed 14 điều kiện + 20 dấu hiệu + 6 định lý nền (neo4j/seed/20-dinhly-B.cypher),"README mục 6. Mỗi dấu hiệu: YEU_CAU_LA, YEU_CAU_CO, KHANG_DINH, THUOC_LOP.",Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b
-19,16,Sub-task,"[US-03] Rà soát chéo nội dung US-03: chạy 2 file seed, đối chiếu Phụ lục D, chạy truy vấn đếm trong AC","Ghi kết quả vào docs/cypher/C-hoc-tap.md mục ""Rà soát US-03"".",Thành viên C,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-c
+- Mỗi mục có nguồn đối chiếu và trạng thái rà soát.",,High,5,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom,,
+17,16,Sub-task,[US-03] Seed 12 tính chất + 12 công thức (neo4j/seed/10-kienthuc-A.cypher),"README mục 6. MERGE theo ma, SET nhãn TinhChat; công thức có bieuThuc LaTeX, bienSo, daiLuong.",Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a,,
+18,16,Sub-task,[US-03] Seed 14 điều kiện + 20 dấu hiệu + 6 định lý nền (neo4j/seed/20-dinhly-B.cypher),"README mục 6. Mỗi dấu hiệu: YEU_CAU_LA, YEU_CAU_CO, KHANG_DINH, THUOC_LOP.",Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Đủ14 điều kiện, 20 dấu hiệu, 6 định lý nền, seed idempotent; giữ NHAP, chờ C review toán học/nguồn độc lập trước DA_RA_SOAT. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+19,16,Sub-task,"[US-03] Rà soát chéo nội dung US-03: chạy 2 file seed, đối chiếu Phụ lục D, chạy truy vấn đếm trong AC","Ghi kết quả vào docs/cypher/C-hoc-tap.md mục ""Rà soát US-03"".",Thành viên C,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-c,,
 20,1,Task,"US-04 Nạp bài tập (≥ 30), tình huống thực tế (9) và chứng minh mẫu (4)","Là nhóm phát triển, chúng tôi muốn nạp bài tập (≥ 30), tình huống thực tế (9) và chứng minh mẫu (4) để các tính năng bài tập, thực tế, chứng minh có dữ liệu.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -50,11 +50,11 @@ Yêu cầu SRS: NFR-09
 
 Tiêu chí chấp nhận:
 - Mỗi bài/tình huống gắn ít nhất một khái niệm (BR-08).
-- Bài tập phủ cả 3 cấp và 3 loại (trắc nghiệm, đáp án số, chứng minh).",,High,5,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom
-21,20,Sub-task,"[US-04] Seed bài tập BT-001..BT-010, cấp 1 (neo4j/seed/11-baitap-A.cypher)",5 trắc nghiệm + 5 đáp án số; kiểm tra lại phép tính.,Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a
-22,20,Sub-task,"[US-04] Seed 3 bối cảnh + 9 tình huống thực tế, có lời giải ""vì sao đúng"" (neo4j/seed/12-tinhhuong-A.cypher)","Dữ liệu cho US-17 của B; phải xong trong Sprint 1. AP_DUNG, TRONG_BOI_CANH, LIEN_QUAN_DEN.",Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a
-23,20,Sub-task,"[US-04] Seed 4 chứng minh mẫu, mỗi bài 3–6 bước có căn cứ (neo4j/seed/21-chungminh-B.cypher)",CO_BUOC {thuTu} từ 1; CAN_CU tới định lý/tính chất.,Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b
-24,20,Sub-task,"[US-04] Seed bài tập BT-011..BT-030, cấp 2–3, ≥ 5 bài Hình thoi (neo4j/seed/30-baitap-C.cypher) + dữ liệu làm bài mẫu (neo4j/dev)","≥ 7 trắc nghiệm, ≥ 7 đáp án số, ≥ 3 chứng minh có lời giải mẫu.",Thành viên C,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-c
+- Bài tập phủ cả 3 cấp và 3 loại (trắc nghiệm, đáp án số, chứng minh).",,High,5,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-00 – Nền tảng & dữ liệu,geoquad,R1,Must,ca-nhom,,
+21,20,Sub-task,"[US-04] Seed bài tập BT-001..BT-010, cấp 1 (neo4j/seed/11-baitap-A.cypher)",5 trắc nghiệm + 5 đáp án số; kiểm tra lại phép tính.,Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a,,
+22,20,Sub-task,"[US-04] Seed 3 bối cảnh + 9 tình huống thực tế, có lời giải ""vì sao đúng"" (neo4j/seed/12-tinhhuong-A.cypher)","Dữ liệu cho US-17 của B; phải xong trong Sprint 1. AP_DUNG, TRONG_BOI_CANH, LIEN_QUAN_DEN.",Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a,,
+23,20,Sub-task,"[US-04] Seed 4 chứng minh mẫu, mỗi bài 3–6 bước có căn cứ (neo4j/seed/21-chungminh-B.cypher)",CO_BUOC {thuTu} từ 1; CAN_CU tới định lý/tính chất.,Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Đủ4 mẫu với 3–6 bước/căn cứ/BR-08; query/HTTP readiness đạt; chờ C review nội dung, nhất là CM-04. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+24,20,Sub-task,"[US-04] Seed bài tập BT-011..BT-030, cấp 2–3, ≥ 5 bài Hình thoi (neo4j/seed/30-baitap-C.cypher) + dữ liệu làm bài mẫu (neo4j/dev)","≥ 7 trắc nghiệm, ≥ 7 đáp án số, ≥ 3 chứng minh có lời giải mẫu.",Thành viên C,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-c,,
 25,2,Story,US-05 Đăng ký tài khoản,"Là khách, tôi muốn đăng ký tài khoản để lưu tiến độ học của mình.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -64,8 +64,8 @@ Yêu cầu SRS: FR-01
 Tiêu chí chấp nhận:
 - Tên đăng nhập trùng bị từ chối.
 - Mật khẩu lưu dạng băm.
-- Không tick xác nhận thì không đăng ký được.",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Must,ca-nhom
-26,25,Sub-task,"[US-05] Kickoff: giải thích đăng ký, nút TaiKhoan, quan hệ HOC_LOP, bắt lỗi ràng buộc trùng tên",,Thành viên C,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-c
+- Không tick xác nhận thì không đăng ký được.",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Must,ca-nhom,,
+26,25,Sub-task,"[US-05] Kickoff: giải thích đăng ký, nút TaiKhoan, quan hệ HOC_LOP, bắt lỗi ràng buộc trùng tên",,Thành viên C,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-c,,
 27,2,Story,US-06 Đăng nhập và đăng xuất,"Là người dùng, tôi muốn đăng nhập và đăng xuất để dùng chức năng theo đúng quyền của mình.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -74,8 +74,8 @@ Yêu cầu SRS: FR-02
 
 Tiêu chí chấp nhận:
 - Sai 5 lần liên tiếp thì khóa 5 phút.
-- Trang Quản trị từ chối người không phải Quản trị viên.",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Must,ca-nhom
-28,27,Sub-task,"[US-06] Kickoff: giải thích đăng nhập, khóa 5 phút, phân quyền, IAuthHelper",,Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a
+- Trang Quản trị từ chối người không phải Quản trị viên.",,High,3,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Must,ca-nhom,,
+28,27,Sub-task,"[US-06] Kickoff: giải thích đăng nhập, khóa 5 phút, phân quyền, IAuthHelper",,Thành viên A,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-a,,
 29,2,Story,"US-07 Dùng thử tra cứu, tính toán, tình huống, bài tập mà không cần đăng ký","Là khách, tôi muốn dùng thử tra cứu, tính toán, tình huống, bài tập mà không cần đăng ký.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -83,8 +83,8 @@ Yêu cầu SRS: FR-03
 Ưu tiên MoSCoW: Must
 
 Tiêu chí chấp nhận:
-- Khách làm bài không lưu kết quả và được mời đăng nhập.",,High,1,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Must,ca-nhom
-30,29,Sub-task,"[US-07] Kickoff: giải thích ICurrentUser, cookie lớp của khách, ""Xem trước kiến thức nâng cao""",,Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b
+- Khách làm bài không lưu kết quả và được mời đăng nhập.",,High,1,GeoQuad Sprint 1 (07/10),2026-10-07,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Must,ca-nhom,,
+30,29,Sub-task,"[US-07] Kickoff: giải thích ICurrentUser, cookie lớp của khách, ""Xem trước kiến thức nâng cao""",,Thành viên B,High,,GeoQuad Sprint 1 (07/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,Cập nhật B 08/10/2026 — ICurrentUser/cookie guest lớp 8/nâng cao 12 và public read-only đã kiểm tra; còn buổi kickoff/giải thích trước nhóm. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
 31,2,Story,"US-08 Đổi biệt danh, lớp, mật khẩu","Là học sinh, tôi muốn đổi biệt danh, lớp, mật khẩu để thông tin luôn đúng.
 
 Phụ trách: Thành viên C. Lệnh cho Claude Code: ""Đọc README.md và làm story US-08 (phần C). Chỉ sửa file thuộc phạm vi phần C.""
@@ -93,10 +93,10 @@ Yêu cầu SRS: FR-04
 
 Tiêu chí chấp nhận:
 - Đổi lớp thì nội dung mặc định đổi theo.
-- Đổi mật khẩu yêu cầu mật khẩu cũ.",Thành viên C,Medium,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Should,tv-c
-32,31,Sub-task,[US-08] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c
-33,31,Sub-task,[US-08] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-34,31,Sub-task,"[US-08] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Đổi mật khẩu yêu cầu mật khẩu cũ.",Thành viên C,Medium,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-01 – Tài khoản & phân quyền,geoquad,R1,Should,tv-c,,
+32,31,Sub-task,[US-08] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c,,
+33,31,Sub-task,[US-08] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+34,31,Sub-task,"[US-08] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 35,3,Story,US-09 Duyệt thư viện kiến thức theo lớp,"Là học sinh, tôi muốn duyệt thư viện kiến thức theo lớp để chỉ thấy nội dung phù hợp với mình.
 
 Phụ trách: Thành viên A. Lệnh cho Claude Code: ""Đọc README.md và làm story US-09 (phần A). Chỉ sửa file thuộc phạm vi phần A.""
@@ -104,10 +104,10 @@ Yêu cầu SRS: FR-10
 Ưu tiên MoSCoW: Must
 
 Tiêu chí chấp nhận:
-- Học sinh lớp 4 không thấy nội dung lớp 6 trừ khi bật xem trước nâng cao.",Thành viên A,High,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a
-36,35,Sub-task,[US-09] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a
-37,35,Sub-task,[US-09] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-38,35,Sub-task,"[US-09] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
+- Học sinh lớp 4 không thấy nội dung lớp 6 trừ khi bật xem trước nâng cao.",Thành viên A,High,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a,,
+36,35,Sub-task,[US-09] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a,,
+37,35,Sub-task,[US-09] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+38,35,Sub-task,"[US-09] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
 39,3,Story,"US-10 Xem chi tiết một hình (định nghĩa, tính chất, dấu hiệu, công thức)","Là học sinh, tôi muốn xem chi tiết một hình (định nghĩa, tính chất, dấu hiệu, công thức) để học và ôn lại.
 
 Phụ trách: Thành viên A. Lệnh cho Claude Code: ""Đọc README.md và làm story US-10 (phần A). Chỉ sửa file thuộc phạm vi phần A.""
@@ -117,10 +117,10 @@ Yêu cầu SRS: FR-11
 Tiêu chí chấp nhận:
 - Công thức hiển thị bằng KaTeX.
 - Mục rỗng không hiển thị.
-- Bấm ""Em đã hiểu"" ghi nhận đã học (học sinh đăng nhập).",Thành viên A,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a
-40,39,Sub-task,[US-10] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a
-41,39,Sub-task,[US-10] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-42,39,Sub-task,"[US-10] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
+- Bấm ""Em đã hiểu"" ghi nhận đã học (học sinh đăng nhập).",Thành viên A,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a,,
+40,39,Sub-task,[US-10] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a,,
+41,39,Sub-task,[US-10] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+42,39,Sub-task,"[US-10] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
 43,3,Story,US-11 Tìm kiếm bằng từ khóa có hoặc không dấu,"Là người dùng, tôi muốn tìm kiếm bằng từ khóa có hoặc không dấu để ra ngay kiến thức cần tìm.
 
 Phụ trách: Thành viên A. Lệnh cho Claude Code: ""Đọc README.md và làm story US-11 (phần A). Chỉ sửa file thuộc phạm vi phần A.""
@@ -129,10 +129,10 @@ Yêu cầu SRS: FR-12
 
 Tiêu chí chấp nhận:
 - ""hinh thoi"" và ""hình thoi"" cùng đưa ""Hình thoi"" lên đầu.
-- Ký tự đặc biệt không gây lỗi.",Thành viên A,High,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a
-44,43,Sub-task,[US-11] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a
-45,43,Sub-task,[US-11] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-46,43,Sub-task,"[US-11] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
+- Ký tự đặc biệt không gây lỗi.",Thành viên A,High,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a,,
+44,43,Sub-task,[US-11] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a,,
+45,43,Sub-task,[US-11] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+46,43,Sub-task,"[US-11] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
 47,3,Story,US-12 Xem bản đồ kiến thức,"Là học sinh, tôi muốn xem bản đồ kiến thức để hiểu hình nào là trường hợp đặc biệt của hình nào.
 
 Phụ trách: Thành viên A. Lệnh cho Claude Code: ""Đọc README.md và làm story US-12 (phần A). Chỉ sửa file thuộc phạm vi phần A.""
@@ -142,10 +142,10 @@ Yêu cầu SRS: FR-13
 Tiêu chí chấp nhận:
 - Hình vuông nối tới hình chữ nhật và hình thoi.
 - Lọc theo lớp hoạt động.
-- Chọn nút mở được chi tiết.",Thành viên A,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a
-48,47,Sub-task,[US-12] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a
-49,47,Sub-task,[US-12] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-50,47,Sub-task,"[US-12] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
+- Chọn nút mở được chi tiết.",Thành viên A,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-02 – Tra cứu kiến thức,geoquad,R1,Must,tv-a,,
+48,47,Sub-task,[US-12] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a,,
+49,47,Sub-task,[US-12] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+50,47,Sub-task,"[US-12] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
 51,4,Story,"US-13 Nhập hình đã biết, điều kiện đã có và hình cần chứng minh","Là học sinh, tôi muốn nhập hình đã biết, điều kiện đã có và hình cần chứng minh để được gợi ý nên dùng dấu hiệu nào.
 
 Phụ trách: Thành viên B. Lệnh cho Claude Code: ""Đọc README.md và làm story US-13 (phần B). Chỉ sửa file thuộc phạm vi phần B.""
@@ -154,10 +154,10 @@ Yêu cầu SRS: FR-20
 
 Tiêu chí chấp nhận:
 - Hình bình hành + một góc vuông, đích hình chữ nhật: dấu hiệu tương ứng đứng đầu, thiếu 0 điều kiện.
-- Hình đã biết là trường hợp đặc biệt của hình đích thì thông báo đặc biệt hóa.",Thành viên B,High,8,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-03 – Hỗ trợ chứng minh,geoquad,R1,Must,tv-b
-52,51,Sub-task,[US-13] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b
-53,51,Sub-task,[US-13] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-54,51,Sub-task,"[US-13] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
+- Hình đã biết là trường hợp đặc biệt của hình đích thì thông báo đặc biệt hóa.",Thành viên B,High,8,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-03 – Hỗ trợ chứng minh,geoquad,R1,Must,tv-b,In Progress,Cập nhật B 08/10/2026 — Backend/DB/HTTP bốn AC gợi ý và QPP 2–3 bước đạt; còn UI 360px/keyboard và review A/C. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+52,51,Sub-task,[US-13] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Query thật đã chạy bằng Driver/cypher-shell trên seed test, params/ký hiệu/output có trong docs B; chưa chạy thủ công trong Neo4j Browser. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+53,51,Sub-task,[US-13] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,Done,Cập nhật B 08/10/2026 — Repository/service tham số; unit/DB/HTTP đạt; direct/inheritance/QPP/missingCount/class/review/input được kiểm tra. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+54,51,Sub-task,"[US-13] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Controller/View tiếng Việt và link proof readiness có; HTTP AC đạt, CSS 16px/target 48px; còn browser 360px/keyboard. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
 55,4,Story,US-14 Xem chứng minh mẫu từng bước kèm căn cứ,"Là học sinh, tôi muốn xem chứng minh mẫu từng bước kèm căn cứ để biết cách trình bày.
 
 Phụ trách: Thành viên B. Lệnh cho Claude Code: ""Đọc README.md và làm story US-14 (phần B). Chỉ sửa file thuộc phạm vi phần B.""
@@ -166,10 +166,10 @@ Yêu cầu SRS: FR-21
 
 Tiêu chí chấp nhận:
 - Mỗi bước có căn cứ là liên kết tới định lý.
-- Ẩn nút nếu chưa có chứng minh mẫu.",Thành viên B,Medium,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-03 – Hỗ trợ chứng minh,geoquad,R1,Should,tv-b
-56,55,Sub-task,[US-14] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b
-57,55,Sub-task,[US-14] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-58,55,Sub-task,"[US-14] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
+- Ẩn nút nếu chưa có chứng minh mẫu.",Thành viên B,Medium,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-03 – Hỗ trợ chứng minh,geoquad,R1,Should,tv-b,In Progress,Cập nhật B 08/10/2026 — Proofsteps/căn cứ/ẩn link/direct404/class đạt; còn review toán học C và kiểm tra UI 360px/keyboard. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+56,55,Sub-task,[US-14] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Query catalog/detail dùng chung readiness, params/output thực có docs B; chưa chạy thủ công Neo4j Browser. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+57,55,Sub-task,[US-14] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,Done,Cập nhật B 08/10/2026 — Repository và service chứng minh và xUnit/DB/HTTP đạt; thứ tự/căn cứ/thiếu/draft/class/nâng cao được kiểm tra. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+58,55,Sub-task,"[US-14] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,In Progress,Cập nhật B 08/10/2026 — View proof/SVGtitle/căn cứ-link hoặc details có; còn browser 360px/keyboard và review nội dung C. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
 59,5,Story,US-15 Nhập số đo,"Là học sinh, tôi muốn nhập số đo để tính chu vi, diện tích, đường chéo và xem các bước giải.
 
 Phụ trách: Thành viên A. Lệnh cho Claude Code: ""Đọc README.md và làm story US-15 (phần A). Chỉ sửa file thuộc phạm vi phần A.""
@@ -178,10 +178,10 @@ Yêu cầu SRS: FR-30
 
 Tiêu chí chấp nhận:
 - Hình chữ nhật 5 × 3: chu vi 16, diện tích 15, đường chéo ≈ 5,83.
-- Số đo không hợp lệ bị báo lỗi rõ ràng.",Thành viên A,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-04 – Tính toán & trực quan,geoquad,R1,Should,tv-a
-60,59,Sub-task,[US-15] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a
-61,59,Sub-task,[US-15] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-62,59,Sub-task,"[US-15] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
+- Số đo không hợp lệ bị báo lỗi rõ ràng.",Thành viên A,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-04 – Tính toán & trực quan,geoquad,R1,Should,tv-a,,
+60,59,Sub-task,[US-15] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/A-tra-cuu.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-a,,
+61,59,Sub-task,[US-15] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+62,59,Sub-task,"[US-15] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
 63,5,Story,US-16 Thấy hình vẽ tỉ lệ theo số đo vừa nhập,"Là học sinh, tôi muốn thấy hình vẽ tỉ lệ theo số đo vừa nhập để hình dung bài toán.
 
 Phụ trách: Thành viên A. Lệnh cho Claude Code: ""Đọc README.md và làm story US-16 (phần A). Chỉ sửa file thuộc phạm vi phần A.""
@@ -189,9 +189,9 @@ Yêu cầu SRS: FR-31
 Ưu tiên MoSCoW: Should
 
 Tiêu chí chấp nhận:
-- Hình SVG có nhãn đỉnh, cạnh, góc và có mô tả thay thế.",Thành viên A,Medium,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-04 – Tính toán & trực quan,geoquad,R1,Should,tv-a
-64,63,Sub-task,[US-16] Logic thuần (lớp không phụ thuộc Neo4j) + unit test,Theo README.,Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-65,63,Sub-task,"[US-16] Giao diện, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
+- Hình SVG có nhãn đỉnh, cạnh, góc và có mô tả thay thế.",Thành viên A,Medium,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-04 – Tính toán & trực quan,geoquad,R1,Should,tv-a,,
+64,63,Sub-task,[US-16] Logic thuần (lớp không phụ thuộc Neo4j) + unit test,Theo README.,Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+65,63,Sub-task,"[US-16] Giao diện, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px.",Thành viên A,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
 66,6,Story,US-17 Xem tình huống thực tế gắn với kiến thức,"Là học sinh, tôi muốn xem tình huống thực tế gắn với kiến thức để nhớ lâu và biết dùng vào đâu.
 
 Phụ trách: Thành viên B. Lệnh cho Claude Code: ""Đọc README.md và làm story US-17 (phần B). Chỉ sửa file thuộc phạm vi phần B.""
@@ -199,10 +199,10 @@ Yêu cầu SRS: FR-40
 Ưu tiên MoSCoW: Must
 
 Tiêu chí chấp nhận:
-- Tình huống liên kết tới định lý/công thức được dùng và có giải thích ""vì sao đúng"".",Thành viên B,High,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-05 – Bài toán thực tế,geoquad,R1,Must,tv-b
-67,66,Sub-task,[US-17] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b
-68,66,Sub-task,[US-17] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-69,66,Sub-task,"[US-17] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
+- Tình huống liên kết tới định lý/công thức được dùng và có giải thích ""vì sao đúng"".",Thành viên B,High,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-05 – Bài toán thực tế,geoquad,R1,Must,tv-b,In Progress,"Cập nhật B 08/10/2026 — 3 bối cảnh/9 tình huống trong graph test, AP_DUNG/full-class gate và HTTP đạt; còn browser 360px và seed B được review. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+67,66,Sub-task,[US-17] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Query list/detail cùng gate, max lớp toàn AP_DUNG, params/output thực có docs B; chưa chạy thủ công Neo4j Browser. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+68,66,Sub-task,[US-17] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,Done,Cập nhật B 08/10/2026 — Repository và service tình huống và xUnit/DB/HTTP đạt; context/input/list/detail/class/missingAP_DUNG được kiểm tra. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+69,66,Sub-task,"[US-17] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,In Progress,Cập nhật B 08/10/2026 — Controller/View/filter/read-only/giải thích/đo đạc có; còn browser 360px/keyboard. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
 70,6,Story,"US-18 Nhập số đo thật (cạnh, đường chéo)","Là học sinh, tôi muốn nhập số đo thật (cạnh, đường chéo) để kiểm tra khung cửa, mặt bàn có vuông không.
 
 Phụ trách: Thành viên B. Lệnh cho Claude Code: ""Đọc README.md và làm story US-18 (phần B). Chỉ sửa file thuộc phạm vi phần B.""
@@ -210,10 +210,10 @@ Yêu cầu SRS: FR-41
 Ưu tiên MoSCoW: Should
 
 Tiêu chí chấp nhận:
-- AB = CD = 2,00; BC = DA = 0,90; AC = BD = 2,19 (sai số 1%): kết luận hình chữ nhật.",Thành viên B,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-05 – Bài toán thực tế,geoquad,R1,Should,tv-b
-71,70,Sub-task,[US-18] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b
-72,70,Sub-task,[US-18] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-73,70,Sub-task,"[US-18] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
+- AB = CD = 2,00; BC = DA = 0,90; AC = BD = 2,19 (sai số 1%): kết luận hình chữ nhật.",Thành viên B,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-05 – Bài toán thực tế,geoquad,R1,Should,tv-b,In Progress,Cập nhật B 08/10/2026 — Mẫu 2/.9/2.19 → HCN; 23 unit cases classifier/input và HTTP/CSRF/class/no-write đạt; còn browser 360px/keyboard. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+71,70,Sub-task,[US-18] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,Cập nhật B 08/10/2026 — Query trace dấu hiệu reviewed/class tham số và output thật có docs B; chưa chạy thủ công Neo4j Browser. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+72,70,Sub-task,[US-18] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,Done,"Cập nhật B 08/10/2026 — Classifier/input/server gate và xUnit/HTTP đạt; tolerance đối xứng, unit, finite, tam giác, hai nhánh hình vuông, trace thật, không ghi học tập. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+73,70,Sub-task,"[US-18] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,In Progress,Cập nhật B 08/10/2026 — Form giữ input/lỗi/CSRF/result và trace có; còn browser 360px/keyboard/4G. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
 74,7,Story,"US-19 Lọc ngân hàng bài tập theo lớp, dạng, độ khó, khái niệm","Là học sinh, tôi muốn lọc ngân hàng bài tập theo lớp, dạng, độ khó, khái niệm để chọn bài vừa sức.
 
 Phụ trách: Thành viên C. Lệnh cho Claude Code: ""Đọc README.md và làm story US-19 (phần C). Chỉ sửa file thuộc phạm vi phần C.""
@@ -221,10 +221,10 @@ Yêu cầu SRS: FR-50
 Ưu tiên MoSCoW: Must
 
 Tiêu chí chấp nhận:
-- Bộ lọc kết hợp được nhiều tiêu chí.",Thành viên C,High,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-06 – Bài tập & chấm bài,geoquad,R1,Must,tv-c
-75,74,Sub-task,[US-19] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c
-76,74,Sub-task,[US-19] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-77,74,Sub-task,"[US-19] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Bộ lọc kết hợp được nhiều tiêu chí.",Thành viên C,High,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-06 – Bài tập & chấm bài,geoquad,R1,Must,tv-c,,
+75,74,Sub-task,[US-19] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c,,
+76,74,Sub-task,[US-19] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+77,74,Sub-task,"[US-19] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 78,7,Story,US-20 Làm bài và được chấm ngay kèm giải thích,"Là học sinh, tôi muốn làm bài và được chấm ngay kèm giải thích để biết mình sai ở đâu.
 
 Phụ trách: Thành viên C. Lệnh cho Claude Code: ""Đọc README.md và làm story US-20 (phần C). Chỉ sửa file thuộc phạm vi phần C.""
@@ -233,10 +233,10 @@ Yêu cầu SRS: FR-51
 
 Tiêu chí chấp nhận:
 - Trắc nghiệm và đáp án số được chấm theo BR-05.
-- Học sinh đăng nhập được lưu lần làm; khách thì không.",Thành viên C,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-06 – Bài tập & chấm bài,geoquad,R1,Must,tv-c
-79,78,Sub-task,[US-20] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c
-80,78,Sub-task,[US-20] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-81,78,Sub-task,"[US-20] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Học sinh đăng nhập được lưu lần làm; khách thì không.",Thành viên C,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-06 – Bài tập & chấm bài,geoquad,R1,Must,tv-c,,
+79,78,Sub-task,[US-20] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c,,
+80,78,Sub-task,[US-20] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+81,78,Sub-task,"[US-20] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 82,7,Story,US-21 Xem lời giải mẫu của bài chứng minh tự luận,"Là học sinh, tôi muốn xem lời giải mẫu của bài chứng minh tự luận để học cách làm.
 
 Phụ trách: Thành viên C. Lệnh cho Claude Code: ""Đọc README.md và làm story US-21 (phần C). Chỉ sửa file thuộc phạm vi phần C.""
@@ -244,10 +244,10 @@ Yêu cầu SRS: FR-52
 Ưu tiên MoSCoW: Should
 
 Tiêu chí chấp nhận:
-- Bài chứng minh không chấm tự động và có nút xem lời giải mẫu.",Thành viên C,Medium,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-06 – Bài tập & chấm bài,geoquad,R1,Should,tv-c
-83,82,Sub-task,[US-21] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c
-84,82,Sub-task,[US-21] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-85,82,Sub-task,"[US-21] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Bài chứng minh không chấm tự động và có nút xem lời giải mẫu.",Thành viên C,Medium,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-06 – Bài tập & chấm bài,geoquad,R1,Should,tv-c,,
+83,82,Sub-task,[US-21] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c,,
+84,82,Sub-task,[US-21] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+85,82,Sub-task,"[US-21] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 86,8,Story,US-22 Xem lộ trình học một khái niệm theo đúng thứ tự,"Là học sinh, tôi muốn xem lộ trình học một khái niệm theo đúng thứ tự để biết bắt đầu từ đâu.
 
 Phụ trách: Thành viên C. Lệnh cho Claude Code: ""Đọc README.md và làm story US-22 (phần C). Chỉ sửa file thuộc phạm vi phần C.""
@@ -257,10 +257,10 @@ Yêu cầu SRS: FR-60
 Tiêu chí chấp nhận:
 - Khái niệm tiên quyết xuất hiện trước khái niệm phụ thuộc.
 - Trạng thái đã học hiển thị đúng.
-- Giới hạn trong lớp của học sinh.",Thành viên C,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-07 – Học tập cá nhân hóa,geoquad,R1,Must,tv-c
-87,86,Sub-task,[US-22] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c
-88,86,Sub-task,[US-22] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-89,86,Sub-task,"[US-22] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Giới hạn trong lớp của học sinh.",Thành viên C,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-07 – Học tập cá nhân hóa,geoquad,R1,Must,tv-c,,
+87,86,Sub-task,[US-22] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c,,
+88,86,Sub-task,[US-22] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+89,86,Sub-task,"[US-22] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 90,8,Story,US-23 Xem tiến độ và phần yếu,"Là học sinh, tôi muốn xem tiến độ và phần yếu để biết nên ôn gì.
 
 Phụ trách: Thành viên C. Lệnh cho Claude Code: ""Đọc README.md và làm story US-23 (phần C). Chỉ sửa file thuộc phạm vi phần C.""
@@ -268,10 +268,10 @@ Yêu cầu SRS: FR-61
 Ưu tiên MoSCoW: Should
 
 Tiêu chí chấp nhận:
-- Khái niệm có tỉ lệ đúng dưới 60% (5 lần gần nhất, tối thiểu 3 lần) nằm trong danh sách cần ôn.",Thành viên C,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-07 – Học tập cá nhân hóa,geoquad,R1,Should,tv-c
-91,90,Sub-task,[US-23] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c
-92,90,Sub-task,[US-23] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-93,90,Sub-task,"[US-23] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Khái niệm có tỉ lệ đúng dưới 60% (5 lần gần nhất, tối thiểu 3 lần) nằm trong danh sách cần ôn.",Thành viên C,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-07 – Học tập cá nhân hóa,geoquad,R1,Should,tv-c,,
+91,90,Sub-task,[US-23] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c,,
+92,90,Sub-task,[US-23] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+93,90,Sub-task,"[US-23] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 94,8,Story,US-24 Được gợi ý bài kế tiếp,"Là học sinh, tôi muốn được gợi ý bài kế tiếp để củng cố phần yếu.
 
 Phụ trách: Thành viên C. Lệnh cho Claude Code: ""Đọc README.md và làm story US-24 (phần C). Chỉ sửa file thuộc phạm vi phần C.""
@@ -279,10 +279,10 @@ Yêu cầu SRS: FR-62
 Ưu tiên MoSCoW: Should
 
 Tiêu chí chấp nhận:
-- Gợi ý tối đa 5 bài, chưa làm đúng, đúng lớp, độ khó tăng dần.",Thành viên C,Medium,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-07 – Học tập cá nhân hóa,geoquad,R1,Should,tv-c
-95,94,Sub-task,[US-24] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c
-96,94,Sub-task,[US-24] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-97,94,Sub-task,"[US-24] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Gợi ý tối đa 5 bài, chưa làm đúng, đúng lớp, độ khó tăng dần.",Thành viên C,Medium,3,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-07 – Học tập cá nhân hóa,geoquad,R1,Should,tv-c,,
+95,94,Sub-task,[US-24] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/C-hoc-tap.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-c,,
+96,94,Sub-task,[US-24] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+97,94,Sub-task,"[US-24] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên C,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 98,9,Story,"US-25 Thêm, sửa, ẩn bài tập","Là quản trị viên, tôi muốn thêm, sửa, ẩn bài tập để mở rộng ngân hàng bài tập mà không cần chạy script.
 
 Phụ trách: Thành viên B. Lệnh cho Claude Code: ""Đọc README.md và làm story US-25 (phần B). Chỉ sửa file thuộc phạm vi phần B.""
@@ -291,10 +291,10 @@ Yêu cầu SRS: FR-70
 
 Tiêu chí chấp nhận:
 - Trắc nghiệm phải có đúng một đáp án đúng.
-- Bài ẩn không hiện với học sinh nhưng giữ lịch sử.",Thành viên B,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-08 – Quản trị nội dung,geoquad,R1,Should,tv-b
-99,98,Sub-task,[US-25] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b
-100,98,Sub-task,[US-25] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-101,98,Sub-task,"[US-25] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
+- Bài ẩn không hiện với học sinh nhưng giữ lịch sử.",Thành viên B,Medium,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-08 – Quản trị nội dung,geoquad,R1,Should,tv-b,In Progress,Cập nhật B 08/10/2026 — CRUD 3 loại/role/CSRF/atomicity/immutablecode/preview/history đạt; còn reader C cho bài ẩn và UI 360px/keyboard. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
+99,98,Sub-task,[US-25] Cypher: viết và chạy thử truy vấn trên Neo4j Browser,"Chạy trên dữ liệu seed, ghi vào docs/cypher/B-ap-dung.md kèm giải thích từng ký hiệu và kết quả mong đợi.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-07,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Mọi query CRUD/catalog đã chạy thật, params/output/rollback có docs B; chưa chạy thủ công Neo4j Browser. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+100,98,Sub-task,[US-25] Backend: Repository + Service + unit test,"Cypher là hằng trong Repository, luôn dùng tham số; logic thuần có unit test xUnit.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,Done,"Cập nhật B 08/10/2026 — Validator 3 loại/whitelist, transaction rollback/ID/race, history, preview, role/login/CSRF thật đạt. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+101,98,Sub-task,"[US-25] Giao diện: Controller + View, kiểm tra AC","Tiếng Việt, đáp ứng 360px, nút ≥ 44px; tự kiểm tra từng tiêu chí chấp nhận.",Thành viên B,Medium,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,In Progress,Cập nhật B 08/10/2026 — List/filter/editor/preview/hide có; còn browser 360px/keyboard và đối chiếu giao diện học sinh C. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import.
 102,10,Task,"US-26 Kiểm thử luồng chính, sửa lỗi và hoàn thiện giao diện đáp ứng","Là nhóm phát triển, chúng tôi muốn kiểm thử luồng chính, sửa lỗi và hoàn thiện giao diện đáp ứng để bản demo ổn định.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -303,13 +303,13 @@ Yêu cầu SRS: NFR-01, NFR-03, NFR-04, NFR-05
 
 Tiêu chí chấp nhận:
 - Các acceptance criteria của mọi story Must đạt.
-- Không có lỗi nghiêm trọng ở luồng đăng ký, tra cứu, gợi ý, làm bài.",,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-09 – Chất lượng & bàn giao,geoquad,R1,Must,ca-nhom
-103,102,Sub-task,"[US-26] Kiểm thử chéo phần B: chạy hết AC, tự chạy lại 2 câu Cypher của B, ghi docs/kiem-thu.md",,Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-104,102,Sub-task,"[US-26] Kiểm thử chéo phần C: chạy hết AC, tự chạy lại 2 câu Cypher của C, ghi docs/kiem-thu.md",,Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-105,102,Sub-task,"[US-26] Kiểm thử chéo phần A: chạy hết AC, tự chạy lại 2 câu Cypher của A, ghi docs/kiem-thu.md",,Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
-106,102,Sub-task,[US-26] Sửa lỗi phần A và hoàn thiện giao diện đáp ứng (360px),,Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-107,102,Sub-task,[US-26] Sửa lỗi phần B và hoàn thiện giao diện đáp ứng (360px),,Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-108,102,Sub-task,[US-26] Sửa lỗi phần C và hoàn thiện giao diện đáp ứng (360px),,Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Không có lỗi nghiêm trọng ở luồng đăng ký, tra cứu, gợi ý, làm bài.",,High,5,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-09 – Chất lượng & bàn giao,geoquad,R1,Must,ca-nhom,,
+103,102,Sub-task,"[US-26] Kiểm thử chéo phần B: chạy hết AC, tự chạy lại 2 câu Cypher của B, ghi docs/kiem-thu.md",,Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+104,102,Sub-task,"[US-26] Kiểm thử chéo phần C: chạy hết AC, tự chạy lại 2 câu Cypher của C, ghi docs/kiem-thu.md",,Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,To Do,"Cập nhật B 08/10/2026 — Chưa thực hiện AC/Cypher C vì controllers C còn khung, docs C chưa có query; blockers đã ghi docs/kiem-thu.md. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+105,102,Sub-task,"[US-26] Kiểm thử chéo phần A: chạy hết AC, tự chạy lại 2 câu Cypher của A, ghi docs/kiem-thu.md",,Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
+106,102,Sub-task,[US-26] Sửa lỗi phần A và hoàn thiện giao diện đáp ứng (360px),,Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+107,102,Sub-task,[US-26] Sửa lỗi phần B và hoàn thiện giao diện đáp ứng (360px),,Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Lỗi B đã sửa và regression đạt; load 1.000 request/100 workers p95=427.4867 ms,0 lỗi; còn browser 360px/keyboard/4G/KaTeX. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+108,102,Sub-task,[US-26] Sửa lỗi phần C và hoàn thiện giao diện đáp ứng (360px),,Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 109,10,Task,"US-27 Có README, script sao lưu/khôi phục và kịch bản demo","Là nhóm phát triển, chúng tôi muốn có README, script sao lưu/khôi phục và kịch bản demo để bàn giao và trình bày.
 
 Story chung của cả nhóm: việc chia cho từng người ở các sub-task. Chi tiết trong README.md.
@@ -318,42 +318,42 @@ Yêu cầu SRS: NFR-07, NFR-08, NFR-13
 
 Tiêu chí chấp nhận:
 - Người ngoài chạy được hệ thống từ máy sạch theo README trong 15 phút.
-- Khôi phục dữ liệu thử thành công.",,High,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-09 – Chất lượng & bàn giao,geoquad,R1,Must,ca-nhom
-110,109,Sub-task,"[US-27] README ""Chạy dự án từ máy sạch"" và thử trên máy chưa cài",,Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a
-111,109,Sub-task,"[US-27] Script sao lưu/khôi phục Neo4j (neo4j-admin database dump/load), thử khôi phục một lần",NFR-07.,Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b
-112,109,Sub-task,"[US-27] Kịch bản demo docs/demo.md, tập chạy và bấm giờ",,Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c
+- Khôi phục dữ liệu thử thành công.",,High,2,GeoQuad Sprint 2 (08/10),2026-10-08,,EP-09 – Chất lượng & bàn giao,geoquad,R1,Must,ca-nhom,,
+110,109,Sub-task,"[US-27] README ""Chạy dự án từ máy sạch"" và thử trên máy chưa cài",,Thành viên A,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-a,,
+111,109,Sub-task,"[US-27] Script sao lưu/khôi phục Neo4j (neo4j-admin database dump/load), thử khôi phục một lần",NFR-07.,Thành viên B,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-b,In Progress,"Cập nhật B 08/10/2026 — Shell offline dump/load cùng image ID/manifest/checksum/auth/history/source thật đạt, flow lỗi đạt; PowerShell/Windows/ACL còn chưa chạy. Evidence: docs/cypher/B-ap-dung.md; docs/kiem-thu.md; plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md. Jira online chưa cập nhật; đây là trạng thái CSV local theo Issue Id import."
+112,109,Sub-task,"[US-27] Kịch bản demo docs/demo.md, tập chạy và bấm giờ",,Thành viên C,High,,GeoQuad Sprint 2 (08/10),2026-10-08,,,geoquad,R1,,tv-c,,
 113,11,Story,US-28 Nhập bài chứng minh của mình và được chỉ ra bước thiếu căn cứ,"Là học sinh, tôi muốn nhập bài chứng minh của mình và được chỉ ra bước thiếu căn cứ.
 
 Release 2 (Could) theo SRS: chưa lên lịch, chưa ước lượng.
 Yêu cầu SRS: FR-22
-Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,
+Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,,,
 114,11,Story,US-29 Kéo đỉnh của hình,"Là học sinh, tôi muốn kéo đỉnh của hình để quan sát tính chất không đổi.
 
 Release 2 (Could) theo SRS: chưa lên lịch, chưa ước lượng.
 Yêu cầu SRS: FR-32
-Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,
+Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,,,
 115,11,Story,US-30 Chụp ảnh đề bài,"Là học sinh, tôi muốn chụp ảnh đề bài để hệ thống nhận diện.
 
 Release 2 (Could) theo SRS: chưa lên lịch, chưa ước lượng.
 Yêu cầu SRS: FR-33
-Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,
+Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,,,
 116,11,Story,US-31 Quản lý nội dung kiến thức và các quan hệ trên giao diện,"Là quản trị viên, tôi muốn quản lý nội dung kiến thức và các quan hệ trên giao diện.
 
 Release 2 (Could) theo SRS: chưa lên lịch, chưa ước lượng.
 Yêu cầu SRS: FR-71
-Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,
+Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,,,
 117,11,Story,US-32 Nhập nội dung và bài tập từ tệp CSV/JSON,"Là quản trị viên, tôi muốn nhập nội dung và bài tập từ tệp CSV/JSON.
 
 Release 2 (Could) theo SRS: chưa lên lịch, chưa ước lượng.
 Yêu cầu SRS: FR-72
-Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,
+Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,,,
 118,11,Story,US-33 Nhận huy hiệu và thấy chuỗi ngày học,"Là học sinh, tôi muốn nhận huy hiệu và thấy chuỗi ngày học để có động lực.
 
 Release 2 (Could) theo SRS: chưa lên lịch, chưa ước lượng.
 Yêu cầu SRS: FR-80
-Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,
+Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,,,
 119,11,Story,US-34 Nhập tọa độ bốn đỉnh,"Là học sinh cấp 3, tôi muốn nhập tọa độ bốn đỉnh để biết đó là hình gì.
 
 Release 2 (Could) theo SRS: chưa lên lịch, chưa ước lượng.
 Yêu cầu SRS: FR-34
-Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,
+Ưu tiên MoSCoW: Could",,Low,,,,,EP-10 – Mở rộng (Release 2),geoquad,R2,Could,,,
