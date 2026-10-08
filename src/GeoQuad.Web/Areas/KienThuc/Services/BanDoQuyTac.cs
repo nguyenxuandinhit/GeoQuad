@@ -31,13 +31,16 @@ public static class BanDoQuyTac
             .ToList();
     }
 
-    /// <summary>Màu nút theo cấp học; luôn đi kèm chữ ghi lớp nên không chỉ dùng màu (NFR-11).</summary>
+    /// <summary>
+    /// Màu nút theo cấp học, ba sắc độ trong tông nâu của GeoQuad; phân biệt thêm bằng
+    /// độ đậm nhạt và bằng chữ ghi lớp trong nhãn nên không chỉ dùng màu (NFR-11).
+    /// </summary>
     public static string MauTheoCap(string? cap) => cap switch
     {
-        "CAP_1" => "#2f8f4e",
-        "CAP_2" => "#1f6fb2",
-        "CAP_3" => "#8a4ea8",
-        _ => "#6c757d"
+        "CAP_1" => "#a9714a",   // nâu cam
+        "CAP_2" => "#74553c",   // nâu
+        "CAP_3" => "#3e3027",   // nâu đậm
+        _ => "#8c7a68"
     };
 
     /// <summary>Chú giải màu cho bản đồ.</summary>

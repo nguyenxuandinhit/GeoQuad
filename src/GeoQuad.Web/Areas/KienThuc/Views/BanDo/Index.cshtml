@@ -68,7 +68,7 @@
             </ul>
 
             <div id="gq-ban-do" class="border rounded"
-                 style="height:420px;min-height:320px" role="img"
+                 style="height:420px;min-height:320px;background-color:#fffdf9" role="img"
                  aria-label="Sơ đồ quan hệ giữa các loại tứ giác. Bảng bên dưới ghi lại cùng nội dung bằng chữ."></div>
 
             <noscript>
@@ -215,25 +215,27 @@
                         selector: 'node',
                         style: {
                             'label': 'data(nhan)', 'text-wrap': 'wrap', 'text-valign': 'center',
-                            'text-halign': 'center', 'color': '#fff', 'font-size': '11px',
+                            'text-halign': 'center', 'color': '#fdfaf5', 'font-size': '11px',
+                            'font-weight': 600,
                             'background-color': 'data(mau)', 'shape': 'round-rectangle',
-                            'width': 'label', 'height': 'label', 'padding': '8px',
-                            'border-width': 1, 'border-color': '#333'
+                            'width': 'label', 'height': 'label', 'padding': '10px',
+                            'border-width': 1, 'border-color': '#3e3027'
                         }
                     },
                     {
                         // Nút đã học: viền đậm, kèm dấu ✓ trong nhãn.
                         selector: 'node[?daHoc]',
-                        style: { 'border-width': 4, 'border-color': '#146c43' }
+                        style: { 'border-width': 4, 'border-color': '#f3eadc' }
                     },
                     {
                         selector: 'edge',
                         style: {
-                            'width': 2, 'line-color': '#6c757d', 'target-arrow-color': '#6c757d',
-                            'target-arrow-shape': 'triangle', 'curve-style': 'bezier'
+                            'width': 2, 'line-color': '#b39b80', 'target-arrow-color': '#8c6a4e',
+                            'target-arrow-shape': 'triangle', 'arrow-scale': 1.2,
+                            'curve-style': 'bezier'
                         }
                     },
-                    { selector: 'node:selected', style: { 'border-width': 4, 'border-color': '#d63384' } }
+                    { selector: 'node:selected', style: { 'border-width': 5, 'border-color': '#a9714a' } }
                 ]
             });
 

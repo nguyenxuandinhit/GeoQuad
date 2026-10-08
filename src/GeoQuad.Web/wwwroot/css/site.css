@@ -1,9 +1,52 @@
-/* GeoQuad – kiểu dùng chung (PHẦN 0).
-   Mỗi phần A/B/C đặt CSS riêng trong view qua @section Styles, không sửa file này. */
+/* ============================================================================
+   GeoQuad – kiểu dùng chung (PHẦN 0)
+   Bảng màu: be và nâu, 5 tông chính + 1 màu đất đỏ dành riêng cho thông báo lỗi.
+   Mỗi phần A/B/C đặt CSS riêng trong view qua @section Styles, không sửa file này.
+   ============================================================================ */
 
 :root {
+    /* ---- 5 tông chính ---- */
+    --gq-nen: #faf6f0;      /* be rất nhạt – nền trang */
+    --gq-the: #f3eadc;      /* be – thẻ, khối, thanh điều hướng */
+    --gq-vien: #ddc9ae;     /* be đậm – đường viền */
+    --gq-nau: #6b4f3a;      /* nâu – màu chính: nút, tiêu đề, thanh nav */
+    --gq-nhan: #a9714a;     /* nâu cam – nhấn: liên kết, nhãn "Nâng cao" */
+
+    /* ---- Chữ và màu lỗi ---- */
+    --gq-chu: #33281f;      /* nâu gần đen – chữ nội dung */
+    --gq-chu-nhat: #6f6155; /* nâu xám – chữ phụ */
+    --gq-loi: #8f4a3c;      /* đất đỏ – chỉ dùng cho thông báo lỗi */
+
+    /* ---- Dẫn xuất ---- */
+    --gq-nau-dam: #523c2c;
+    --gq-nau-nhat: #8c6a4e;
+    --gq-the-dam: #eaddc9;
+
     --gq-co-chu: 1rem;        /* 16px, NFR-03 */
     --gq-nut-toi-thieu: 44px; /* NFR-04 */
+    --gq-bo-goc: .5rem;
+}
+
+/* ---- Nối bảng màu vào biến của Bootstrap ---- */
+:root,
+[data-bs-theme="light"] {
+    --bs-body-bg: var(--gq-nen);
+    --bs-body-color: var(--gq-chu);
+    --bs-body-color-rgb: 51, 40, 31;
+    --bs-secondary-color: var(--gq-chu-nhat);
+    --bs-tertiary-bg: var(--gq-the);
+    --bs-border-color: var(--gq-vien);
+    --bs-border-color-translucent: var(--gq-vien);
+    --bs-link-color: var(--gq-nhan);
+    --bs-link-hover-color: var(--gq-nau-dam);
+    --bs-link-color-rgb: 169, 113, 74;
+    --bs-primary: var(--gq-nau);
+    --bs-primary-rgb: 107, 79, 58;
+    --bs-primary-bg-subtle: var(--gq-the-dam);
+    --bs-primary-border-subtle: var(--gq-vien);
+    --bs-emphasis-color: var(--gq-nau-dam);
+    --bs-heading-color: var(--gq-nau-dam);
+    --bs-focus-ring-color: rgba(107, 79, 58, .3);
 }
 
 html {
@@ -12,13 +55,80 @@ html {
 
 body {
     font-size: var(--gq-co-chu);
-    line-height: 1.6;
+    line-height: 1.65;
+    background-color: var(--gq-nen);
+    color: var(--gq-chu);
 }
 
-/* Nút và vùng bấm đủ lớn cho học sinh (NFR-04). */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--gq-nau-dam);
+    font-weight: 600;
+}
+
+.text-body-secondary {
+    color: var(--gq-chu-nhat) !important;
+}
+
+/* ============================================================================
+   Thanh điều hướng
+   ============================================================================ */
+
+header .navbar {
+    background-color: var(--gq-nau) !important;
+    border-bottom: 3px solid var(--gq-nau-dam) !important;
+}
+
+header .navbar .navbar-brand,
+header .navbar .nav-link,
+header .navbar .navbar-text,
+header .navbar .form-label {
+    color: #fdfaf5;
+}
+
+header .navbar .navbar-brand {
+    letter-spacing: .02em;
+}
+
+header .navbar .nav-link:hover,
+header .navbar .nav-link:focus-visible {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+header .navbar .navbar-toggler {
+    border-color: rgba(255, 255, 255, .5);
+}
+
+header .navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28253,250,245,0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+header .navbar .form-select {
+    background-color: #fdfaf5;
+    border-color: var(--gq-nau-nhat);
+    color: var(--gq-chu);
+}
+
+header .navbar .form-check-input {
+    border-color: rgba(255, 255, 255, .6);
+    background-color: rgba(255, 255, 255, .25);
+}
+
+header .navbar .form-check-input:checked {
+    background-color: var(--gq-nhan);
+    border-color: var(--gq-nhan);
+}
+
+/* ============================================================================
+   Nút
+   ============================================================================ */
+
 .gq-nut,
 .btn,
 .form-select,
+.form-control,
 .nav-link {
     min-height: var(--gq-nut-toi-thieu);
 }
@@ -26,15 +136,279 @@ body {
 .gq-nut,
 .btn {
     min-width: var(--gq-nut-toi-thieu);
+    border-radius: var(--gq-bo-goc);
+    font-weight: 500;
 }
 
-/* Cấp 1: vùng bấm lớn hơn (NFR-04). */
+.btn-primary {
+    --bs-btn-bg: var(--gq-nau);
+    --bs-btn-border-color: var(--gq-nau);
+    --bs-btn-color: #fdfaf5;
+    --bs-btn-hover-bg: var(--gq-nau-dam);
+    --bs-btn-hover-border-color: var(--gq-nau-dam);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--gq-nau-dam);
+    --bs-btn-active-border-color: var(--gq-nau-dam);
+    --bs-btn-disabled-bg: var(--gq-nau-nhat);
+    --bs-btn-disabled-border-color: var(--gq-nau-nhat);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--gq-nau);
+    --bs-btn-border-color: var(--gq-nau);
+    --bs-btn-hover-bg: var(--gq-nau);
+    --bs-btn-hover-border-color: var(--gq-nau);
+    --bs-btn-hover-color: #fdfaf5;
+    --bs-btn-active-bg: var(--gq-nau-dam);
+    --bs-btn-active-border-color: var(--gq-nau-dam);
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--gq-nau-nhat);
+    --bs-btn-border-color: var(--gq-vien);
+    --bs-btn-hover-bg: var(--gq-the-dam);
+    --bs-btn-hover-border-color: var(--gq-nau-nhat);
+    --bs-btn-hover-color: var(--gq-nau-dam);
+    --bs-btn-active-bg: var(--gq-the-dam);
+    --bs-btn-active-color: var(--gq-nau-dam);
+}
+
+.btn-outline-danger {
+    --bs-btn-color: var(--gq-loi);
+    --bs-btn-border-color: var(--gq-loi);
+    --bs-btn-hover-bg: var(--gq-loi);
+    --bs-btn-hover-border-color: var(--gq-loi);
+    --bs-btn-hover-color: #fdfaf5;
+}
+
+header .navbar .btn-outline-primary,
+header .navbar .btn-outline-secondary,
+header .navbar .btn-outline-danger {
+    --bs-btn-color: #fdfaf5;
+    --bs-btn-border-color: rgba(253, 250, 245, .65);
+    --bs-btn-hover-bg: #fdfaf5;
+    --bs-btn-hover-border-color: #fdfaf5;
+    --bs-btn-hover-color: var(--gq-nau-dam);
+}
+
+header .navbar .btn-primary {
+    --bs-btn-bg: var(--gq-nhan);
+    --bs-btn-border-color: var(--gq-nhan);
+    --bs-btn-hover-bg: #95603c;
+    --bs-btn-hover-border-color: #95603c;
+}
+
+/* ============================================================================
+   Thẻ, danh sách, bảng
+   ============================================================================ */
+
+.card {
+    --bs-card-bg: #fffdf9;
+    --bs-card-border-color: var(--gq-vien);
+    --bs-card-border-radius: var(--gq-bo-goc);
+    box-shadow: 0 1px 2px rgba(82, 60, 44, .06);
+}
+
+.card.border-success,
+.card.border-warning {
+    border-color: var(--gq-nhan) !important;
+    border-width: 2px !important;
+}
+
+.list-group {
+    --bs-list-group-bg: #fffdf9;
+    --bs-list-group-border-color: var(--gq-vien);
+    --bs-list-group-color: var(--gq-chu);
+    --bs-list-group-action-hover-bg: var(--gq-the);
+}
+
+.table {
+    --bs-table-bg: #fffdf9;
+    --bs-table-color: var(--gq-chu);
+    --bs-table-border-color: var(--gq-vien);
+    --bs-table-striped-bg: var(--gq-nen);
+    --bs-table-hover-bg: var(--gq-the);
+}
+
+.table thead th {
+    background-color: var(--gq-the);
+    color: var(--gq-nau-dam);
+    border-bottom: 2px solid var(--gq-vien);
+}
+
+.breadcrumb {
+    --bs-breadcrumb-divider-color: var(--gq-nau-nhat);
+    --bs-breadcrumb-item-active-color: var(--gq-chu-nhat);
+    background-color: transparent;
+    padding: .25rem 0;
+}
+
+/* ============================================================================
+   Tab
+   ============================================================================ */
+
+.nav-tabs {
+    --bs-nav-tabs-border-color: var(--gq-vien);
+    --bs-nav-tabs-link-hover-border-color: var(--gq-vien);
+    --bs-nav-tabs-link-active-bg: #fffdf9;
+    --bs-nav-tabs-link-active-border-color: var(--gq-vien);
+    --bs-nav-tabs-link-active-color: var(--gq-nau-dam);
+}
+
+.nav-tabs .nav-link {
+    color: var(--gq-nau-nhat);
+    border-top-left-radius: var(--gq-bo-goc);
+    border-top-right-radius: var(--gq-bo-goc);
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: 600;
+    box-shadow: inset 0 3px 0 var(--gq-nhan);
+}
+
+.tab-content {
+    background-color: #fffdf9;
+    border-color: var(--gq-vien) !important;
+}
+
+/* ============================================================================
+   Nhãn (badge) – giữ trong tông be/nâu, luôn kèm chữ hoặc ký hiệu (NFR-11)
+   ============================================================================ */
+
+.badge {
+    font-weight: 600;
+    border-radius: 999px;
+    padding: .35em .7em;
+}
+
+.badge.text-bg-primary,
+.badge.text-bg-secondary {
+    background-color: var(--gq-nau) !important;
+    color: #fdfaf5 !important;
+}
+
+.badge.text-bg-light {
+    background-color: var(--gq-the) !important;
+    color: var(--gq-nau-dam) !important;
+    border-color: var(--gq-vien) !important;
+}
+
+/* "Nâng cao" – nâu cam, kèm ký hiệu ▲ */
+.badge.text-bg-warning {
+    background-color: var(--gq-nhan) !important;
+    color: #fdfaf5 !important;
+}
+
+/* "Đã học" – nâu đậm, kèm dấu ✓ */
+.badge.text-bg-success {
+    background-color: var(--gq-nau-dam) !important;
+    color: #fdfaf5 !important;
+}
+
+.badge.text-bg-danger {
+    background-color: var(--gq-loi) !important;
+    color: #fdfaf5 !important;
+}
+
+/* ============================================================================
+   Khối thông báo
+   ============================================================================ */
+
+.alert {
+    --bs-alert-border-radius: var(--gq-bo-goc);
+    border-width: 1px;
+    border-left-width: 4px;
+}
+
+.alert-info,
+.alert-secondary {
+    --bs-alert-bg: var(--gq-the);
+    --bs-alert-border-color: var(--gq-nau-nhat);
+    --bs-alert-color: var(--gq-chu);
+}
+
+.alert-warning {
+    --bs-alert-bg: #f7e9d7;
+    --bs-alert-border-color: var(--gq-nhan);
+    --bs-alert-color: #6d4423;
+}
+
+.alert-danger {
+    --bs-alert-bg: #f6e2dd;
+    --bs-alert-border-color: var(--gq-loi);
+    --bs-alert-color: #6d3328;
+}
+
+.alert-success {
+    --bs-alert-bg: var(--gq-the-dam);
+    --bs-alert-border-color: var(--gq-nau);
+    --bs-alert-color: var(--gq-nau-dam);
+}
+
+/* ============================================================================
+   Biểu mẫu
+   ============================================================================ */
+
+.form-control,
+.form-select {
+    background-color: #fffdf9;
+    border-color: var(--gq-vien);
+    color: var(--gq-chu);
+    border-radius: var(--gq-bo-goc);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #fff;
+    border-color: var(--gq-nhan);
+    box-shadow: 0 0 0 .2rem rgba(169, 113, 74, .2);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--gq-nau-dam);
+    margin-bottom: .3rem;
+}
+
+.form-text {
+    color: var(--gq-chu-nhat);
+}
+
+.text-danger {
+    color: var(--gq-loi) !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--gq-nau);
+    border-color: var(--gq-nau);
+}
+
+.input-group-text {
+    background-color: var(--gq-the);
+    border-color: var(--gq-vien);
+    color: var(--gq-nau-dam);
+}
+
+/* ============================================================================
+   Cấp 1: vùng bấm lớn hơn, chữ to hơn (NFR-04)
+   ============================================================================ */
+
 .gq-cap-1 .gq-nut,
-.gq-cap-1 .btn {
+.gq-cap-1 .btn,
+.gq-cap-1 .form-control,
+.gq-cap-1 .form-select {
     min-height: 48px;
     min-width: 48px;
     font-size: 1.125rem;
 }
+
+.gq-cap-1 {
+    font-size: 1.0625rem;
+}
+
+/* ============================================================================
+   Tiện ích riêng của GeoQuad
+   ============================================================================ */
 
 /* Liên kết bỏ qua điều hướng, chỉ hiện khi có tiêu điểm bàn phím. */
 .gq-bo-qua {
@@ -43,8 +417,10 @@ body {
     top: 0;
     z-index: 1080;
     padding: .5rem 1rem;
-    background: var(--bs-body-bg);
-    border: 2px solid var(--bs-primary);
+    background: var(--gq-nen);
+    color: var(--gq-nau-dam);
+    border: 2px solid var(--gq-nau);
+    border-radius: var(--gq-bo-goc);
 }
 
 .gq-bo-qua:focus {
@@ -58,44 +434,122 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-    outline: 3px solid var(--bs-primary);
+    outline: 3px solid var(--gq-nhan);
     outline-offset: 2px;
 }
 
 .gq-the-loi-tat {
     color: inherit;
-    transition: box-shadow .15s ease-in-out;
+    border-color: var(--gq-vien);
+    transition: box-shadow .15s ease-in-out, transform .15s ease-in-out;
 }
 
 .gq-the-loi-tat:hover,
 .gq-the-loi-tat:focus-visible {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .15);
+    box-shadow: 0 .4rem .9rem rgba(82, 60, 44, .14);
+    transform: translateY(-2px);
 }
 
-/* Nhãn "Nâng cao" kèm chữ, không chỉ dựa vào màu (NFR-11). */
+.gq-the-loi-tat .card-title {
+    color: var(--gq-nhan);
+}
+
+/* Nhãn "Nâng cao" kèm ký hiệu, không chỉ dựa vào màu (NFR-11). */
 .gq-nhan-nang-cao::before {
     content: "▲ ";
 }
 
-/* Dùng được từ chiều rộng 360px (NFR-03). */
-@media (max-width: 420px) {
+/* Trạng thái trang "Đang xây dựng". */
+.gq-trang-thai {
+    margin-bottom: .75rem;
+}
+
+footer {
+    background-color: var(--gq-the);
+    border-top: 1px solid var(--gq-vien) !important;
+    color: var(--gq-chu-nhat);
+    margin-top: 2rem;
+}
+
+/* SVG minh họa hình: luôn co theo khung chứa. */
+.gq-hinh-ve {
+    background-color: #fffdf9;
+    border-color: var(--gq-vien) !important;
+}
+
+.gq-hinh-ve svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Màu dùng chung cho mọi hình SVG của GeoQuad. */
+.gq-hinh-tu-giac .gq-canh,
+.gq-hinh-so-do .gq-canh {
+    fill: var(--gq-the-dam);
+    stroke: var(--gq-nau);
+    stroke-width: 2.5;
+}
+
+.gq-hinh-tu-giac .gq-cheo,
+.gq-hinh-so-do .gq-cheo {
+    stroke: var(--gq-nhan);
+    stroke-width: 1.5;
+}
+
+.gq-hinh-tu-giac .gq-goc-vuong,
+.gq-hinh-so-do .gq-goc-vuong {
+    fill: none;
+    stroke: var(--gq-nau-dam);
+    stroke-width: 1.5;
+}
+
+.gq-hinh-tu-giac .gq-nhan-dinh,
+.gq-hinh-so-do .gq-nhan-dinh {
+    font-size: 13px;
+    font-weight: 700;
+    fill: var(--gq-nau-dam);
+}
+
+.gq-hinh-so-do .gq-nhan-canh {
+    font-size: 12px;
+    fill: var(--gq-nhan);
+    font-weight: 600;
+}
+
+/* Công thức KaTeX hòa với tông chữ. */
+.katex {
+    color: var(--gq-nau-dam);
+    font-size: 1.05em;
+}
+
+/* ============================================================================
+   Dùng được từ chiều rộng 360px (NFR-03)
+   ============================================================================ */
+
+@media (max-width: 575.98px) {
     .container,
     .container-fluid {
-        padding-left: .75rem;
-        padding-right: .75rem;
+        padding-left: .85rem;
+        padding-right: .85rem;
     }
 
     h1, .h1 { font-size: 1.5rem; }
     h2, .h2 { font-size: 1.3rem; }
+    h3, .h3 { font-size: 1.15rem; }
 
-    table {
+    .display-6 { font-size: 1.75rem; }
+
+    .table {
         display: block;
         overflow-x: auto;
     }
-}
 
-/* SVG minh họa hình: luôn co theo khung chứa. */
-.gq-hinh-ve svg {
-    max-width: 100%;
-    height: auto;
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .nav-tabs .nav-link {
+        white-space: nowrap;
+    }
 }
