@@ -797,8 +797,80 @@ không cần Neo4j (quy ước 2, điểm 9).
 | 08/10 | **Cả nhóm chốt**: README mục 2 điểm 6 và SRS mục 4 **xung đột** về `trangThai` ban đầu của seed. Cần chọn một hướng rồi sửa tài liệu còn lại cho khớp | SRS mục 4: *"Trạng thái nội dung đặt ban đầu là **NHAP**; chuyển sang DA_RA_SOAT khi đã đối chiếu nguồn và có người thứ hai rà soát (NFR-09)"*. README lại ghi seed thẳng `DA_RA_SOAT` vì "nhóm đã rà soát". Seed của A theo README, seed của B theo SRS → lệch nhau | Không có cách tạm. A **không** nới điều kiện lọc, vì nới là vi phạm BR-13/NFR-09 và sẽ hiện nội dung chưa rà soát cho học sinh | 💬 Cần nhóm chốt |
 | 08/10 | **Phần C**: hoàn tất việc "Rà soát US-03" rồi **đổi `trangThai` trong chính file seed của B** từ `'NHAP'` sang `'DA_RA_SOAT'` (hoặc B tự đổi sau khi C xác nhận) | US-03 giao C việc "Rà soát chéo: chạy hai file trên, đối chiếu từng mục với Phụ lục D/SRS Phụ lục B". `nguon` của B đã ghi sẵn "(chờ C đối chiếu SGK)". Đây là bước quy trình **chưa làm**, không phải lỗi mã của B | Chờ. Tuyệt đối **không** đổi bằng Cypher thủ công trên Neo4j Browser — chạy lại seed là mất | ⏳ Chờ C |
 | 08/10 | **Phần B**: cho các test trong `tests/.../B_ApDung/Integration/**` và `Http/MayChuThuTests` **bỏ qua** (`Assert.Skip` / `ITestOutputHelper` + điều kiện) khi chưa có `GQ_B_INTEGRATION=1`, thay vì ném `InvalidOperationException` | Hiện `dotnet test` trên máy sạch cho **18 test đỏ**, vi phạm Definition of Done của README ("`dotnet test` qua") và mục 2 điểm 12 | A không chạm; khi cần xác nhận phần A thì lọc `--filter FullyQualifiedName~A_TraCuu` | ⏳ Chờ B |
+| 08/10 | **Phần B**: thêm dấu hiệu `DH_HCN_4` "Hình thang cân có một góc vuông là hình chữ nhật" vào `20-dinhly-B.cypher`, và định lý nền `DL_NEN_7` "Trong tam giác vuông, đường trung tuyến ứng với cạnh huyền bằng nửa cạnh huyền" | SGK Toán 8 có **4** dấu hiệu hình chữ nhật, seed hiện chỉ có 3. `DL_NEN_7` là căn cứ hay dùng khi chứng minh dấu hiệu hình chữ nhật | A không chạm file của B. Phần A đã tự bổ sung 8 tính chất và 2 công thức trong `10-kienthuc-A.cypher` | ⏳ Chờ B |
 | 08/10 | **Phần B**: 4 test `BackupFlowTests` gọi `bash`/WSL thật nên đỏ trên máy Windows không có WSL hoạt động | Test phụ thuộc môi trường, không phải lỗi logic | A không chạm | ⏳ Chờ B |
 | 08/10 | **Hợp đồng dữ liệu**: `20-dinhly-B.cypher` thêm quan hệ `THUOC_LOP` cho `DieuKien`, trong khi lược đồ README mục 4.2 không liệt kê quan hệ này cho `DieuKien` | Nếu giữ thì nên bổ sung vào mục 4.2 để A và C biết mà dùng | A không dùng `DieuKien` nên không ảnh hưởng | 💬 Cần nhóm chốt |
+
+### Đề xuất cho B: hai mục bổ sung (dán được luôn)
+
+Thêm vào cuối khối `UNWIND` dấu hiệu trong `20-dinhly-B.cypher`:
+
+```cypher
+  {ma: 'DH_HCN_4', lop: 8,
+   noiDung: 'Hình thang cân có một góc vuông là hình chữ nhật.',
+   nen: 'HINH_THANG_CAN', dieuKien: 'DK_MOT_GOC_VUONG', dich: 'HINH_CHU_NHAT'}
+```
+
+Và vào khối định lý nền:
+
+```cypher
+  {ma: 'DL_NEN_7', lop: 8,
+   noiDung: 'Trong tam giác vuông, đường trung tuyến ứng với cạnh huyền bằng nửa cạnh huyền.'}
+```
+
+> **Lưu ý cho B**: `tests/GeoQuad.Tests/B_ApDung/Integration/SeedBTests.cs` đang so khớp
+> **chính xác** danh sách `DauHieu` (`Signs`) và dãy `DL_NEN_1..6`
+> (`Enumerable.Range(1, 6)`). Thêm hai mục trên **sẽ làm hai test đó đỏ** nếu B không cập
+> nhật cả `Signs` và dãy `DL_NEN` thành `Range(1, 7)`.
+
+### Phần A đã bổ sung gì ngoài Phụ lục B
+
+Lý do: Phụ lục B **không có mục nào về đối xứng**, trong khi trục đối xứng và tâm đối xứng
+thuộc chương tứ giác ở SGK Toán 8; cũng thiếu tổng góc ngoài, đường trung bình hình thang,
+chu vi hình thang và đường chéo hình thoi theo cạnh.
+
+AC của US-03 ghi *"đủ 14 điều kiện, 20 dấu hiệu, 12 tính chất, 12 công thức"* — hiểu chữ
+"đủ" là **mức tối thiểu**, nên bổ sung chỉ làm dày thêm và không bỏ mục nào của Phụ lục B.
+Mọi mục mới có `nguon` kết thúc bằng **"(bổ sung ngoài Phụ lục B)"** nên đếm riêng được:
+
+```cypher
+MATCH (n) WHERE n.nguon ENDS WITH '(bổ sung ngoài Phụ lục B)'
+RETURN labels(n) AS nhan, count(n) AS so;        -- TinhChat 8, CongThuc 2
+```
+
+**8 tính chất mới** (`10-kienthuc-A.cypher`), tất cả lớp 8:
+
+| ma | Hình | Nội dung |
+|---|---|---|
+| TC_TG_2 | Tứ giác | Tổng bốn góc ngoài, mỗi đỉnh một góc, bằng 360° |
+| TC_HT_2 | Hình thang | Đường trung bình song song hai đáy và bằng nửa tổng hai đáy |
+| TC_HTC_3 | Hình thang cân | Một trục đối xứng qua trung điểm hai đáy |
+| TC_HBH_4 | Hình bình hành | Giao điểm hai đường chéo là tâm đối xứng |
+| TC_HCN_3 | Hình chữ nhật | Hai trục đối xứng + một tâm đối xứng |
+| TC_THOI_3 | Hình thoi | Hai trục đối xứng là hai đường chéo + một tâm đối xứng |
+| TC_HV_2 | Hình vuông | Bốn trục đối xứng + một tâm đối xứng |
+| TC_HV_3 | Hình vuông | Hai đường chéo bằng nhau, vuông góc và là phân giác các góc |
+
+`TC_HV_1` của Phụ lục B (*"Hình vuông có tất cả tính chất của hình chữ nhật và của hình
+thoi"*) **giữ nguyên không sửa**; `TC_HV_3` phát biểu cụ thể bổ sung cho nó.
+
+**2 công thức mới**:
+
+| ma | Hình | Biểu thức | bienSo | daiLuong |
+|---|---|---|---|---|
+| CT_HT_CV | Hình thang | `P = a + b + c + d` | a, b, c, d | CHU_VI |
+| CT_THOI_CHEO | Hình thoi | `d_2 = 2\sqrt{a^2 - \frac{d_1^2}{4}}` | a, d1 | DUONG_CHEO |
+
+Cả hai không bị "rò" sang hình khác qua cơ chế mượn công thức của hình tổng quát gần nhất,
+vì mọi hình đặc biệt hơn đều đã có `CHU_VI` và `DUONG_CHEO` riêng ở khoảng cách 0.
+`CT_THOI_CHEO` đúng bằng phép tính bài **BT-023** của phần C (cạnh 13, đường chéo 10 → 24).
+
+**Đã thử rồi bỏ: công thức đường trung bình hình thang.** Máy tính hình học mượn công thức
+của hình tổng quát gần nhất, mà **không hình nào khác có đại lượng đường trung bình**, nên
+hình thoi và hình chữ nhật mượn luôn công thức của hình thang rồi hỏi học sinh "hai đáy a và
+b". Với hai hình đó, hai cạnh song song của **cùng một cặp** bằng nhau, nên nhập chiều dài và
+chiều rộng sẽ ra kết quả **sai**. Kiến thức này giữ ở dạng tính chất `TC_HT_2` để vẫn có
+trong thư viện. Test `KhongDuaDuongTrungBinhVaoMayTinh` khoá lại quyết định này.
 
 ### Chi tiết: xung đột README vs SRS về `trangThai`
 

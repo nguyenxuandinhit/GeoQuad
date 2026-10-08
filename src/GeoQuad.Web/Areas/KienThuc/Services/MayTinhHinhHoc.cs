@@ -136,6 +136,24 @@ public static class MayTinhHinhHoc
                 $"Tính: S = {So((s["a"] + s["b"]) * s["h"] / 2)}"
             ]),
 
+        ["CT_HT_CV"] = new(DaiLuongChuVi, ["a", "b", "c", "d"], @"P = a + b + c + d",
+            s => s["a"] + s["b"] + s["c"] + s["d"],
+            s =>
+            [
+                $"Thay số: P = {So(s["a"])} + {So(s["b"])} + {So(s["c"])} + {So(s["d"])}  (hai đáy và hai cạnh bên)",
+                $"Tính: P = {So(s["a"] + s["b"] + s["c"] + s["d"])}"
+            ]),
+
+        ["CT_THOI_CHEO"] = new(DaiLuongDuongCheo, ["a", "d1"], @"d_2 = 2\\sqrt{a^2 - \\frac{d_1^2}{4}}",
+            s => 2 * Math.Sqrt(s["a"] * s["a"] - s["d1"] * s["d1"] / 4),
+            s =>
+            [
+                $"Nửa đường chéo đã biết: {So(s["d1"])} : 2 = {So(s["d1"] / 2)}",
+                $"Theo Pythagore trong tam giác vuông: (d₂ : 2)² = {So(s["a"])}² − {So(s["d1"] / 2)}² = {So(s["a"] * s["a"] - s["d1"] * s["d1"] / 4)}",
+                $"Nửa đường chéo cần tìm: {So(Math.Sqrt(s["a"] * s["a"] - s["d1"] * s["d1"] / 4))}",
+                $"Nhân 2: d₂ = {So(2 * Math.Sqrt(s["a"] * s["a"] - s["d1"] * s["d1"] / 4))}"
+            ]),
+
         ["CT_HCN_CHEO"] = new(DaiLuongDuongCheo, ["a", "b"], @"d = \sqrt{a^2 + b^2}",
             s => Math.Sqrt(s["a"] * s["a"] + s["b"] * s["b"]),
             s =>
@@ -301,7 +319,8 @@ public static class MayTinhHinhHoc
 
         // BR-10: bốn cạnh của một tứ giác — mỗi cạnh phải nhỏ hơn tổng ba cạnh còn lại.
         // Chỉ xét khi đã đọc đủ bốn số đo.
-        if (ma == "CT_TG_CHUVI" && ct.BienSo.All(b => soDo.TryGetValue(b, out var g) && g is not null))
+        if (ma is "CT_TG_CHUVI" or "CT_HT_CV"
+            && ct.BienSo.All(b => soDo.TryGetValue(b, out var g) && g is not null))
         {
             var canh = ct.BienSo.Select(b => (Bien: b, Gia: soDo[b]!.Value)).ToList();
             var tong = canh.Sum(x => x.Gia);
@@ -320,6 +339,19 @@ public static class MayTinhHinhHoc
 
         // Chiều cao của hình bình hành không thể lớn hơn cạnh bên... nhưng ở đây chỉ nhập
         // đáy và chiều cao nên không kiểm tra thêm được; hình thang cũng vậy.
+        // Đường chéo hình thoi: nửa đường chéo đã biết phải nhỏ hơn cạnh, nếu không thì
+        // bốn cạnh không khép lại thành hình thoi (BR-10).
+        if (ma == "CT_THOI_CHEO"
+            && soDo.TryGetValue("a", out var canhThoi) && canhThoi is not null
+            && soDo.TryGetValue("d1", out var cheo) && cheo is not null
+            && cheo.Value >= 2 * canhThoi.Value)
+        {
+            loi.Add(
+                $"Đường chéo d₁ = {So(cheo.Value)} phải nhỏ hơn hai lần cạnh "
+                + $"(2 × {So(canhThoi.Value)} = {So(2 * canhThoi.Value)}). "
+                + "Với số đo này bốn cạnh không khép lại thành hình thoi.");
+        }
+
         return loi;
     }
 
