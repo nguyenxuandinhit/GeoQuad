@@ -1,3 +1,6 @@
+using GeoQuad.Web.Areas.HocTap.Repositories;
+using GeoQuad.Web.Areas.HocTap.Services;
+
 namespace GeoQuad.Web.Areas.HocTap;
 
 /// <summary>
@@ -9,7 +12,10 @@ public static class HocTapModule
 {
     public static IServiceCollection AddHocTap(this IServiceCollection services)
     {
-        // Phần C: đăng ký Repository và Service của Area HocTap tại đây.
+        // US-08: Hồ sơ học sinh
+        services.AddScoped<IHoSoRepository, HoSoRepository>();
+        services.AddScoped<IHoSoService, HoSoService>();
+
         return services;
     }
 }

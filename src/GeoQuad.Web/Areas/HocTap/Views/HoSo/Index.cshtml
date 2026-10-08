@@ -1,0 +1,191 @@
+@model HoSoViewModel
+@{
+    ViewData["Title"] = "Hồ sơ của em";
+}
+
+<div class="container py-2">
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="h2 mb-1 fw-bold text-primary">Hồ sơ của em</h1>
+            <p class="text-body-secondary mb-0">
+                Quản lý thông tin cá nhân, cập nhật lớp học và bảo mật tài khoản.
+            </p>
+        </div>
+        <div class="badge bg-primary-subtle text-primary border px-3 py-2 fs-6">
+            Lớp @Model.Lop · @(Model.VaiTro == "QUAN_TRI" ? "Quản trị viên" : "Học sinh")
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ThongBaoThanhCong))
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <strong>Thành công!</strong> @Model.ThongBaoThanhCong
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ThongBaoLoi))
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <strong>Có lỗi xảy ra:</strong> @Model.ThongBaoLoi
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+        <!-- Khối 1: Thông tin học sinh & Đổi biệt danh, lớp -->
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm border">
+                <div class="card-header bg-body-tertiary border-bottom py-3">
+                    <h2 class="h5 mb-0 fw-semibold text-primary">Thông tin học sinh</h2>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="DoiThongTin" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label text-body-secondary small fw-bold">TÊN ĐĂNG NHẬP</label>
+                            <input class="form-control bg-light" value="@Model.TenDangNhap" readonly disabled />
+                            <div class="form-text">Tên đăng nhập không thể thay đổi sau khi đăng ký.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold" asp-for="DoiThongTin.BietDanh">Biệt danh hiển thị</label>
+                            <input class="form-control gq-nut" asp-for="DoiThongTin.BietDanh" maxlength="50"
+                                   placeholder="Ví dụ: Minh An" required />
+                            <div class="form-text">Tên bạn muốn GeoQuad dùng để xưng hô trên hệ thống.</div>
+                            <span class="text-danger small" asp-validation-for="DoiThongTin.BietDanh"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" asp-for="DoiThongTin.Lop">Lớp học hiện tại</label>
+                            <select class="form-select gq-nut" asp-for="DoiThongTin.Lop">
+                                @for (var i = 1; i <= 12; i++)
+                                {
+                                    <option value="@i" selected="@(Model.Lop == i)">Lớp @i</option>
+                                }
+                            </select>
+                            <div class="form-text">
+                                Khi đổi lớp, thư viện kiến thức và bài tập sẽ tự động chuyển sang nội dung của lớp mới.
+                            </div>
+                            <span class="text-danger small" asp-validation-for="DoiThongTin.Lop"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary gq-nut w-100">
+                            Lưu thông tin
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khối 2: Đổi mật khẩu -->
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm border">
+                <div class="card-header bg-body-tertiary border-bottom py-3">
+                    <h2 class="h5 mb-0 fw-semibold text-primary">Đổi mật khẩu</h2>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="DoiMatKhau" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold" asp-for="DoiMatKhau.MatKhauCu">Mật khẩu hiện tại</label>
+                            <input type="password" class="form-control gq-nut" asp-for="DoiMatKhau.MatKhauCu"
+                                   autocomplete="current-password" placeholder="Nhập mật khẩu cũ" required />
+                            <span class="text-danger small" asp-validation-for="DoiMatKhau.MatKhauCu"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold" asp-for="DoiMatKhau.MatKhauMoi">Mật khẩu mới</label>
+                            <input type="password" class="form-control gq-nut" asp-for="DoiMatKhau.MatKhauMoi"
+                                   autocomplete="new-password" placeholder="Tối thiểu 8 ký tự" required />
+                            <div class="form-text">Mật khẩu phải có từ 8 ký tự trở lên.</div>
+                            <span class="text-danger small" asp-validation-for="DoiMatKhau.MatKhauMoi"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" asp-for="DoiMatKhau.XacNhanMatKhau">Xác nhận mật khẩu mới</label>
+                            <input type="password" class="form-control gq-nut" asp-for="DoiMatKhau.XacNhanMatKhau"
+                                   autocomplete="new-password" placeholder="Nhập lại mật khẩu mới" required />
+                            <span class="text-danger small" asp-validation-for="DoiMatKhau.XacNhanMatKhau"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-primary gq-nut w-100">
+                            Cập nhật mật khẩu
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khối 3: Quyền riêng tư & Bảo vệ dữ liệu (NFR-06) -->
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm border">
+                <div class="card-header bg-body-tertiary border-bottom py-3">
+                    <h2 class="h5 mb-0 fw-semibold text-primary">Bảo vệ quyền riêng tư</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="p-2 rounded bg-primary-subtle text-primary fs-4 lh-1">🛡️</div>
+                        <div>
+                            <h3 class="h6 mb-1 fw-bold">Nguyên tắc thu thập dữ liệu tối thiểu</h3>
+                            <p class="text-body-secondary small mb-0">
+                                GeoQuad tuân thủ nghiêm ngặt chuẩn an toàn cho trẻ em (NFR-06). Hệ thống <strong>không thu thập</strong>
+                                họ tên thật, email, số điện thoại hay vị trí địa lý của em.
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="text-body-secondary small ps-3 mb-3">
+                        <li>Dữ liệu lưu trữ: Tên đăng nhập, biệt danh, lớp học, lịch sử và kết quả giải bài tập.</li>
+                        <li>Mục đích sử dụng: Cá nhân hóa lộ trình học và gợi ý các khái niệm cần ôn lại.</li>
+                        <li>Em có toàn quyền yêu cầu xóa toàn bộ lịch sử học tập và tài khoản bất kỳ lúc nào.</li>
+                    </ul>
+                    <div class="text-body-tertiary small">
+                        Ngày tạo tài khoản: @(Model.NgayTao?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa xác định")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khối 4: Vùng nguy hiểm - Xóa tài khoản (NFR-06, SCR-17) -->
+        <div class="col-12 col-lg-6">
+            <div class="card h-100 shadow-sm border border-danger-subtle">
+                <div class="card-header bg-danger-subtle border-bottom border-danger-subtle py-3 text-danger">
+                    <h2 class="h5 mb-0 fw-semibold">Vùng nguy hiểm</h2>
+                </div>
+                <div class="card-body p-4">
+                    <h3 class="h6 text-danger fw-bold mb-2">Xóa tài khoản vĩnh viễn</h3>
+                    <p class="text-body-secondary small mb-3">
+                        Thao tác này sẽ xóa hoàn toàn tài khoản của em khỏi cơ sở dữ liệu Neo4j. Toàn bộ tiến độ học tập,
+                        bài tập đã làm và lịch sử đánh dấu sẽ bị xóa và <strong>không thể phục hồi</strong>.
+                    </p>
+
+                    <form asp-action="XoaTaiKhoan" method="post"
+                          onsubmit="return confirm('Em có chắc chắn muốn xóa vĩnh viễn tài khoản và toàn bộ dữ liệu học tập không?');"
+                          novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-danger small" asp-for="XoaTaiKhoan.MatKhauXacNhan">
+                                MẬT KHẨU XÁC NHẬN
+                            </label>
+                            <input type="password" class="form-control gq-nut border-danger-subtle"
+                                   asp-for="XoaTaiKhoan.MatKhauXacNhan" autocomplete="current-password"
+                                   placeholder="Nhập mật khẩu để xác nhận" required />
+                            <span class="text-danger small" asp-validation-for="XoaTaiKhoan.MatKhauXacNhan"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-danger gq-nut w-100">
+                            Xác nhận xóa tài khoản
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
