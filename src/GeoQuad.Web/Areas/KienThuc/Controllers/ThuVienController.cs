@@ -4,27 +4,47 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GeoQuad.Web.Areas.KienThuc.Controllers;
 
-/// <summary>Thư viện kiến thức (US-09) và chi tiết khái niệm (US-10, US-11).</summary>
+/// <summary>Thư viện kiến thức (US-09), chi tiết khái niệm (US-10), tìm kiếm (US-11).</summary>
 [Area("KienThuc")]
 public sealed class ThuVienController : Controller
 {
     private readonly IThuVienService _thuVien;
+    private readonly IChiTietService _chiTiet;
 
-    public ThuVienController(IThuVienService thuVien) => _thuVien = thuVien;
+    public ThuVienController(IThuVienService thuVien, IChiTietService chiTiet)
+    {
+        _thuVien = thuVien;
+        _chiTiet = chiTiet;
+    }
 
     // SCR-04 · /KienThuc/ThuVien?loai=&cap=&lop=
     public async Task<IActionResult> Index(string? loai, string? cap, int? lop)
         => View(await _thuVien.DuyetAsync(loai, cap, lop));
 
     // SCR-05 · /KienThuc/ThuVien/ChiTiet/{ma}
-    public IActionResult ChiTiet(string id)
-        => this.DangXayDung("Chi tiết khái niệm", "US-10", "A", "Định nghĩa, tính chất, dấu hiệu nhận biết, công thức và ví dụ thực tế.");
+    public async Task<IActionResult> ChiTiet(string id, bool moi = false)
+    {
+        var vm = await _chiTiet.LayAsync(id, moiDangNhap: moi);
+
+        // Mã không tồn tại → trang 404 thân thiện của PHẦN 0.
+        return vm is null ? NotFound() : View(vm);
+    }
 
     // "Em đã hiểu" · POST /KienThuc/ThuVien/DaHieu/{ma}
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult DaHieu(string id)
-        => this.DangXayDung("Em đã hiểu", "US-10", "A", "Ghi nhận khái niệm em đã học.");
+    public async Task<IActionResult> DaHieu(string id)
+    {
+        var ketQua = await _chiTiet.DaHieuAsync(id);
+
+        return ketQua switch
+        {
+            // Khách: quay lại trang chi tiết và hiện khối mời đăng nhập (BR-09).
+            KetQuaDaHieu.MoiDangNhap => RedirectToAction(nameof(ChiTiet), new { id, moi = true }),
+            KetQuaDaHieu.DaGhiNhan => RedirectToAction(nameof(ChiTiet), new { id }),
+            _ => NotFound()
+        };
+    }
 
     // SCR-06 · /KienThuc/ThuVien/TimKiem?q=
     public IActionResult TimKiem(string? q)

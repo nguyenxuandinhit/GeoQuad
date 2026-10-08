@@ -16,6 +16,10 @@ public static class KienThucModule
         services.AddScoped<IThuVienRepository, ThuVienRepository>();
         services.AddScoped<IThuVienService, ThuVienService>();
 
+        // US-10: chi tiết khái niệm và "Em đã hiểu" (SCR-05)
+        services.AddScoped<IChiTietRepository, ChiTietRepository>();
+        services.AddScoped<IChiTietService, ChiTietService>();
+
         return services;
     }
 }
