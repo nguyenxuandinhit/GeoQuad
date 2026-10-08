@@ -1,24 +1,26 @@
 @using GeoQuad.Web.Infrastructure.Auth
 @inject ICurrentUser NguoiDung
-@* Khối tài khoản trên thanh điều hướng (US-05, US-06, US-07). *@
+@* Khối tài khoản bên phải thanh điều hướng (US-05, US-06, US-07). *@
 
-<div class="d-flex flex-wrap align-items-center gap-2 ms-lg-3">
+<div class="gq-khoi-tk">
     @if (NguoiDung.DaDangNhap)
     {
         @if (NguoiDung.LaQuanTri)
         {
-            <a class="btn btn-sm btn-outline-danger gq-nut" href="/QuanTri/BaiTap">Quản trị</a>
+            <a class="btn btn-sm gq-nut-nav" href="/QuanTri/BaiTap">Quản trị</a>
         }
-        <span class="navbar-text">Chào <strong>@NguoiDung.BietDanh</strong></span>
+        <a class="gq-ten-nguoi-dung" href="/HocTap/HoSo">
+            <span class="gq-avatar" aria-hidden="true">@(NguoiDung.BietDanh?.Trim().FirstOrDefault())</span>
+            <span>@NguoiDung.BietDanh</span>
+        </a>
         <form method="post" action="/TaiKhoan/DangXuat" class="m-0">
             @Html.AntiForgeryToken()
-            <button class="btn btn-sm btn-outline-secondary gq-nut" type="submit">Đăng xuất</button>
+            <button class="btn btn-sm gq-nut-nav" type="submit">Đăng xuất</button>
         </form>
     }
     else
     {
-        <span class="navbar-text">Chế độ khách</span>
-        <a class="btn btn-sm btn-outline-primary gq-nut" href="/TaiKhoan/DangNhap">Đăng nhập</a>
-        <a class="btn btn-sm btn-primary gq-nut" href="/TaiKhoan/DangKy">Đăng ký</a>
+        <a class="btn btn-sm gq-nut-nav" href="/TaiKhoan/DangNhap">Đăng nhập</a>
+        <a class="btn btn-sm gq-nut-nav-dac" href="/TaiKhoan/DangKy">Đăng ký</a>
     }
 </div>

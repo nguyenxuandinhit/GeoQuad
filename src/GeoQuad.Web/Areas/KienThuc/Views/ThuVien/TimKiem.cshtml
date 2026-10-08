@@ -15,6 +15,16 @@
     </nav>
 
     <h1 class="h2">Kết quả tìm kiếm</h1>
+    <p class="gq-ngu-canh-lop">
+        GeoQuad chỉ tìm trong nội dung <strong>tới lớp @Model.LopHienThi</strong>.
+        @if (Model.LopHienThi > Model.LopHocSinh)
+        {
+            <span>Em đang bật xem trước kiến thức lớp trên, nên có cả nội dung trên lớp
+            @Model.LopHocSinh — những mục đó mang nhãn
+            <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>.
+            Tắt ở thanh phía trên nếu em chỉ muốn xem lớp @Model.LopHocSinh.</span>
+        }
+    </p>
 
     <form class="my-3" method="get" action="/KienThuc/ThuVien/TimKiem" role="search">
         <label class="form-label" for="gq-q">Em muốn tìm gì?</label>

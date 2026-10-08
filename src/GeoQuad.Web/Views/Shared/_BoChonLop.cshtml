@@ -1,46 +1,74 @@
 @using GeoQuad.Web.Infrastructure.Auth
 @inject ICurrentUser NguoiDung
 @*
-    Bộ chọn lớp của khách và công tắc "Xem trước kiến thức nâng cao" (US-01, US-07).
-    Học sinh đã đăng nhập đổi lớp ở trang Hồ sơ (US-08), nên không hiện bộ chọn ở đây.
+    Thanh ngữ cảnh (US-01, US-07): luôn cho học sinh thấy đang xem nội dung tới lớp nào.
+    Khách đổi lớp ngay tại đây; học sinh đã đăng nhập đổi lớp ở trang Hồ sơ (US-08).
+    Khi bật "Xem trước kiến thức nâng cao" thì thanh này đổi màu và có nút tắt, để em
+    không bị lẫn vì thấy nội dung lớp trên (BR-04).
 *@
 @{
     var duongDanHienTai = $"{Context.Request.Path}{Context.Request.QueryString}";
+    var nangCao = NguoiDung.XemNangCao;
 }
 
-<div class="d-flex flex-wrap align-items-center gap-3">
-    @if (!NguoiDung.DaDangNhap)
-    {
-        <form method="post" action="/Home/ChonLop" class="d-flex align-items-center gap-2">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
-            <label class="form-label mb-0" for="gq-chon-lop">Em học lớp</label>
-            <select class="form-select gq-nut w-auto" id="gq-chon-lop" name="lop"
-                    onchange="this.form.submit()">
-                @for (var i = QuyUoc.LopNhoNhat; i <= QuyUoc.LopLonNhat; i++)
-                {
-                    <option value="@i" selected="@(i == NguoiDung.Lop)">@i</option>
-                }
-            </select>
-            <noscript><button type="submit" class="btn btn-sm btn-outline-primary gq-nut">Chọn</button></noscript>
-        </form>
-    }
-    else
-    {
-        <span class="navbar-text">Lớp @NguoiDung.Lop</span>
-    }
+<div class="gq-thanh-lop @(nangCao ? "gq-thanh-lop--nangcao" : "")">
+    <div class="container gq-thanh-lop__trong">
 
-    <form method="post" action="/Home/NangCao" class="form-check form-switch mb-0">
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
-        <input type="hidden" name="bat" value="@(NguoiDung.XemNangCao ? "false" : "true")" />
-        <input class="form-check-input" type="checkbox" role="switch" id="gq-nang-cao"
-               checked="@NguoiDung.XemNangCao" onchange="this.form.submit()"
-               aria-describedby="gq-nang-cao-mo-ta" />
-        <label class="form-check-label" for="gq-nang-cao">Xem trước kiến thức nâng cao</label>
-        <span class="visually-hidden" id="gq-nang-cao-mo-ta">
-            Bật để xem cả nội dung của lớp trên; nội dung đó được đánh dấu "Nâng cao".
-        </span>
-        <noscript><button type="submit" class="btn btn-sm btn-outline-secondary gq-nut">Đổi</button></noscript>
-    </form>
+        <div class="gq-thanh-lop__lop">
+            @if (!NguoiDung.DaDangNhap)
+            {
+                <form method="post" action="/Home/ChonLop" class="gq-chon-lop-form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
+                    <label class="gq-thanh-lop__nhan" for="gq-chon-lop">Em học lớp</label>
+                    <select class="form-select form-select-sm gq-chon-lop-select" id="gq-chon-lop"
+                            name="lop" onchange="this.form.submit()">
+                        @for (var i = QuyUoc.LopNhoNhat; i <= QuyUoc.LopLonNhat; i++)
+                        {
+                            <option value="@i" selected="@(i == NguoiDung.Lop)">@i</option>
+                        }
+                    </select>
+                    <noscript><button type="submit" class="btn btn-sm btn-outline-primary">Chọn</button></noscript>
+                </form>
+            }
+            else
+            {
+                <span class="gq-thanh-lop__nhan">Em học <strong>lớp @NguoiDung.Lop</strong></span>
+            }
+        </div>
+
+        <div class="gq-thanh-lop__trangthai">
+            @if (nangCao)
+            {
+                <span class="gq-pill-nangcao">
+                    <span aria-hidden="true">▲</span>
+                    Đang xem trước tới <strong>lớp @NguoiDung.LopHienThi</strong>
+                </span>
+                <form method="post" action="/Home/NangCao" class="m-0">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
+                    <input type="hidden" name="bat" value="false" />
+                    <button class="btn btn-sm gq-nut-tat" type="submit">
+                        Tắt, chỉ xem lớp @NguoiDung.Lop
+                    </button>
+                </form>
+            }
+            else
+            {
+                <span class="gq-thanh-lop__nhan gq-thanh-lop__nhan--mo">
+                    Đang xem nội dung tới lớp @NguoiDung.LopHienThi
+                </span>
+                <form method="post" action="/Home/NangCao" class="m-0">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
+                    <input type="hidden" name="bat" value="true" />
+                    <button class="btn btn-sm gq-nut-bat" type="submit"
+                            title="Xem thêm kiến thức của lớp trên, các mục đó sẽ được đánh dấu Nâng cao">
+                        ▲ Xem trước kiến thức lớp trên
+                    </button>
+                </form>
+            }
+        </div>
+
+    </div>
 </div>
