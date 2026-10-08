@@ -1,0 +1,50 @@
+@model GeoQuad.Web.Areas.HocTap.Models.KetQuaLamBaiViewModel
+@{ ViewData["Title"] = "Kết quả làm bài"; }
+<div class="container py-4" style="max-width:52rem">
+    <h1 class="h2">Kết quả @Model.Ma</h1>
+    <p>@Model.De</p>
+    <p class="alert @(Model.Dung ? "alert-success" : "alert-warning")" role="status">@(Model.Dung ? "Chính xác!" : "Chưa chính xác.")</p>
+    <dl><dt>Đáp án em chọn</dt><dd>@Model.DapAnDaChon @Model.DonVi</dd><dt>Đáp án đúng</dt><dd>@Model.DapAnDung @Model.DonVi</dd></dl>
+    @if (!string.IsNullOrWhiteSpace(Model.GiaiThich)) { <section><h2 class="h5">Giải thích</h2><p>@Model.GiaiThich</p></section> }
+    @if (Model.KienThuc.Count > 0)
+    {
+        <section class="mt-3">
+            <h2 class="h5">Kiến thức đã dùng</h2>
+            <ul>
+                @foreach (var kt in Model.KienThuc)
+                {
+                    <li>
+                        @kt.Ten
+                        @if (!string.IsNullOrWhiteSpace(kt.BieuThuc)) { <span>: @("$" + kt.BieuThuc + "$")</span> }
+                        <span class="badge text-bg-light border">Lớp @kt.Lop</span>
+                        @if (kt.Lop > Model.LopHocSinh) { <span class="badge text-bg-warning">Nâng cao</span> }
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+    @if (Model.KhaiNiem.Count > 0)
+    {
+        <section class="mt-3">
+            <h2 class="h5">Khái niệm liên quan</h2>
+            <ul class="list-inline">
+                @foreach (var k in Model.KhaiNiem)
+                {
+                    <li class="list-inline-item">
+                        <a asp-area="KienThuc" asp-controller="ThuVien" asp-action="ChiTiet" asp-route-id="@k.Ma">@k.Ten</a>
+                        @if (k.Lop > Model.LopHocSinh) { <span class="badge text-bg-warning">Nâng cao</span> }
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+    @if (Model.MaChungMinh is not null) { <a asp-area="ApDung" asp-controller="ChungMinh" asp-action="Xem" asp-route-ma="@Model.MaChungMinh">Xem chứng minh liên quan</a> }
+    @if (Model.LaKhach)
+    {
+        <div class="mt-3"><partial name="_MoiDangNhap" model="@("/HocTap/BaiTap/Lam/" + Model.Ma)" /></div>
+    }
+    <div class="d-flex flex-wrap gap-2 mt-4">
+        <a class="btn btn-primary gq-nut" asp-area="HocTap" asp-controller="BaiTap" asp-action="KeTiep" asp-route-id="@Model.Ma">Bài kế tiếp</a>
+        <a class="btn btn-outline-primary gq-nut" asp-area="HocTap" asp-controller="BaiTap" asp-action="Index">Về ngân hàng</a>
+    </div>
+</div>

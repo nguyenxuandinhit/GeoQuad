@@ -1,0 +1,65 @@
+@using GeoQuad.Web.Areas.HocTap.Models
+@model TienDoViewModel
+@{
+    ViewData["Title"] = "Tiến độ của em";
+}
+@section Styles {
+    <style>
+        .gq-thanh { background: var(--bs-secondary-bg); border-radius: .25rem; height: 1.25rem; overflow: hidden; }
+        .gq-thanh > span { display: block; height: 100%; background: var(--bs-primary); }
+        .gq-thanh-dong { display: grid; grid-template-columns: minmax(7rem, 10rem) 1fr 3.5rem; gap: .5rem; align-items: center; }
+    </style>
+}
+
+<div class="container py-4">
+    <h1>Tiến độ của em</h1>
+    @if (!Model.CoLichSu)
+    {
+        <p role="status">Em chưa có dữ liệu làm bài. <a asp-area="HocTap" asp-controller="BaiTap" asp-action="Index">Chọn bài đầu tiên</a>.</p>
+    }
+    else
+    {
+        <p>Lớp @Model.Lop · @Model.SoBaiDaLam bài đã làm · @Model.SoLuot lượt làm · tỉ lệ đúng @Model.TiLeDung.ToString("P0")</p>
+
+        <section class="mb-4" aria-labelledby="can-on">
+            <h2 id="can-on" class="h4">Cần ôn lại</h2>
+            @if (Model.CanOnLai.Count > 0)
+            {
+                <ul class="list-group mb-2">
+                    @foreach (var concept in Model.CanOnLai)
+                    {
+                        <li class="list-group-item">
+                            <strong>@concept.Ten</strong>: đúng @concept.SoDungGanNhat / @Math.Min(concept.SoLuot, 5) lượt gần nhất (@concept.TiLeGanNhat.ToString("P0"))
+                        </li>
+                    }
+                </ul>
+                <a class="btn btn-primary gq-nut" asp-action="GoiY">Làm bài gợi ý</a>
+            }
+            else if (Model.Loai == LoaiGoiY.KhongCanOn)
+            {
+                <p role="status">Chúc mừng em! Không có khái niệm nào cần ôn.
+                    Thử <a asp-action="GoiY">bài khó hơn</a> hoặc xem <a asp-controller="LoTrinh" asp-action="Index">lộ trình học</a>.</p>
+            }
+            else
+            {
+                <p role="status">Em làm thêm vài bài nữa (ít nhất 3 lượt cho một khái niệm) để GeoQuad biết em cần ôn phần nào nhé.</p>
+            }
+        </section>
+
+        <section aria-labelledby="ti-le">
+            <h2 id="ti-le" class="h4">Tỉ lệ đúng theo khái niệm</h2>
+            @foreach (var concept in Model.KhaiNiem)
+            {
+                var phanTram = (int)Math.Round(concept.TiLeAllTime * 100, MidpointRounding.AwayFromZero);
+                <div class="gq-thanh-dong mb-2">
+                    <span>@concept.Ten@(concept.CanOn ? " (cần ôn)" : "")</span>
+                    <div class="gq-thanh" role="img" aria-label="@concept.Ten: đúng @concept.SoDungAllTime trên @concept.SoLuot lượt, @phanTram%">
+                        <span style="width:@phanTram%"></span>
+                    </div>
+                    <span>@phanTram%</span>
+                </div>
+            }
+        </section>
+    }
+    <a class="btn btn-outline-primary gq-nut mt-3" asp-action="GoiY">Xem bài gợi ý</a>
+</div>
