@@ -1,0 +1,8 @@
+@model GeoQuad.Web.Areas.HocTap.Models.KetQuaLamBaiViewModel
+@{ ViewData["Title"] = "Lời giải mẫu"; }
+<div class="container py-4" style="max-width:52rem">
+    <h1 class="h2">Lời giải mẫu @Model.Ma</h1><p>@Model.De</p>
+    <section class="card"><div class="card-body"><p>@Model.GiaiThich</p></div></section>
+    @if (Model.MaChungMinh is not null) { <p class="mt-3"><a asp-area="ApDung" asp-controller="ChungMinh" asp-action="Xem" asp-route-ma="@Model.MaChungMinh">Mở chứng minh chi tiết @Model.MaChungMinh</a></p> }
+    <a class="btn btn-outline-primary gq-nut mt-3" asp-area="HocTap" asp-controller="BaiTap" asp-action="Index">Về ngân hàng bài tập</a>
+</div>

@@ -60,7 +60,7 @@ public sealed class HoSoController : Controller
     // POST /HocTap/HoSo/DoiThongTin
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DoiThongTin(DoiThongTinInput form)
+    public async Task<IActionResult> DoiThongTin([Bind(Prefix = "DoiThongTin")] DoiThongTinInput form)
     {
         var id = _currentUser.TaiKhoanId;
         if (string.IsNullOrEmpty(id))
@@ -106,7 +106,7 @@ public sealed class HoSoController : Controller
     // POST /HocTap/HoSo/DoiMatKhau
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DoiMatKhau(DoiMatKhauInput form)
+    public async Task<IActionResult> DoiMatKhau([Bind(Prefix = "DoiMatKhau")] DoiMatKhauInput form)
     {
         var id = _currentUser.TaiKhoanId;
         if (string.IsNullOrEmpty(id))
@@ -146,7 +146,7 @@ public sealed class HoSoController : Controller
     // POST /HocTap/HoSo/XoaTaiKhoan
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> XoaTaiKhoan(XoaTaiKhoanInput form)
+    public async Task<IActionResult> XoaTaiKhoan([Bind(Prefix = "XoaTaiKhoan")] XoaTaiKhoanInput form)
     {
         var id = _currentUser.TaiKhoanId;
         if (string.IsNullOrEmpty(id))
