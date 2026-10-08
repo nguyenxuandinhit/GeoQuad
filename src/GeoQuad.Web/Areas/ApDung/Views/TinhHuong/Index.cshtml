@@ -1,0 +1,23 @@
+@model GeoQuad.Web.Areas.ApDung.Models.TinhHuongDanhSach
+@{ ViewData["Title"] = "Hình học quanh ta"; }
+<style>.situations a {min-height:48px;font-size:16px;padding:.8rem;display:inline-block;overflow-wrap:anywhere}.situations article {border:1px solid #ccd;border-radius:.5rem;padding:1rem;margin:1rem 0}</style>
+<main class="situations">
+<h1>Hình học quanh ta</h1>
+<nav aria-label="Bối cảnh">
+    <a class="btn btn-outline-secondary" asp-action="Index">Tất cả</a>
+    @foreach(var c in Model.BoiCanh) {
+        <a class="btn btn-outline-primary" asp-action="Index" asp-route-boiCanh="@c.Ma">@c.Ten (@Model.TinhHuong.Count(t => t.MaBoiCanh == c.Ma))</a>
+    }
+</nav>
+@foreach(var context in Model.BoiCanh.Where(c => Model.Loc == null || c.Ma == Model.Loc)) {
+    <section><h2 class="mt-3">@context.Ten</h2>
+    @if(!Model.TinhHuong.Any(t => t.MaBoiCanh == context.Ma)) {
+        <p>Chưa có tình huống phù hợp lớp của em ở bối cảnh này. Em thử bối cảnh khác hoặc bật Xem trước kiến thức nâng cao.</p>
+    }
+    @foreach(var t in Model.TinhHuong.Where(t => t.MaBoiCanh == context.Ma)) {
+        <article><h3 class="fs-5"><a asp-action="Xem" asp-route-id="@t.Ma">@t.Ten</a></h3>
+        <p>Lớp @t.Lop @if(t.Lop > Model.Lop) { <span class="badge bg-info text-dark">Nâng cao</span> }</p><p>@t.MoTa</p></article>
+    }
+    </section>
+}
+</main>

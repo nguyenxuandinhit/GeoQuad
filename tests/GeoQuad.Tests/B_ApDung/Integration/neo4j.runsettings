@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!-- Explicit opt-in to the guarded B-only Docker project, never the dev database. -->
+    <EnvironmentVariables>
+      <GQ_B_INTEGRATION>1</GQ_B_INTEGRATION>
+      <GQ_B_TEST_URI>bolt://127.0.0.1:17687</GQ_B_TEST_URI>
+      <GQ_B_TEST_USER>neo4j</GQ_B_TEST_USER>
+      <GQ_B_TEST_PASSWORD>geoquad_test_123</GQ_B_TEST_PASSWORD>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>

@@ -1,0 +1,26 @@
+@model GeoQuad.Web.Areas.ApDung.Models.ChungMinhViewModel
+@{ ViewData["Title"] = Model.Ten; }
+<style>.proof a,.proof summary {min-height:48px;display:inline-block;padding:.7rem;font-size:16px}.proof li {margin:1rem 0;overflow-wrap:anywhere}</style>
+<main class="proof">
+<h1>@Model.Ten</h1>
+<p><code>@Model.Ma</code> · Lớp @Model.Lop @if(Model.NangCao) { <span class="badge bg-info text-dark">Nâng cao</span> }</p>
+<p><strong>Định lý:</strong> @Model.DinhLy</p>
+<p><strong>Giả thiết:</strong> @Model.GiaThiet</p>
+<p><strong>Kết luận:</strong> @Model.KetLuan</p>
+<partial name="_TuGiac" />
+<ol>
+@foreach (var b in Model.Buoc) {
+    <li id="buoc-@b.ThuTu">
+        <p>@b.NoiDung</p>
+        @foreach (var c in b.CanCu) {
+            @if(c.MaHinh != null) {
+                <a asp-area="KienThuc" asp-controller="ThuVien" asp-action="ChiTiet" asp-route-id="@c.MaHinh">@c.Ma · @c.NoiDung</a>
+            } else {
+                <details><summary>Căn cứ @c.Ma</summary><p>@c.NoiDung</p></details>
+            }
+        }
+    </li>
+}
+</ol>
+<a class="btn btn-outline-primary" asp-area="ApDung" asp-controller="GoiY" asp-action="Index">Quay lại gợi ý</a>
+</main>

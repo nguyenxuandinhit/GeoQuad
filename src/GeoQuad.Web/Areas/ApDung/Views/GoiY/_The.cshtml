@@ -1,0 +1,13 @@
+@model GeoQuad.Web.Areas.ApDung.Models.GoiYThe
+<article>
+    <h2 class="fs-5">@Model.DauHieu.NoiDung</h2>
+    <p><code>@Model.DauHieu.Ma</code> · Lớp @Model.DauHieu.Lop · Thiếu @Model.ConThieu.Count điều kiện</p>
+    <ul>
+    @foreach (var d in Model.DaCo) { <li>✓ Đã có: @d.NoiDung</li> }
+    @foreach (var d in Model.ConThieu) { <li>✗ Còn thiếu: @d.NoiDung</li> }
+    </ul>
+    @if (Model.DauHieu.MaChungMinh != null) {
+        <a class="btn btn-outline-primary" asp-area="ApDung" asp-controller="ChungMinh" asp-action="Xem" asp-route-id="@Model.DauHieu.MaChungMinh">Xem chứng minh mẫu</a>
+    }
+    <a class="btn btn-outline-secondary" asp-area="HocTap" asp-controller="BaiTap" asp-action="Index" asp-route-khaiNiem="@Model.DauHieu.Dich">Bài tập liên quan</a>
+</article>
