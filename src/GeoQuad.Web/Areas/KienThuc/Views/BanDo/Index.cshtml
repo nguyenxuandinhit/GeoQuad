@@ -1,0 +1,259 @@
+@using GeoQuad.Web.Areas.KienThuc.Services
+@model GeoQuad.Web.Areas.KienThuc.Models.BanDoViewModel
+@{
+    ViewData["Title"] = "Bản đồ kiến thức";
+}
+
+<div class="@(Model.LaCap1 ? "gq-cap-1" : "")">
+    <nav aria-label="Đường dẫn">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Bản đồ kiến thức</li>
+        </ol>
+    </nav>
+
+    <h1 class="h2">Bản đồ kiến thức</h1>
+    <p class="text-body-secondary">
+        Mũi tên đi <strong>từ hình đặc biệt tới hình tổng quát hơn</strong>.
+        Ví dụ mũi tên từ "Hình vuông" sang "Hình chữ nhật" nghĩa là mọi hình vuông đều là hình chữ nhật.
+    </p>
+
+    @* ---- Lọc theo lớp ---- *@
+    <form class="row g-2 align-items-end mb-3" method="get" action="/KienThuc/BanDo">
+        <div class="col-12 col-sm-auto">
+            <label class="form-label" for="gq-bd-lop">Xem tới lớp</label>
+            <select class="form-select gq-nut" id="gq-bd-lop" name="lop">
+                <option value="">Tất cả (tới lớp @Model.DuLieu.LopHienThi)</option>
+                @for (var i = 1; i <= Model.DuLieu.LopHienThi; i++)
+                {
+                    <option value="@i" selected="@(Model.LopLoc == i)">Lớp @i</option>
+                }
+            </select>
+        </div>
+        <div class="col-12 col-sm-auto d-flex gap-2">
+            <button class="btn btn-primary gq-nut" type="submit">Xem</button>
+            @if (Model.LopLoc is not null)
+            {
+                <a class="btn btn-outline-secondary gq-nut" href="/KienThuc/BanDo">Bỏ lọc</a>
+            }
+        </div>
+    </form>
+
+    @if (Model.KhongCoQuanHe)
+    {
+        <div class="alert alert-info" role="status">
+            <strong>Ở lớp này các hình chưa nối với nhau.</strong>
+            <div class="small mt-1">
+                Các hình hiện ra rời nhau vì quan hệ "hình nào là trường hợp đặc biệt của hình nào"
+                được học ở lớp trên. Em chọn lớp cao hơn để thấy các mũi tên nối chúng lại.
+            </div>
+        </div>
+    }
+
+    <div class="row g-3">
+        <div class="col-12 col-lg-8">
+            @* ---- Chú giải màu, kèm chữ nên không chỉ dùng màu (NFR-11) ---- *@
+            <ul class="list-inline small mb-2" aria-label="Chú giải màu theo cấp học">
+                @foreach (var (cap, ten, mau) in BanDoQuyTac.ChuGiai())
+                {
+                    <li class="list-inline-item">
+                        <span class="d-inline-block border" aria-hidden="true"
+                              style="width:14px;height:14px;background:@mau;vertical-align:middle"></span>
+                        @ten
+                    </li>
+                }
+                <li class="list-inline-item">
+                    <span aria-hidden="true">✓</span> = em đã học (viền đậm)
+                </li>
+            </ul>
+
+            <div id="gq-ban-do" class="border rounded"
+                 style="height:420px;min-height:320px" role="img"
+                 aria-label="Sơ đồ quan hệ giữa các loại tứ giác. Bảng bên dưới ghi lại cùng nội dung bằng chữ."></div>
+
+            <noscript>
+                <div class="alert alert-warning mt-2" role="alert">
+                    Sơ đồ cần JavaScript. Em xem bảng quan hệ bằng chữ ở dưới nhé.
+                </div>
+            </noscript>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            @* Khung tóm tắt khi chọn nút ---- *@
+            <div class="card" id="gq-tom-tat" hidden>
+                <div class="card-body">
+                    <h2 class="h6 card-title mb-1" id="gq-tt-ten"></h2>
+                    <p class="small mb-2">
+                        <span class="badge text-bg-light text-dark border" id="gq-tt-lop"></span>
+                        <span class="badge text-bg-success" id="gq-tt-dahoc" hidden>✓ Đã học</span>
+                    </p>
+                    <p class="card-text" id="gq-tt-dinh-nghia"></p>
+                    <a class="btn btn-sm btn-primary gq-nut" id="gq-tt-chi-tiet" href="#">Xem chi tiết</a>
+                </div>
+            </div>
+            <p class="form-text" id="gq-huong-dan">Em bấm vào một hình trên sơ đồ để xem tóm tắt.</p>
+
+            @* ---- Ô "Vì sao … là …?" ---- *@
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h2 class="h6 card-title">Vì sao … là …?</h2>
+                    <form method="get" action="/KienThuc/BanDo">
+                        <input type="hidden" name="lop" value="@Model.LopLoc" />
+                        <div class="mb-2">
+                            <label class="form-label" for="gq-tu">Vì sao</label>
+                            <select class="form-select gq-nut" id="gq-tu" name="tu">
+                                @foreach (var (ma, ten) in Model.CacHinh)
+                                {
+                                    <option value="@ma" selected="@(Model.ViSao is not null && Model.ViSao.Tu == ten)">@ten</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" for="gq-den">lại là</label>
+                            <select class="form-select gq-nut" id="gq-den" name="den">
+                                @foreach (var (ma, ten) in Model.CacHinh)
+                                {
+                                    <option value="@ma" selected="@(Model.ViSao is not null && Model.ViSao.Den == ten)">@ten</option>
+                                }
+                            </select>
+                        </div>
+                        <button class="btn btn-primary gq-nut w-100" type="submit">Giải thích giúp em</button>
+                    </form>
+
+                    @if (Model.ViSao is not null)
+                    {
+                        <hr />
+                        @if (Model.ViSao.CoDuongDi)
+                        {
+                            <p class="mb-1 fw-semibold">@string.Join(" → ", Model.ViSao.Chuoi)</p>
+                            <p class="mb-0">@BanDoQuyTac.CauTraLoi(Model.ViSao.Chuoi)</p>
+                        }
+                        else
+                        {
+                            <p class="mb-0" role="status">
+                                Không phải mọi <strong>@Model.ViSao.Tu.ToLower()</strong> đều là
+                                <strong>@Model.ViSao.Den.ToLower()</strong>, nên không có chuỗi giải thích nào.
+                                Em thử đổi chiều hai hình xem sao.
+                            </p>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ---- Bảng quan hệ bằng chữ: cùng nội dung với sơ đồ, dùng được khi không có JavaScript ---- *@
+    <h2 class="h5 mt-4">Bảng quan hệ</h2>
+    <div class="table-responsive">
+        <table class="table table-sm align-middle">
+            <caption class="visually-hidden">Danh sách các hình và hình tổng quát hơn của chúng</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Hình</th>
+                    <th scope="col">Lớp</th>
+                    <th scope="col">Cấp</th>
+                    <th scope="col">Là trường hợp đặc biệt của</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var n in Model.DuLieu.Nut)
+                {
+                    var cha = Model.DuLieu.Canh.Where(c => c.Tu == n.Ma)
+                        .Select(c => Model.DuLieu.Nut.FirstOrDefault(x => x.Ma == c.Den)?.Ten)
+                        .Where(t => t is not null)
+                        .ToList();
+                    <tr>
+                        <th scope="row" class="fw-normal">
+                            @n.Ten
+                            @if (n.DaHoc)
+                            {
+                                <span class="badge text-bg-success">✓ Đã học</span>
+                            }
+                        </th>
+                        <td>@n.Lop</td>
+                        <td>@ThuVienQuyTac.TenCap(n.Cap)</td>
+                        <td>@(cha.Count > 0 ? string.Join(", ", cha) : "—")</td>
+                        <td><a href="/KienThuc/ThuVien/ChiTiet/@n.Ma">Chi tiết</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/cytoscape/cytoscape.min.js"></script>
+    <script>
+        (function () {
+            var duLieu = @Html.Raw(Json.Serialize(Model.DuLieu));
+            var mauCap = { CAP_1: '@BanDoQuyTac.MauTheoCap("CAP_1")', CAP_2: '@BanDoQuyTac.MauTheoCap("CAP_2")', CAP_3: '@BanDoQuyTac.MauTheoCap("CAP_3")' };
+
+            var phanTu = duLieu.nut.map(function (n) {
+                return {
+                    data: {
+                        id: n.ma,
+                        // Nhãn ghi cả tên và lớp: thông tin không chỉ nằm ở màu (NFR-11).
+                        nhan: (n.daHoc ? '✓ ' : '') + n.ten + '\n(lớp ' + n.lop + ')',
+                        mau: mauCap[n.cap] || '#6c757d',
+                        daHoc: n.daHoc,
+                        ten: n.ten,
+                        lop: n.lop,
+                        dinhNghia: n.dinhNghia
+                    }
+                };
+            }).concat(duLieu.canh.map(function (c) {
+                return { data: { id: c.tu + '->' + c.den, source: c.tu, target: c.den } };
+            }));
+
+            var cy = cytoscape({
+                container: document.getElementById('gq-ban-do'),
+                elements: phanTu,
+                layout: { name: 'breadthfirst', directed: true, padding: 18, spacingFactor: 1.1 },
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'label': 'data(nhan)', 'text-wrap': 'wrap', 'text-valign': 'center',
+                            'text-halign': 'center', 'color': '#fff', 'font-size': '11px',
+                            'background-color': 'data(mau)', 'shape': 'round-rectangle',
+                            'width': 'label', 'height': 'label', 'padding': '8px',
+                            'border-width': 1, 'border-color': '#333'
+                        }
+                    },
+                    {
+                        // Nút đã học: viền đậm, kèm dấu ✓ trong nhãn.
+                        selector: 'node[?daHoc]',
+                        style: { 'border-width': 4, 'border-color': '#146c43' }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'width': 2, 'line-color': '#6c757d', 'target-arrow-color': '#6c757d',
+                            'target-arrow-shape': 'triangle', 'curve-style': 'bezier'
+                        }
+                    },
+                    { selector: 'node:selected', style: { 'border-width': 4, 'border-color': '#d63384' } }
+                ]
+            });
+
+            var tomTat = document.getElementById('gq-tom-tat');
+            var huongDan = document.getElementById('gq-huong-dan');
+
+            cy.on('tap', 'node', function (e) {
+                var d = e.target.data();
+                document.getElementById('gq-tt-ten').textContent = d.ten;
+                document.getElementById('gq-tt-lop').textContent = 'Lớp ' + d.lop;
+                document.getElementById('gq-tt-dinh-nghia').textContent = d.dinhNghia;
+                document.getElementById('gq-tt-dahoc').hidden = !d.daHoc;
+                document.getElementById('gq-tt-chi-tiet').href = '/KienThuc/ThuVien/ChiTiet/' + encodeURIComponent(d.id);
+                tomTat.hidden = false;
+                huongDan.hidden = true;
+            });
+
+            cy.on('tap', function (e) {
+                if (e.target === cy) { tomTat.hidden = true; huongDan.hidden = false; }
+            });
+        })();
+    </script>
+}

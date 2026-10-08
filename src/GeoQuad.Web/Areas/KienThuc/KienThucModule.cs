@@ -24,6 +24,10 @@ public static class KienThucModule
         services.AddScoped<ITimKiemRepository, TimKiemRepository>();
         services.AddScoped<ITimKiemService, TimKiemService>();
 
+        // US-12: bản đồ kiến thức (SCR-07)
+        services.AddScoped<IBanDoRepository, BanDoRepository>();
+        services.AddScoped<IBanDoService, BanDoService>();
+
         return services;
     }
 }
