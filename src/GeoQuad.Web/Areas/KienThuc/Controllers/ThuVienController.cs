@@ -1,15 +1,20 @@
+using GeoQuad.Web.Areas.KienThuc.Services;
 using GeoQuad.Web.Infrastructure.Trang;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeoQuad.Web.Areas.KienThuc.Controllers;
 
-/// <summary>Khung rỗng do PHẦN 0 tạo (US-01). Phần A hoàn thiện ở US-09, US-10, US-11.</summary>
+/// <summary>Thư viện kiến thức (US-09) và chi tiết khái niệm (US-10, US-11).</summary>
 [Area("KienThuc")]
 public sealed class ThuVienController : Controller
 {
+    private readonly IThuVienService _thuVien;
+
+    public ThuVienController(IThuVienService thuVien) => _thuVien = thuVien;
+
     // SCR-04 · /KienThuc/ThuVien?loai=&cap=&lop=
-    public IActionResult Index()
-        => this.DangXayDung("Thư viện kiến thức", "US-09", "A", "Duyệt hình, tính chất, dấu hiệu và công thức theo cấp và lớp.");
+    public async Task<IActionResult> Index(string? loai, string? cap, int? lop)
+        => View(await _thuVien.DuyetAsync(loai, cap, lop));
 
     // SCR-05 · /KienThuc/ThuVien/ChiTiet/{ma}
     public IActionResult ChiTiet(string id)

@@ -1,0 +1,146 @@
+@using GeoQuad.Web.Areas.KienThuc.Services
+@model GeoQuad.Web.Areas.KienThuc.Models.ThuVienViewModel
+@{
+    ViewData["Title"] = "Thư viện kiến thức";
+
+    string UrlVoiLoai(string? loai)
+    {
+        var tv = new List<string>();
+        if (loai is not null) tv.Add($"loai={loai}");
+        if (Model.Cap is not null) tv.Add($"cap={Model.Cap}");
+        if (Model.Lop is not null) tv.Add($"lop={Model.Lop}");
+        return "/KienThuc/ThuVien" + (tv.Count > 0 ? "?" + string.Join("&", tv) : "");
+    }
+}
+
+<div class="@(Model.LaCap1 ? "gq-cap-1" : "")">
+    <nav aria-label="Đường dẫn">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thư viện kiến thức</li>
+        </ol>
+    </nav>
+
+    <h1 class="h2">Thư viện kiến thức</h1>
+    <p class="text-body-secondary">
+        Em đang xem nội dung tới <strong>lớp @Model.LopHienThi</strong>.
+        @if (Model.XemNangCao)
+        {
+            <span>Công tắc "Xem trước kiến thức nâng cao" đang bật, nên có cả nội dung lớp trên
+            — những mục đó được đánh dấu <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>.</span>
+        }
+        else
+        {
+            <span>Muốn xem thêm kiến thức lớp trên, em bật công tắc "Xem trước kiến thức nâng cao" ở thanh trên.</span>
+        }
+    </p>
+
+    @* ---- Tab loại nội dung (SCR-04) ---- *@
+    <ul class="nav nav-tabs mb-3" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link @(Model.Loai is null ? "active" : "")"
+               href="@UrlVoiLoai(null)" aria-current="@(Model.Loai is null ? "page" : "false")">Tất cả</a>
+        </li>
+        @foreach (var loai in ThuVienQuyTac.CacLoai)
+        {
+            <li class="nav-item" role="presentation">
+                <a class="nav-link @(Model.Loai == loai ? "active" : "")"
+                   href="@UrlVoiLoai(loai)" aria-current="@(Model.Loai == loai ? "page" : "false")">
+                    @ThuVienQuyTac.TenLoai(loai)
+                </a>
+            </li>
+        }
+    </ul>
+
+    @* ---- Lọc cấp và lớp ---- *@
+    <form class="row g-2 align-items-end mb-4" method="get" action="/KienThuc/ThuVien">
+        <input type="hidden" name="loai" value="@Model.Loai" />
+
+        <div class="col-12 col-sm-auto">
+            <label class="form-label" for="gq-cap">Cấp học</label>
+            <select class="form-select gq-nut" id="gq-cap" name="cap">
+                <option value="">Tất cả cấp</option>
+                @foreach (var cap in ThuVienQuyTac.CacCap)
+                {
+                    <option value="@cap" selected="@(Model.Cap == cap)">@ThuVienQuyTac.TenCap(cap)</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-12 col-sm-auto">
+            <label class="form-label" for="gq-lop">Lớp</label>
+            <select class="form-select gq-nut" id="gq-lop" name="lop">
+                <option value="">Tất cả lớp</option>
+                @for (var i = 1; i <= Model.LopHienThi; i++)
+                {
+                    <option value="@i" selected="@(Model.Lop == i)">Lớp @i</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-12 col-sm-auto d-flex gap-2">
+            <button class="btn btn-primary gq-nut" type="submit">Lọc</button>
+            @if (Model.CoLoc)
+            {
+                <a class="btn btn-outline-secondary gq-nut" href="/KienThuc/ThuVien">Bỏ lọc</a>
+            }
+        </div>
+    </form>
+
+    @* ---- Danh sách thẻ nội dung ---- *@
+    @if (Model.DanhSach.Count == 0)
+    {
+        <div class="alert alert-secondary" role="status">
+            <strong>Chưa có nội dung nào khớp với bộ lọc của em.</strong>
+            <div class="small mt-1">
+                Em thử bỏ bớt bộ lọc, hoặc bật "Xem trước kiến thức nâng cao" để xem nội dung lớp trên.
+                @if (Model.Loai == ThuVienQuyTac.LoaiDauHieu)
+                {
+                    <span>Riêng phần <em>Dấu hiệu nhận biết</em> sẽ có sau khi nhóm nạp dữ liệu định lý (US-03 phần B).</span>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-body-secondary" role="status">Có @Model.DanhSach.Count mục.</p>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+            @foreach (var n in Model.DanhSach)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex flex-wrap gap-1 mb-2">
+                                <span class="badge text-bg-secondary">@n.TenLoai</span>
+                                <span class="badge text-bg-light text-dark border">Lớp @n.Lop</span>
+                                @if (n.NangCao)
+                                {
+                                    <span class="badge text-bg-warning gq-nhan-nang-cao"
+                                          title="Nội dung của lớp trên lớp em đang học">Nâng cao</span>
+                                }
+                                @if (n.DaHoc)
+                                {
+                                    <span class="badge text-bg-success" title="Em đã đánh dấu đã hiểu">✓ Đã học</span>
+                                }
+                            </div>
+
+                            <h2 class="h6 card-title">@n.TieuDe</h2>
+
+                            @if (!string.IsNullOrWhiteSpace(n.BieuThuc))
+                            {
+                                <p class="card-text">$$@n.BieuThuc$$</p>
+                            }
+
+                            @if (n.DuongDanChiTiet is not null)
+                            {
+                                <a class="btn btn-sm btn-outline-primary gq-nut mt-auto align-self-start"
+                                   href="@n.DuongDanChiTiet">Xem chi tiết</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

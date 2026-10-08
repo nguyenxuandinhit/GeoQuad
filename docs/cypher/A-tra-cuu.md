@@ -374,6 +374,86 @@ không tồn tại quan hệ nào khớp. `IN [...]` kiểm tra giá trị có n
 Chạy `scripts/seed` hai lần: tổng số nút giữ nguyên **81** (55 sau US-03 + 10 bài tập +
 9 tình huống + 3 bối cảnh + 4 nút dấu hiệu tạm của phần B), tổng quan hệ giữ nguyên **160**.
 
+### US-09 · Duyệt thư viện kiến thức (FR-10, UC-03, SCR-04)
+
+Hằng `CypherDuyet` trong `Areas/KienThuc/Repositories/ThuVienRepository.cs`.
+
+```cypher
+MATCH (n)-[:THUOC_LOP]->(l:Lop)-[:THUOC_CAP]->(cap:CapHoc)
+WHERE ((n:KhaiNiem AND n.loai = 'HINH') OR n:TinhChat OR n:DauHieu OR n:CongThuc)
+  AND n.trangThai = 'DA_RA_SOAT' AND l.so <= $lop
+  AND ($lopLoc IS NULL OR l.so = $lopLoc)
+  AND ($capLoc IS NULL OR cap.ma = $capLoc)
+  AND ($loai IS NULL
+       OR ($loai = 'HINH' AND n:KhaiNiem) OR ($loai = 'TINH_CHAT' AND n:TinhChat)
+       OR ($loai = 'DAU_HIEU' AND n:DauHieu) OR ($loai = 'CONG_THUC' AND n:CongThuc))
+OPTIONAL MATCH (h:KhaiNiem)-[:CO_TINH_CHAT|CO_CONG_THUC]->(n)
+OPTIONAL MATCH (n)-[:KHANG_DINH]->(dich:KhaiNiem)
+RETURN n.ma AS ma, coalesce(n.ten, n.noiDung) AS tieuDe, n.bieuThuc AS bieuThuc,
+       [x IN labels(n) WHERE x IN ['KhaiNiem','TinhChat','DauHieu','CongThuc']][0] AS loai,
+       l.so AS lop, cap.ma AS cap,
+       coalesce(CASE WHEN n:KhaiNiem THEN n.ma END, h.ma, dich.ma) AS maHinh,
+       EXISTS { MATCH (:TaiKhoan {id: $tk})-[:DA_HOC]->(n) } AS daHoc
+ORDER BY lop, loai, tieuDe
+```
+
+**Giải thích ký hiệu**
+
+| Ký hiệu trong câu | Nghĩa |
+|---|---|
+| `(n)` không có nhãn | nút bất kỳ — vì một thẻ có thể là `KhaiNiem`, `TinhChat`, `DauHieu` hay `CongThuc`; điều kiện nhãn nằm trong `WHERE` |
+| `-[:THUOC_LOP]->(l:Lop)-[:THUOC_CAP]->(cap:CapHoc)` | **đường đi hai chặng**: nội dung → lớp → cấp. Nhờ vậy lọc theo cấp mà không cần lưu cấp trên từng nút |
+| `n:TinhChat` trong `WHERE` | `n:Nhan` dùng như biểu thức đúng/sai: "nút này có nhãn đó không" |
+| `$lop`, `$loai`, `$capLoc`, `$lopLoc`, `$tk` | **tham số**; dữ liệu từ URL không bao giờ nối vào chuỗi truy vấn (NFR-05) |
+| `$lopLoc IS NULL OR l.so = $lopLoc` | mẫu "lọc tuỳ chọn": tham số null thì bỏ qua điều kiện, khỏi phải ghép câu động |
+| `l.so <= $lop` | lọc theo lớp (BR-04). `$lop` = `ICurrentUser.LopHienThi`, bằng 12 khi bật xem trước nâng cao |
+| `n.trangThai = 'DA_RA_SOAT'` | chỉ hiện nội dung đã rà soát (BR-13). Nhờ điều kiện này, nút "tạm" của mảng khác (chưa có `trangThai`) tự bị bỏ qua |
+| `OPTIONAL MATCH` | như `MATCH` nhưng không có cũng vẫn giữ dòng, các biến thành `null`. Dùng vì tính chất/công thức mới có hình sở hữu, còn hình thì không |
+| `-[:CO_TINH_CHAT\|CO_CONG_THUC]->` | `\|` là **"hoặc"** giữa hai kiểu quan hệ: đi theo cả hai trong một bước |
+| `labels(n)` | trả về danh sách nhãn của nút, ví dụ `['DinhLy','TinhChat']` |
+| `[x IN labels(n) WHERE x IN [...]][0]` | **list comprehension**: lọc danh sách nhãn rồi lấy phần tử đầu — để biến nhiều nhãn thành một chữ `loai` cho giao diện |
+| `coalesce(a, b, c)` | lấy giá trị **không null đầu tiên**. `coalesce(n.ten, n.noiDung)` vì hình/công thức có `ten`, còn tính chất/dấu hiệu có `noiDung` |
+| `CASE WHEN n:KhaiNiem THEN n.ma END` | không có `ELSE` nên trả `null` khi không phải khái niệm, để `coalesce` chuyển sang `h.ma` rồi `dich.ma` |
+| `EXISTS { MATCH ... }` | **truy vấn con**: đúng/sai, không nhân thêm dòng. Với khách thì `$tk` là null nên không khớp tài khoản nào → `daHoc` luôn false (BR-09) |
+| `ORDER BY lop, loai, tieuDe` | sắp xếp theo lớp trước để nội dung dễ trước, khó sau |
+
+**Kết quả mong đợi trên dữ liệu seed** (chưa có dữ liệu phần B nên tab Dấu hiệu rỗng)
+
+Khách lớp 4, **không** bật xem trước nâng cao (`$lop = 4`, các tham số lọc đều null) — **14 mục**:
+
+| loai | các mục |
+|---|---|
+| KhaiNiem | HINH_CHU_NHAT (1), HINH_VUONG (1), TU_GIAC (3), HINH_BINH_HANH (4), HINH_THOI (4) |
+| CongThuc | CT_HCN_CV, CT_HCN_DT, CT_HV_CV, CT_HV_DT, CT_TG_CHUVI (lớp 3); CT_HBH_CV, CT_HBH_DT, CT_THOI_CV, CT_THOI_DT (lớp 4) |
+
+Không có `HINH_THANG_CAN` (lớp 6), không mục nào mang nhãn "Nâng cao" — **đúng AC**.
+
+Khách lớp 4, **bật** xem trước nâng cao (`$lop = 12`) — **31 mục**:
+
+| loai | số mục |
+|---|---|
+| KhaiNiem | 7 |
+| TinhChat | 12 |
+| CongThuc | 12 |
+| DauHieu | 0 (chờ `20-dinhly-B.cypher`) |
+
+`HINH_THANG_CAN` xuất hiện, lớp 6 > lớp 4 nên mang nhãn **"Nâng cao"** — **đúng AC**.
+17 thẻ mang nhãn "Nâng cao" (mọi nội dung lớp 6 và lớp 8).
+
+Huy hiệu "Đã học" — tạo thử một quan hệ rồi xem:
+
+```cypher
+MATCH (tk:TaiKhoan {tenDangNhap: 'hocsinh8'}), (k:KhaiNiem {ma: 'HINH_THOI'})
+MERGE (tk)-[h:DA_HOC]->(k) ON CREATE SET h.luc = datetime();
+```
+
+`hocsinh8` mở tab Hình thì chỉ "Hình thoi" có huy hiệu **✓ Đã học**; khách mở cùng trang thì
+không thẻ nào có huy hiệu. Xoá thử nghiệm: `MATCH (:TaiKhoan)-[h:DA_HOC]->() DELETE h;`
+
+**Nhãn "Nâng cao" tính ở đâu?** Không tính trong Cypher. Truy vấn trả `lop` của từng mục;
+`ThuVienQuyTac.LaNangCao(lopNoiDung, lopHocSinh)` so với `ICurrentUser.Lop` (lớp **thật**, không
+phải `LopHienThi`). Tách như vậy để unit test được mà không cần Neo4j (quy ước 2, điểm 9).
+
 ## Đề xuất thay đổi chung
 
 > README mục 2, điểm 1: nếu thấy cần sửa file của PHẦN 0 hoặc của phần khác thì **không sửa**,
