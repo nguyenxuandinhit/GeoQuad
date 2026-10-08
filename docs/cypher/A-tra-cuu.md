@@ -794,4 +794,35 @@ không cần Neo4j (quy ước 2, điểm 9).
 
 | Ngày | Đề xuất | Lý do | Cách tạm đang dùng | Trạng thái |
 |---|---|---|---|---|
-| | | | | |
+| 08/10 | **Phần B**: đổi `trangThai` của seed B từ `'NHAP'` sang `'DA_RA_SOAT'` trong `20-dinhly-B.cypher` (3 chỗ) và `21-chungminh-B.cypher` (các chỗ `ChungMinh` và `Buoc`) | README mục 2 điểm 6 quy định **mọi** nút nội dung do seed tạo phải có `trangThai: 'DA_RA_SOAT'` (BR-13, ghi rõ "nhóm đã rà soát theo Phụ lục B của SRS"). Để `'NHAP'` thì mọi truy vấn hiển thị (của cả A và B) đều lọc bỏ | Không có cách tạm. A **không** nới điều kiện lọc, vì nới là vi phạm BR-13 và sẽ hiện nội dung chưa rà soát cho học sinh | ⏳ Chờ B |
+| 08/10 | **Phần B**: cho các test trong `tests/.../B_ApDung/Integration/**` và `Http/MayChuThuTests` **bỏ qua** (`Assert.Skip` / `ITestOutputHelper` + điều kiện) khi chưa có `GQ_B_INTEGRATION=1`, thay vì ném `InvalidOperationException` | Hiện `dotnet test` trên máy sạch cho **18 test đỏ**, vi phạm Definition of Done của README ("`dotnet test` qua") và mục 2 điểm 12 | A không chạm; khi cần xác nhận phần A thì lọc `--filter FullyQualifiedName~A_TraCuu` | ⏳ Chờ B |
+| 08/10 | **Phần B**: 4 test `BackupFlowTests` gọi `bash`/WSL thật nên đỏ trên máy Windows không có WSL hoạt động | Test phụ thuộc môi trường, không phải lỗi logic | A không chạm | ⏳ Chờ B |
+| 08/10 | **Hợp đồng dữ liệu**: `20-dinhly-B.cypher` thêm quan hệ `THUOC_LOP` cho `DieuKien`, trong khi lược đồ README mục 4.2 không liệt kê quan hệ này cho `DieuKien` | Nếu giữ thì nên bổ sung vào mục 4.2 để A và C biết mà dùng | A không dùng `DieuKien` nên không ảnh hưởng | 💬 Cần nhóm chốt |
+
+### Chi tiết đề xuất số 1 (ảnh hưởng rộng nhất)
+
+Đo trên dữ liệu sau khi seed cả A và B (133 nút / 297 quan hệ):
+
+| Nhãn | Số nút | `trangThai` |
+|---|---|---|
+| KhaiNiem, CongThuc, BaiTap, TinhHuong, DinhLy:TinhChat | 56 | `DA_RA_SOAT` ✅ |
+| DieuKien (14), DinhLy:DauHieu (20), DinhLy nền (6), ChungMinh (4), Buoc | 44+ | **`NHAP`** ❌ |
+
+Hệ quả đo được trên trình duyệt:
+
+| Màn hình | Chủ | Hiện trạng |
+|---|---|---|
+| `/KienThuc/ThuVien?loai=DAU_HIEU` | A | **0 thẻ** |
+| `/KienThuc/ThuVien/ChiTiet/HINH_CHU_NHAT` | A | tab "Dấu hiệu nhận biết" **vẫn ẩn** |
+| `/KienThuc/ThuVien/TimKiem?q=dau+hieu` | A | **0 mục** |
+| `/ApDung/GoiY` | B | không có điều kiện nào để chọn |
+| `/ApDung/ChungMinh/Xem/CM-01` | B | **HTTP 404** |
+| `/ApDung/TinhHuong/Xem/TH-01`, `TH-09` | B | **HTTP 404** — hai tình huống này `AP_DUNG` tới dấu hiệu đang `NHAP`, và `TinhHuongRepository` có mệnh đề *fail closed*; danh sách còn **7/9** |
+
+Câu kiểm tra sau khi B sửa (kỳ vọng tất cả bằng 0):
+
+```cypher
+MATCH (n) WHERE (n:DinhLy OR n:DieuKien OR n:ChungMinh OR n:Buoc)
+  AND coalesce(n.trangThai,'') <> 'DA_RA_SOAT'
+RETURN count(n) AS soChuaRaSoat;
+```
