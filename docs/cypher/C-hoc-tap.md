@@ -363,7 +363,7 @@ WHERE l.so <= $lop AND EXISTS { MATCH (cm)-[:CHUNG_MINH_CHO]->(:DinhLy {trangTha
 RETURN count(cm)>0 AS ok
 ```
 
-Hiện trạng: CM-01 trong `21-chungminh-B.cypher` còn `NHAP`, nên BT-027 chưa hiện nút và POST xem lời giải trả 404. Đây là gate của B, không phải lỗi C.
+Hiện trạng (09/10/2026, sau khi B duyệt CM-01…CM-04 trên `main`): BT-027 hiện nút "Xem lời giải mẫu"; trang lời giải có link `/ApDung/ChungMinh/Xem/CM-01` trả HTTP 200. Lỗi đã sửa: link trước đó tạo bằng `asp-route-ma` nên ra `/ApDung/ChungMinh/Xem?ma=CM-01` (404), vì action của B nhận `id` theo hợp đồng URL README 3.2. `us20_us21_http_smoke.py` kiểm tra cả hai chiều: chứng minh đã duyệt thì có link mở được; tạm đặt `NHAP` thì nút ẩn và POST trả 404 (khôi phục trạng thái trong `finally`).
 
 ## US-22 — Lộ trình và đánh dấu đã học
 

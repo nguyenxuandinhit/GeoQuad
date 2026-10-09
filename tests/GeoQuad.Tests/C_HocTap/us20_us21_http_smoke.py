@@ -37,6 +37,7 @@ def post(client, path, fields):
     with client.open(base + path, urllib.parse.urlencode(fields).encode()) as response:
         return response.geturl(), html.unescape(response.read().decode("utf-8"))
 
+proof_draft = False
 try:
     # Guest: GET must not render the key or explanation before submission.
     guest = opener()
@@ -96,7 +97,17 @@ try:
     rows = graph(f"MATCH (u:TaiKhoan {{tenDangNhap:'{username}'}})-[d:DA_LAM]->(b:BaiTap {{ma:'BT-014'}}) RETURN count(d) AS n,collect(d.dapAnDaChon) AS answers,collect(d.dung) AS correct,collect(d.donViDaChon) AS units")
     assert "1" in rows and "96" in rows and "true" in rows.lower() and "cm²" in rows
 
-    # CM-01 is still NHAP in the checked-in B seed; it must remain unavailable and ungraded.
+    # US-21 AC: B reviewed CM-01, so BT-027 shows the sample solution and links to the proof page.
+    _, proof = get(guest, "/HocTap/BaiTap/Lam/BT-027")
+    assert "XemLoiGiai" in proof and 'name="DapAn"' not in proof, "proof exercise must offer the sample, not grading"
+    _, sample = post(guest, "/HocTap/BaiTap/XemLoiGiai/BT-027", {"__RequestVerificationToken": token(proof)})
+    assert 'href="/ApDung/ChungMinh/Xem/CM-01"' in sample, "sample solution lacks the README URL to CM-01"
+    with guest.open(base + "/ApDung/ChungMinh/Xem/CM-01") as r:
+        assert r.status == 200, f"CM-01 link returned HTTP {r.status}"
+
+    # Gate: the same exercise hides the sample again while the proof is a draft.
+    graph("MATCH (cm:ChungMinh {ma:'CM-01'}) SET cm.trangThai = 'NHAP'")
+    proof_draft = True
     _, proof = get(guest, "/HocTap/BaiTap/Lam/BT-027")
     assert "XemLoiGiai" not in proof, "unreviewed proof link was exposed"
     try:
@@ -105,7 +116,9 @@ try:
     except urllib.error.HTTPError as e:
         assert e.code == 404, f"unreviewed proof returned HTTP {e.code}"
     print("US-20/21 HTTP + Neo4j: PASS (no key/hint leak, big MCQ buttons, CSRF, guest no-persist + login invite, "
-          "related knowledge after submit, server grading, immutable replay, proof gate)")
+          "related knowledge after submit, server grading, immutable replay, BT-027 -> CM-01 link 200, draft proof gate)")
 finally:
+    if proof_draft:
+        graph("MATCH (cm:ChungMinh {ma:'CM-01'}) SET cm.trangThai = 'DA_RA_SOAT'")
     graph(f"MATCH (u:TaiKhoan {{tenDangNhap:'{username}'}}) DETACH DELETE u")
     graph(f"MATCH (n) WHERE n.name='{marker}' DETACH DELETE n")
