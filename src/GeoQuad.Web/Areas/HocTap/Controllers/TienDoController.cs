@@ -1,17 +1,27 @@
-using GeoQuad.Web.Infrastructure.Trang;
+using GeoQuad.Web.Areas.HocTap.Services;
+using GeoQuad.Web.Infrastructure.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeoQuad.Web.Areas.HocTap.Controllers;
 
-/// <summary>Khung rỗng do PHẦN 0 tạo (US-01). Phần C hoàn thiện ở US-23, US-24.</summary>
 [Area("HocTap")]
-public sealed class TienDoController : Controller
+[Authorize]
+public sealed class TienDoController(TienDoService service, GoiYService goiY, ICurrentUser user) : Controller
 {
-    // SCR-16 · /HocTap/TienDo
-    public IActionResult Index()
-        => this.DangXayDung("Tiến độ của em", "US-23", "C", "Số bài đã làm, tỉ lệ đúng và khái niệm cần ôn.");
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        if (string.IsNullOrWhiteSpace(user.TaiKhoanId)) return Challenge();
+        var model = await service.XemAsync();
+        return model is null ? Challenge() : View(model);
+    }
 
-    // /HocTap/TienDo/GoiY
-    public IActionResult GoiY()
-        => this.DangXayDung("Bài tập gợi ý", "US-24", "C", "Bài tập nên làm tiếp dựa trên tiến độ của em.");
+    [HttpGet]
+    public async Task<IActionResult> GoiY()
+    {
+        if (string.IsNullOrWhiteSpace(user.TaiKhoanId)) return Challenge();
+        var model = await goiY.XemAsync();
+        return model is null ? Challenge() : View(model);
+    }
 }

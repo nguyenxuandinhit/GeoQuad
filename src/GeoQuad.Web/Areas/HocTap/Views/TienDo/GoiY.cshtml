@@ -1,0 +1,30 @@
+@model GeoQuad.Web.Areas.HocTap.Models.GoiYViewModel
+@{
+    ViewData["Title"] = "Bài tập gợi ý";
+}
+
+<div class="container py-4">
+    <h1>Bài tập gợi ý</h1>
+    <p role="status">@Model.ThongBao</p>
+    @if (Model.KhaiNiemYeu.Count > 0)
+    {
+        <p>Khái niệm nên ôn: @string.Join(", ", Model.KhaiNiemYeu.Select(x => x.Ten))</p>
+    }
+    @if (Model.BaiTap.Count > 0)
+    {
+        <ol class="list-group list-group-numbered">
+            @foreach (var exercise in Model.BaiTap)
+            {
+                <li class="list-group-item d-flex flex-wrap align-items-center gap-2">
+                    <span>@exercise.De</span><span class="badge text-bg-secondary">@exercise.TenKhaiNiem · độ khó @exercise.DoKho</span>
+                    <a class="btn btn-outline-primary ms-auto" style="min-height:44px" asp-controller="BaiTap" asp-action="Lam" asp-route-id="@exercise.Ma">Làm bài</a>
+                </li>
+            }
+        </ol>
+    }
+    @if (Model.Loai != GeoQuad.Web.Areas.HocTap.Models.LoaiGoiY.CanOn || Model.BaiTap.Count == 0)
+    {
+        <p class="mt-3"><a asp-controller="LoTrinh" asp-action="Index">Xem lộ trình học</a></p>
+    }
+    <a asp-controller="TienDo" asp-action="Index">Quay lại tiến độ</a>
+</div>

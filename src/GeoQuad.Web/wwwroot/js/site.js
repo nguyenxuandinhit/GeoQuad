@@ -10,8 +10,9 @@ window.addEventListener('DOMContentLoaded', function () {
         delimiters: [
             { left: '$$', right: '$$', display: true },
             { left: '$', right: '$', display: false },
-            { left: '\[', right: '\]', display: true },
-            { left: '\(', right: '\)', display: false }
+            // Phải viết '\\(' : trong chuỗi JS, '\(' chỉ là '(' và biến mọi cặp ngoặc thành công thức.
+            { left: '\\[', right: '\\]', display: true },
+            { left: '\\(', right: '\\)', display: false }
         ],
         throwOnError: false
     });

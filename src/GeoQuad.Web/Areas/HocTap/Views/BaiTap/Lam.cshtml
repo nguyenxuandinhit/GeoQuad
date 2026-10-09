@@ -1,0 +1,56 @@
+@model GeoQuad.Web.Areas.HocTap.Models.LamBaiViewModel
+@{
+    ViewData["Title"] = $"Làm bài {Model.Ma}";
+}
+@section Styles {
+    <style>.gq-phuong-an { min-height: 48px; font-size: 1.05rem; }</style>
+}
+<div class="container py-4" style="max-width:52rem">
+    <a asp-area="HocTap" asp-controller="BaiTap" asp-action="Index">← Ngân hàng bài tập</a>
+    <h1 class="h2 mt-3">@Model.Ma</h1>
+    <p class="text-body-secondary">Lớp @Model.Lop · Mức @Model.DoKho</p>
+    <section class="card"><div class="card-body">
+        <p class="fs-5">@Model.De</p>
+        @if (Model.Loai == "CHUNG_MINH")
+        {
+            @if (Model.CoLoiGiaiMau)
+            {
+                <form method="post" asp-area="HocTap" asp-controller="BaiTap" asp-action="XemLoiGiai" asp-route-id="@Model.Ma">
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-primary gq-nut" type="submit">Xem lời giải mẫu</button>
+                </form>
+            }
+            else { <p role="status">Chưa có lời giải mẫu đã được rà soát cho bài này.</p> }
+        }
+        else
+        {
+            <form method="post" asp-area="HocTap" asp-controller="BaiTap" asp-action="Lam" asp-route-id="@Model.Ma">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Token" value="@Model.Token" />
+                @if (Model.Loai == "TRAC_NGHIEM")
+                {
+                    <fieldset class="d-grid gap-2 my-2">
+                        <legend class="visually-hidden">Chọn một đáp án</legend>
+                        @for (var i = 0; i < Model.PhuongAn.Count; i++)
+                        {
+                            var letter = ((char)('A' + i)).ToString();
+                            <input class="btn-check" type="radio" id="answer-@letter" name="DapAn" value="@letter" autocomplete="off" />
+                            <label class="btn btn-outline-primary text-start w-100 gq-phuong-an" for="answer-@letter"><strong>@letter.</strong> @Model.PhuongAn[i]</label>
+                        }
+                    </fieldset>
+                }
+                else
+                {
+                    <label class="form-label" for="answer">Đáp án số</label>
+                    <div class="input-group"><input class="form-control gq-nut" id="answer" name="DapAn" inputmode="decimal" autocomplete="off" maxlength="32" />
+                        <span class="input-group-text">@Model.DonViYeuCau</span></div>
+                    <label class="form-label mt-2" for="unit">Đơn vị</label>
+                    @if (string.IsNullOrEmpty(Model.DonViYeuCau)) { <input type="hidden" name="DonVi" value="" /> }
+                    else { <input class="form-control gq-nut" id="unit" name="DonVi" value="@Model.DonViYeuCau" maxlength="32" /> }
+                }
+                <button class="btn btn-primary gq-nut mt-3" type="submit">Nộp bài</button>
+            </form>
+        }
+    </div></section>
+    @if (Model.Loi is not null) { <p class="alert alert-warning mt-3" role="alert">@Model.Loi</p> }
+</div>

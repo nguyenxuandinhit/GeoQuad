@@ -1,0 +1,139 @@
+@model GeoQuad.Web.Areas.HocTap.Models.BaiTapDanhSach
+@{
+    ViewData["Title"] = "Ngân hàng bài tập";
+}
+
+<div class="container py-3">
+    <h1 class="h2">Ngân hàng bài tập</h1>
+    <p class="text-body-secondary">Chọn bài phù hợp với lớp và kiến thức em muốn luyện tập.</p>
+
+    <form method="get" asp-area="HocTap" asp-controller="BaiTap" asp-action="Index"
+          class="row g-3 align-items-end mb-4" aria-label="Lọc bài tập">
+        <div class="col-12 col-sm-6 col-lg-2">
+            <label class="form-label" for="loc-cap">Cấp học</label>
+            <select class="form-select gq-nut" id="loc-cap" name="cap">
+                <option value="">Tất cả</option>
+                <option value="CAP_1" selected="@(Model.BoLoc.Cap == "CAP_1")">Cấp 1</option>
+                <option value="CAP_2" selected="@(Model.BoLoc.Cap == "CAP_2")">Cấp 2</option>
+                <option value="CAP_3" selected="@(Model.BoLoc.Cap == "CAP_3")">Cấp 3</option>
+            </select>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-2">
+            <label class="form-label" for="loc-lop">Lớp</label>
+            <select class="form-select gq-nut" id="loc-lop" name="lop">
+                <option value="">Tất cả</option>
+                @for (var lop = 1; lop <= Model.LopHienThi; lop++)
+                {
+                    var capCuaLop = lop <= 5 ? "CAP_1" : lop <= 9 ? "CAP_2" : "CAP_3";
+                    var an = !Model.LopChon.Contains(lop);
+                    <option value="@lop" data-cap="@capCuaLop" selected="@(Model.BoLoc.Lop == lop)" hidden="@an" disabled="@an">Lớp @lop</option>
+                }
+            </select>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-2">
+            <label class="form-label" for="loc-loai">Dạng bài</label>
+            <select class="form-select gq-nut" id="loc-loai" name="loai">
+                <option value="">Tất cả</option>
+                <option value="TRAC_NGHIEM" selected="@(Model.BoLoc.Loai == "TRAC_NGHIEM")">Trắc nghiệm</option>
+                <option value="DAP_AN_SO" selected="@(Model.BoLoc.Loai == "DAP_AN_SO")">Đáp án số</option>
+                <option value="CHUNG_MINH" selected="@(Model.BoLoc.Loai == "CHUNG_MINH")">Chứng minh</option>
+            </select>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-2">
+            <label class="form-label" for="loc-do-kho">Độ khó</label>
+            <select class="form-select gq-nut" id="loc-do-kho" name="doKho">
+                <option value="">Tất cả</option>
+                @for (var doKho = 1; doKho <= 3; doKho++)
+                {
+                    <option value="@doKho" selected="@(Model.BoLoc.DoKho == doKho)">Mức @doKho</option>
+                }
+            </select>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <label class="form-label" for="loc-khai-niem">Khái niệm</label>
+            <select class="form-select gq-nut" id="loc-khai-niem" name="khaiNiem">
+                <option value="">Tất cả</option>
+                @foreach (var k in Model.KhaiNiem)
+                {
+                    <option value="@k.Ma" selected="@(Model.BoLoc.KhaiNiem == k.Ma)">@k.Ten</option>
+                }
+            </select>
+        </div>
+        <div class="col-12 col-lg-1 d-grid">
+            <button class="btn btn-primary gq-nut" type="submit">Lọc</button>
+        </div>
+        <div class="col-12">
+            <a asp-area="HocTap" asp-controller="BaiTap" asp-action="Index">Xóa bộ lọc</a>
+        </div>
+    </form>
+
+    @if (Model.Loi is not null)
+    {
+        <div class="alert alert-warning" role="alert">@Model.Loi</div>
+    }
+    else if (Model.BaiTap.Count == 0)
+    {
+        <p role="status">Chưa có bài tập phù hợp. Em thử đổi bộ lọc nhé.</p>
+    }
+    else
+    {
+        <p role="status">Có @Model.BaiTap.Count bài tập phù hợp.</p>
+        <div class="row g-3">
+            @foreach (var bai in Model.BaiTap)
+            {
+                <div class="col-12 col-lg-6">
+                    <article class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h2 class="h5 card-title">@bai.Ma</h2>
+                            <p class="card-text">@bai.DeRutGon</p>
+                            <p class="text-body-secondary mb-2">
+                                Lớp @bai.Lop · Mức @bai.DoKho ·
+                                @(bai.Loai switch {
+                                    "TRAC_NGHIEM" => "Trắc nghiệm",
+                                    "DAP_AN_SO" => "Đáp án số",
+                                    _ => "Chứng minh"
+                                })
+                                @if (bai.Lop > Model.LopNguoiDung)
+                                {
+                                    <span class="badge bg-info text-dark">Nâng cao</span>
+                                }
+                            </p>
+                            @if (Model.DaDangNhap)
+                            {
+                                <p class="mb-2">Đã làm: @bai.SoLan lần · @(bai.DaDung ? "Đã đúng" : "Chưa đúng")</p>
+                            }
+                            <a class="btn btn-outline-primary gq-nut mt-auto align-self-start"
+                               asp-area="HocTap" asp-controller="BaiTap" asp-action="Lam" asp-route-id="@bai.Ma">
+                                Xem bài tập
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    }
+
+    @if (!Model.DaDangNhap)
+    {
+        <p class="mt-4"><a asp-area="" asp-controller="TaiKhoan" asp-action="DangNhap">Đăng nhập</a> để lưu kết quả làm bài của em.</p>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // BR-03: ô "Lớp" chỉ hiện lớp thuộc cấp đang chọn; bỏ chọn lớp nếu nó không còn hợp lệ.
+        (function () {
+            var cap = document.getElementById('loc-cap');
+            var lop = document.getElementById('loc-lop');
+            if (!cap || !lop) return;
+            cap.addEventListener('change', function () {
+                Array.prototype.forEach.call(lop.options, function (o) {
+                    if (!o.value) return;
+                    var an = cap.value !== '' && o.dataset.cap !== cap.value;
+                    o.hidden = an; o.disabled = an;
+                    if (an && o.selected) lop.value = '';
+                });
+            });
+        })();
+    </script>
+}
