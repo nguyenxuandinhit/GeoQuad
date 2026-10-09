@@ -851,7 +851,7 @@ thật của nó thay vì gộp chung một chuỗi:
 | `01-khung.cypher` — 7 hình | Nhóm GeoQuad biên soạn theo SRS Phụ lục B.1; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; thành viên C rà soát 08/10/2026 |
 | `01-khung.cypher` — 6 yếu tố | Nhóm GeoQuad **tự soạn định nghĩa** (SRS Phụ lục B.1 không có cột định nghĩa); đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ |
 | `10-kienthuc-A.cypher` — 12 tính chất + 12 công thức của Phụ lục B | Nhóm GeoQuad biên soạn theo SRS Phụ lục B; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; thành viên C rà soát 08/10/2026 |
-| `10-kienthuc-A.cypher` — 8 tính chất + 2 công thức bổ sung | Nhóm GeoQuad biên soạn, **bổ sung ngoài Phụ lục B**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ — **không** ghi là đã rà soát, vì C rà soát trước khi A thêm các mục này |
+| `10-kienthuc-A.cypher` — 22 tính chất + 2 công thức bổ sung | Nhóm GeoQuad biên soạn, **bổ sung ngoài Phụ lục B**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ — **không** ghi là đã rà soát, vì C rà soát trước khi A thêm các mục này |
 | `11-baitap-A.cypher` — 10 bài tập | Nhóm GeoQuad **tự soạn** theo SRS giả định A-01; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; **đã kiểm lại phép tính** |
 | `12-tinhhuong-A.cypher` — 9 tình huống | Nhóm GeoQuad biên soạn theo SRS Phụ lục B.8, **lời giải nhóm tự viết**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ |
 
@@ -861,9 +861,42 @@ chương trình khung GDPT 2018 để đối chiếu chủ đề và lớp (SRS 
 
 ### Phần A đã bổ sung gì ngoài Phụ lục B
 
-Lý do: Phụ lục B **không có mục nào về đối xứng**, trong khi trục đối xứng và tâm đối xứng
-thuộc chương tứ giác ở SGK Toán 8; cũng thiếu tổng góc ngoài, đường trung bình hình thang,
-chu vi hình thang và đường chéo hình thoi theo cạnh.
+Hai đợt bổ sung, tổng **22 tính chất + 2 công thức**.
+
+**Đợt 1 (08/10) — vá chỗ thiếu ở lớp 8.** Phụ lục B **không có mục nào về đối xứng**, trong khi
+trục đối xứng và tâm đối xứng thuộc chương tứ giác ở SGK Toán 8; cũng thiếu tổng góc ngoài,
+đường trung bình hình thang, chu vi hình thang và đường chéo hình thoi theo cạnh.
+→ 8 tính chất + 2 công thức.
+
+**Đợt 2 (09/10) — vá chỗ thiếu ở các lớp khác.** Phụ lục B chỉ phủ tới lớp 8, nên thư viện
+**không có mục nào ở lớp 2, 7, 9, 10, 11, 12** — chọn "Cấp 3" ra trang trống. Chủ đề tứ giác
+vẫn tiếp tục ở các lớp trên theo CT GDPT 2018, nên bổ sung 14 tính chất:
+
+| Lớp | Căn cứ chương trình | Bổ sung |
+|---|---|---|
+| 2 | Toán 2 — hình học trực quan, nhận dạng hình tứ giác | `TC_TG_5` đếm đỉnh/cạnh/góc |
+| 7 | Toán 7 — hình hộp chữ nhật, hình lập phương | `TC_HCN_6`, `TC_HV_5` (ghi rõ là **liên hệ** sang hình học trực quan, không nhận là tính chất của tứ giác) |
+| 9 | Toán 9 — chương Đường tròn, tứ giác nội tiếp | `TC_TG_3`, `TC_HCN_4`, `TC_HV_4`, `TC_HTC_4`, `TC_THOI_4`, `TC_HBH_5` |
+| 10 | Toán 10 — hệ thức lượng, tích vô hướng | `TC_TG_4` ($S = \frac{1}{2} d_1 d_2 \sin\varphi$), `TC_HBH_6` ($d_1^2 + d_2^2 = 2(a^2+b^2)$) |
+| 11 | Toán 11 — quan hệ song song, thiết diện | `TC_HBH_7` (ghi rõ là **liên hệ** hình học không gian) |
+| 12 | Toán 12 — tọa độ không gian, tích có hướng | `TC_HBH_8` ($S = \lvert\overrightarrow{AB} \times \overrightarrow{AD}\rvert$), `TC_HCN_5` |
+
+**Chỉ thêm `TinhChat`, không thêm `CongThuc` và không thêm `KhaiNiem`:**
+công thức mới sẽ xuất hiện trong dropdown của Máy tính hình học (US-15) mà lớp
+`MayTinhHinhHoc` chưa biết tính — chính lỗi đã gặp với đường trung bình hình thang; còn
+`KhaiNiem` mới sẽ làm lệch truy vấn danh sách hình của B và lộ trình của C. Công thức của
+các mục lớp 10 và 12 nằm trong `noiDung` dạng KaTeX nên vẫn đọc được ở tab Tính chất.
+
+Sau hai đợt, **cả 12 lớp và cả 3 cấp đều có nội dung**:
+
+```cypher
+MATCH (n)-[:THUOC_LOP]->(l:Lop)
+WHERE ((n:KhaiNiem AND n.loai = 'HINH') OR n:TinhChat OR n:DauHieu OR n:CongThuc)
+  AND n.trangThai = 'DA_RA_SOAT'
+RETURN l.so AS lop, count(n) AS so ORDER BY lop;
+-- 1:2  2:1  3:6  4:6  5:3  6:1  7:2  8:43  9:6  10:2  11:1  12:2
+-- cấp 1: 18   cấp 2: 52   cấp 3: 5
+```
 
 AC của US-03 ghi *"đủ 14 điều kiện, 20 dấu hiệu, 12 tính chất, 12 công thức"* — hiểu chữ
 "đủ" là **mức tối thiểu**, nên bổ sung chỉ làm dày thêm và không bỏ mục nào của Phụ lục B.
@@ -871,7 +904,7 @@ Mọi mục mới có `nguon` kết thúc bằng **"(bổ sung ngoài Phụ lụ
 
 ```cypher
 MATCH (n) WHERE n.nguon ENDS WITH '(bổ sung ngoài Phụ lục B)'
-RETURN labels(n) AS nhan, count(n) AS so;        -- TinhChat 8, CongThuc 2
+RETURN labels(n) AS nhan, count(n) AS so;        -- TinhChat 22, CongThuc 2
 ```
 
 **8 tính chất mới** (`10-kienthuc-A.cypher`), tất cả lớp 8:

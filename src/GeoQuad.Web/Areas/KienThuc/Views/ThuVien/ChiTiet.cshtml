@@ -199,6 +199,26 @@
                         </p>
                     </div>
                 }
+                else if (Model.ChiTiet.TongQuatHon.Count > 0)
+                {
+                    @* Hình không có công thức riêng trong chương trình (hình thang cân dùng
+                       công thức của hình thang). Tab Công thức bị ẩn theo AC của US-10, nên
+                       chỉ đường sang hình tổng quát để em không tưởng là thiếu dữ liệu. *@
+                    <div class="alert alert-light border mt-3" role="note">
+                        <strong>@k.Ten chưa có công thức riêng trong chương trình.</strong>
+                        <div class="small mt-1">
+                            Hình này dùng công thức của
+                            @for (var i = 0; i < Model.ChiTiet.TongQuatHon.Count; i++)
+                            {
+                                var t = Model.ChiTiet.TongQuatHon[i];
+                                <a href="/KienThuc/ThuVien/ChiTiet/@t.Ma">@t.Ten.ToLower()</a>@(i < Model.ChiTiet.TongQuatHon.Count - 1 ? ", " : "")
+                            }
+                            — vì nó là một trường hợp đặc biệt.
+                            <a href="/KienThuc/MayTinh?hinh=@k.Ma">Máy tính hình học</a>
+                            tự mượn công thức đó và ghi rõ mượn của hình nào.
+                        </div>
+                    </div>
+                }
 
                 @* ---- Ví dụ thực tế (phần B) ---- *@
                 @if (Model.CoTinhHuong)

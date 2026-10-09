@@ -59,7 +59,7 @@ Kiểm thử đối chiếu theo bảng AC trong `docs/cypher/C-hoc-tap.md` và 
 
 Người thực hiện: **Hồ Ngọc Phương Như (thành viên A)**. Commit kiểm: `0ca57e0` trên `main`.
 Môi trường: Windows 11, .NET SDK 8, Neo4j 5.26 Community trên Docker Desktop, database dev
-`geoquad-neo4j` (167 nút / 389 quan hệ) sau khi `scripts/seed.sh` chạy hai lần.
+`geoquad-neo4j` (181 nút / 419 quan hệ) sau khi `scripts/seed.sh` chạy hai lần.
 Cách kiểm: gửi **HTTP thật** tới `http://localhost:5080` rồi đọc HTML trả về, không mock, không
 đọc mã thay cho chạy. Kịch bản kiểm lưu ngoài repo (thư mục tạm của phiên làm việc).
 
@@ -100,7 +100,7 @@ trỏ `CAN_CU` sang đó. Để sau buổi báo cáo vì phải sửa cả danh 
 
 - [x] **A chạy AC US-13/14/17/18/25** — 16/16 đạt, bảng ở trên, ngày 09/10/2026, không có regression.
 - [x] C rà soát US-03 ngày 08/10/2026; B duyệt CM-01..04 ngày 09/10/2026: đã ký phiếu [content-review-B.md](../plans/261008-0132-quan-b-ap-dung-tdd/reports/content-review-B.md) và nạp `DA_RA_SOAT`.
-- [x] **Seed lặp (NFR-08)** — `scripts/seed.sh` chạy hai lần liên tiếp trên database dev: 167 nút / 389 quan hệ không đổi, mỗi lần ~23 giây.
+- [x] **Seed lặp (NFR-08)** — `scripts/seed.sh` chạy hai lần liên tiếp trên database dev: 181 nút / 419 quan hệ không đổi, mỗi lần ~23 giây.
 - [x] **`scripts/seed.ps1` trên Windows** — chạy được trên **Windows PowerShell 5.1**, nạp đủ 8 file, `exit 0`. Đường seed trên Windows coi như đã nghiệm thu.
 - [x] **payload ≤ 2 MB (NFR-14)** — đo bằng HTTP: trang HTML nặng nhất là Thư viện **64,4 KB**; toàn bộ tài nguyên tĩnh tải một lần (Bootstrap, jQuery, KaTeX, Cytoscape, site.css, site.js) **≈ 1,05 MB** chưa nén. Trang nặng nhất (Bản đồ kiến thức) tổng **≈ 1,1 MB**.
 - [x] **Dấu hiệu tiếp cận kiểm được bằng máy (NFR-11)** — `<html lang="vi">`, `meta viewport`, liên kết "Bỏ qua, đến nội dung chính", **đúng một thẻ `<main>`** mỗi trang (sau khi B sửa 6 view ngày 09/10), `:focus-visible` có trong `site.css`, có `@media` cho màn hình nhỏ, vùng bấm nút ≥ 44px. SVG trang chi tiết có `role="img"`, `<title>`, `<desc>` và `aria-labelledby`.
