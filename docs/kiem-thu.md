@@ -68,3 +68,6 @@ Không sửa file/sharedcontract thuộc A/C để né dependency. URL B tới t
 Theo yêu cầu “CSV trước”, thêm Status/Comment cho 27 dòng B trong `docs/GeoQuad_Jira_2ngay.csv`: 5 Done (ID53/57/68/72/100), 21 In Progress, 1 To Do (ID104). Giữ nguyên 16 cột cũ/119 bản ghi, 4 header Labels và mọi giá trị nguồn; A/C không nhận trạng thái/comment mới. Báo cáo [jira-csv-update-B.json](../plans/261008-0132-quan-b-ap-dung-tdd/reports/jira-csv-update-B.json) có mapping từng dòng. Đây là update CSV repository; Jira online chưa cập nhật.
 
 Nhánh duy nhất `feature/B-ap-dung` được fast-forward theo `origin/main@95a8519` trước kiểm thử; không tạo nhánh mới hoặc gộp vào main. Bản SRS Markdown/ảnh được đóng gói nguyên trạng để các link tài liệu có đủ nguồn khi review. Mọi gate chưa có evidence giữ mở, PR để draft do còn các gate review/browser/Windows.
+
+- 09/10/2026 (C): các controller C đã hoàn thiện (US-08, US-19…US-24). Mục "Quân/B kiểm thử C" ở trên ghi theo code cũ; nhờ B kiểm thử lại theo bảng AC trong `docs/cypher/C-hoc-tap.md` và các script `tests/GeoQuad.Tests/C_HocTap/*_http_smoke.py`.
+
