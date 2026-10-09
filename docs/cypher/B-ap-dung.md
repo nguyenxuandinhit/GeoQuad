@@ -58,10 +58,11 @@ trên dữ liệu seed. Tài liệu này dùng để cả nhóm học Neo4j và 
 ### US-02/03/04 · Seed B và trạng thái review
 
 Seed B dùng `20-dinhly-B.cypher` (14 điều kiện, 20 dấu hiệu, 6 định lý nền)
-và `21-chungminh-B.cypher` (4 chứng minh, bước/căn cứ). Danh mục được chép từ
-SRS B.3/B.4/B.7/B.9. Đó là nguồn soạn thảo; nguồn SGK độc lập và chữ ký C vẫn
-chưa có. Tất cả nội dung B giữ `NHAP`. Xem
-[phiếu review C](../../plans/261008-0132-quan-b-ap-dung-tdd/reports/content-review-B.md).
+và `21-chungminh-B.cypher` (4 chứng minh, bước/căn cứ). Danh mục được biên soạn từ
+SRS B.3/B.4/B.7/B.9. Nội dung 14 điều kiện, 20 dấu hiệu, 6 định lý nền đã được thành viên C
+rà soát ngày 08/10/2026 và chuyển `DA_RA_SOAT`. Bốn chứng minh mẫu và các bước đã được thành viên B
+rà soát và chuyển `DA_RA_SOAT`. Xem
+[phiếu review](../../plans/261008-0132-quan-b-ap-dung-tdd/reports/content-review-B.md).
 
 `MERGE (d:DinhLy {ma:row.ma})` khớp placeholder A trước khi `SET d:DauHieu`;
 không MERGE đồng thời cả nhãn phụ vì có thể không khớp nút gốc. `YEU_CAU_LA`

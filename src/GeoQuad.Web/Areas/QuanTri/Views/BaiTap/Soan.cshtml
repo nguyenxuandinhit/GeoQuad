@@ -1,7 +1,7 @@
 @model GeoQuad.Web.Areas.QuanTri.Models.BaiTapForm
 @{ var catalog=(GeoQuad.Web.Areas.QuanTri.Models.QuanTriCatalog)ViewData["Catalog"]!; var sua=(bool)ViewData["Sua"]!; ViewData["Title"]=sua ? "Sửa bài tập" : "Thêm bài tập"; }
 <style>.editor-b input,.editor-b select,.editor-b button,.editor-b a {min-height:48px;font-size:16px}.editor-b textarea {font-size:16px;min-height:110px}.editor-b label {display:block;padding:.6rem 0;overflow-wrap:anywhere}.editor-b fieldset {border:1px solid #ccd;padding:1rem;margin:1rem 0;min-width:0}</style>
-<main class="editor-b"><h1>@ViewData["Title"]</h1>
+<div class="editor-b"><h1>@ViewData["Title"]</h1>
 <form asp-action="@(sua ? "Sua" : "Them")" asp-route-id="@(sua ? Model.Ma : null)" method="post">
 <div asp-validation-summary="All" role="alert" class="text-danger"></div>
 <label asp-for="Ma">Mã bài</label><input asp-for="Ma" class="form-control" readonly="@sua" maxlength="64" required />
@@ -28,4 +28,4 @@
 <button class="btn btn-primary">Lưu bài tập</button><button class="btn btn-outline-primary" formaction="@Url.Action("XemTruoc",new { id=sua ? Model.Ma : null })">Xem trước</button><a class="btn btn-outline-secondary" asp-action="Index">Quay lại danh sách</a>
 </form>
 @if((bool)ViewData["XemTruoc"]!){<partial name="_XemTruoc" model="Model" />}
-</main>
+</div>

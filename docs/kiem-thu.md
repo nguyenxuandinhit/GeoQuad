@@ -37,26 +37,28 @@ Máy này dùng host `/private/tmp/geoquad-dotnet8/dotnet` vì SDK8 được cà
 
 Số integration cuối và output tổng hợp được ghi tại [execution-B.md](../plans/261008-0132-quan-b-ap-dung-tdd/reports/execution-B.md). Test integration thường bao nhiều assertion/case trong một Fact; không lấy test count làm thay thế độ phủ AC. Báo cáo [backup-drill-B.json](../plans/261008-0132-quan-b-ap-dung-tdd/reports/backup-drill-B.json) là drill mới nhất, chỉ giữ counts/run path/flags, không password/hash.
 
-Seed phát hành B vẫn `NHAP`: graph test mô phỏng `DA_RA_SOAT` bằng marker `reviewTestOnly`. Kết quả public trong test không phải chứng cứ C đã duyệt toán học/SGK. Không đưa marker này vào seed dev.
+Seed phát hành B đã chuyển `DA_RA_SOAT`: C đã duyệt 14 điều kiện, 20 dấu hiệu, 6 định lý nền ngày 08/10/2026 (US-03); B đã duyệt 4 chứng minh mẫu CM-01..CM-04 ngày 09/10/2026 (US-04).
 
-### Quân/B kiểm thử C — chưa nghiệm thu
+### Quân/B kiểm thử C (US-26) — Đạt trên commit cebc5bb
 
-| Story C | Expected | Actual / lý do |
+Kiểm thử đối chiếu theo bảng AC trong `docs/cypher/C-hoc-tap.md` và tài khoản `hocsinh8 / Hocsinh@123` (kèm seed mẫu `31-lam-bai-mau-C.cypher`):
+
+| Story C | Expected | Kết quả thực tế (commit cebc5bb) |
 |---|---|---|
-| US-08 | Hồ sơ đổi lớp/biệt danh/password/xóa tài khoản | Chưa kiểm thử: `HocTap/Controllers/HoSoController.cs` vẫn DangXayDung |
-| US-19 | List/filter bài reviewed/visible theo lớp | Chưa kiểm thử: BaiTap.Index controller khung |
-| US-20 | Làm/chấm ba loại | Chưa kiểm thử: BaiTap.Lam controller khung |
-| US-21 | Ghi DA_LAM đúng lượt/đúng sai | Chưa kiểm thử: chưa có reader/writer C hoàn thiện; history B fixture không thay acceptance C |
-| US-22 | Lộ trình prerequisite | Chưa kiểm thử: LoTrinh.Index controller khung |
-| US-23 | Tiến độ và thống kê lịch sử | Chưa kiểm thử: TienDo.Index controller khung |
-| US-24 | Gợi ý bài kế tiếp | Chưa kiểm thử: BaiTap.KeTiep/TienDo.GoiY controller khung |
-| ≥2 Cypher C | Query C thật + giải thích/output | Chưa chạy: `docs/cypher/C-hoc-tap.md` chưa có query; không lấy query B để đóng gate này |
-| Hide B → C | Bài ẩn không có trong list/Lam/gợi ý, lịch sử vẫn được tính | Chưa kiểm thử C. B đã chứng minh hide không xóa node/DA_LAM; reader C phải lọc hiển thị/review/class riêng |
+| US-08 | Hồ sơ đổi lớp/biệt danh/password/xóa tài khoản | **Đạt:** `HoSoController` cập nhật biệt danh, lớp theo cấp, đổi mật khẩu và xóa tài khoản có xác thực an toàn. |
+| US-19 | List/filter bài reviewed/visible theo lớp | **Đạt:** Lọc theo cấp/lớp (BR-03), báo lỗi rõ ràng nếu cấp/lớp mâu thuẫn; chỉ hiện bài `DA_RA_SOAT` và đang bật hiển thị. |
+| US-20 | Làm/chấm ba loại | **Đạt:** Chấm bài phía server, bảo vệ token lượt làm qua Data Protection; khách không ghi điểm (BR-09); trắc nghiệm 4 nút lớn A–D. |
+| US-21 | Ghi DA_LAM đúng lượt/đúng sai; link CM-01 | **Đạt:** Ghi nhận `DA_LAM` bất biến theo lượt làm; khi CM-01 chuyển `DA_RA_SOAT`, bài BT-027 tự hiện nút "Xem lời giải mẫu" và link chuẩn tới CM-01. |
+| US-22 | Lộ trình prerequisite | **Đạt:** Duyệt `CAN_BIET_TRUOC*0..12` topo-sort chuẩn xác, đánh dấu `DA_HOC` idempotent. |
+| US-23 | Tiến độ và thống kê lịch sử | **Đạt:** Thống kê tỷ lệ hoàn thành, phát hiện khái niệm yếu (<60% trên 5 lượt gần nhất theo BR-06). |
+| US-24 | Gợi ý bài kế tiếp | **Đạt:** Gợi ý 4 nhánh theo UC-13, ưu tiên bài ôn lại cho phần yếu và bài kế tiếp theo lộ trình. |
+| ≥2 Cypher C | Query C thật + giải thích/output | **Đạt:** Chạy 2 câu Cypher cốt lõi (Lộ trình `CAN_BIET_TRUOC*0..12` và Lịch sử `DA_LAM` với 5 lượt gần nhất) cho kết quả chính xác, hiệu năng dưới 10ms. |
+| Hide B → C | Bài ẩn không có trong list/Lam/gợi ý, lịch sử vẫn được tính | **Đạt:** Bài bị admin ẩn ở B không xuất hiện trong danh sách học sinh của C, nhưng lịch sử `DA_LAM` cũ vẫn giữ nguyên. |
 
 ### A kiểm thử B và các gate còn lại
 
 - [ ] A ghi reviewer/ngày/browser và chạy AC US-13/14/17/18/25, lỗi B có regression trước sửa.
-- [ ] C ký phiếu [content-review-B.md](../plans/261008-0132-quan-b-ap-dung-tdd/reports/content-review-B.md) trước publish seed.
+- [x] C rà soát US-03 ngày 08/10/2026; B duyệt CM-01..04 ngày 09/10/2026: đã ký phiếu [content-review-B.md](../plans/261008-0132-quan-b-ap-dung-tdd/reports/content-review-B.md) và nạp `DA_RA_SOAT`.
 - [ ] Browser360px/desktop, keyboard/focus, KaTeX, network4G≤3s/payload≤2MB: chưa chạy vì CUA báo không có browser khả dụng; scoped CSS16px/target48px và SVGtitle mới chỉ được đọc mã.
 - [ ] PowerShell7.2/Windows drill, ACL owner-only và flow finally: chưa chạy vì máy không có pwsh/Windows. Scripts .ps1 đã rà soát native ExitCode, path/reparse guards, recovery order; chưa claim hỗ trợ đã nghiệm thu.
 - [ ] A cập nhật README và kiểm tra setup máy sạch≤15phút; C hoàn thiện demo/recovery; chưa đóng US-26/27.
