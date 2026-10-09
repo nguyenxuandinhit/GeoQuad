@@ -91,4 +91,47 @@ public class ThuVienQuyTacTests
     [InlineData(null, "Khác")]
     public void TenLoaiTiengViet(string? loai, string mong)
         => Assert.Equal(mong, ThuVienQuyTac.TenLoai(loai));
+
+    // ---- Lọc theo cấp khi thư viện chỉ hiện nội dung tới lớp đang xem (US-09) ----
+
+    [Theory]
+    [InlineData("CAP_1", 1)]
+    [InlineData("CAP_2", 6)]
+    [InlineData("CAP_3", 10)]
+    public void LopNhoNhatCuaMoiCap(string cap, int mong)
+        => Assert.Equal(mong, ThuVienQuyTac.LopNhoNhatCuaCap(cap));
+
+    [Fact]
+    public void CapLaCoiTraVeLopNhoNhat()
+        => Assert.Equal(1, ThuVienQuyTac.LopNhoNhatCuaCap("CAP_99"));
+
+    [Theory]
+    // Học sinh lớp 4 chỉ với tới cấp 1; chọn cấp 2 hay cấp 3 thì chắc chắn rỗng.
+    [InlineData("CAP_1", 4, true)]
+    [InlineData("CAP_2", 4, false)]
+    [InlineData("CAP_3", 4, false)]
+    // Lớp 6 là lớp đầu của cấp 2 nên vừa đủ với tới.
+    [InlineData("CAP_2", 6, true)]
+    [InlineData("CAP_3", 9, false)]
+    // Bật xem trước nâng cao thì lớp hiển thị là 12, với tới cả ba cấp.
+    [InlineData("CAP_1", 12, true)]
+    [InlineData("CAP_2", 12, true)]
+    [InlineData("CAP_3", 12, true)]
+    public void CapTrongTamTheoLopDangXem(string cap, int lopHienThi, bool mong)
+        => Assert.Equal(mong, ThuVienQuyTac.CapTrongTam(cap, lopHienThi));
+
+    [Fact]
+    public void LopDauCuaCapLuonTrongTamCuaChinhNo()
+    {
+        // Không để lệch giữa LopNhoNhatCuaCap và CapTheoLop: lớp đầu của mỗi cấp
+        // phải được CapTheoLop xếp lại đúng về cấp đó.
+        foreach (var cap in ThuVienQuyTac.CacCap)
+        {
+            var lopDau = ThuVienQuyTac.LopNhoNhatCuaCap(cap);
+
+            Assert.Equal(cap, ThuVienQuyTac.CapTheoLop(lopDau));
+            Assert.True(ThuVienQuyTac.CapTrongTam(cap, lopDau));
+            Assert.False(ThuVienQuyTac.CapTrongTam(cap, lopDau - 1));
+        }
+    }
 }

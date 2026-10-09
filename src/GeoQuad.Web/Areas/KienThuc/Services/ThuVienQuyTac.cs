@@ -77,6 +77,23 @@ public static class ThuVienQuyTac
     public static string TenCap(string? cap)
         => cap is not null && TenCapTiengViet.TryGetValue(cap, out var ten) ? ten : "Khác";
 
+    /// <summary>
+    /// Lớp nhỏ nhất của một cấp (BR-03): CAP_1 → 1, CAP_2 → 6, CAP_3 → 10.
+    /// Dùng để biết người đang xem tới lớp N có với tới cấp đó không: thư viện chỉ hiện
+    /// nội dung lớp ≤ N (quy ước 2.7), nên chọn một cấp nằm trên N thì chắc chắn rỗng và
+    /// phải nói rõ lý do thay vì để trang trống (US-09).
+    /// </summary>
+    public static int LopNhoNhatCuaCap(string? cap) => cap switch
+    {
+        "CAP_1" => 1,
+        "CAP_2" => 6,
+        "CAP_3" => 10,
+        _ => QuyUoc.LopNhoNhat
+    };
+
+    /// <summary>Đúng khi người đang xem tới <paramref name="lopHienThi"/> có nội dung nào của cấp này.</summary>
+    public static bool CapTrongTam(string? cap, int lopHienThi) => LopNhoNhatCuaCap(cap) <= lopHienThi;
+
     /// <summary>Cấp học suy ra từ số lớp (BR-03), dùng cho nhãn trên thẻ nội dung.</summary>
     public static string CapTheoLop(int lop) => lop switch
     {
