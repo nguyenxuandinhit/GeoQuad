@@ -1,0 +1,22 @@
+services:
+  neo4j:
+    image: neo4j:5.26-community
+    container_name: geoquad-c-tests-neo4j
+    labels:
+      geoquad.test-owner: C-only
+      geoquad.test-purpose: integration
+    environment:
+      NEO4J_AUTH: neo4j/${GEOQUAD_US03_PASSWORD:?GEOQUAD_US03_PASSWORD is required}
+    ports:
+      - "127.0.0.1:27688:7687"
+      - "127.0.0.1:27474:7474"
+    volumes:
+      - geoquad-c-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p \"$${NEO4J_AUTH#neo4j/}\" 'RETURN 1' >/dev/null 2>&1"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+volumes:
+  geoquad-c-data:
+    name: geoquad-c-tests-data

@@ -1,13 +1,32 @@
-using GeoQuad.Web.Infrastructure.Trang;
+using GeoQuad.Web.Areas.HocTap.Services;
+using GeoQuad.Web.Infrastructure.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeoQuad.Web.Areas.HocTap.Controllers;
 
-/// <summary>Khung rỗng do PHẦN 0 tạo (US-01). Phần C hoàn thiện ở US-22.</summary>
 [Area("HocTap")]
+[Authorize]
 public sealed class LoTrinhController : Controller
 {
-    // SCR-15 · /HocTap/LoTrinh?muc={ma}
-    public IActionResult Index(string? muc)
-        => this.DangXayDung("Lộ trình học", "US-22", "C", "Thứ tự học các khái niệm cần biết trước để đạt mục tiêu.");
+    private readonly LoTrinhService _service;
+    private readonly ICurrentUser _user;
+
+    public LoTrinhController(LoTrinhService service, ICurrentUser user) => (_service, _user) = (service, user);
+
+    [HttpGet]
+    public async Task<IActionResult> Index(string? muc)
+    {
+        if (string.IsNullOrWhiteSpace(_user.TaiKhoanId)) return Challenge();
+        return View(await _service.XemAsync(muc));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EmDaHieu(string? muc, string? ma)
+    {
+        if (string.IsNullOrWhiteSpace(_user.TaiKhoanId)) return Challenge();
+        await _service.EmDaHieuAsync(muc, ma);
+        return RedirectToAction(nameof(Index), new { muc });
+    }
 }
