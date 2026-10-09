@@ -17,6 +17,7 @@ public sealed class SeedBTests(Neo4jFixture fixture)
     [Fact]
     public async Task CatalogVaChungMinhDungPhuLuc()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.ResetAsync();
         await fixture.SeedAsync("10-kienthuc-A.cypher", "11-baitap-A.cypher", "12-tinhhuong-A.cypher",
             "20-dinhly-B.cypher", "21-chungminh-B.cypher");
@@ -93,15 +94,17 @@ public sealed class SeedBTests(Neo4jFixture fixture)
         Assert.Equal(new[] { "DL_NEN_5,TC_HBH_2", "DL_NEN_2,DL_NEN_5,TC_HBH_1",
             "DL_NEN_2,TC_HBH_3", "DL_NEN_2,DL_NEN_5" },
             grounds.Select(r => string.Join(",", r["grounds"].As<List<string>>())));
+        // C rà soát xong US-03 ngày 08/10 nên seed của B giờ ghi thẳng DA_RA_SOAT (SRS NFR-09).
         Assert.Empty(await fixture.Db.ReadAsync("""
             MATCH (n) WHERE (n:DauHieu OR n:ChungMinh OR (n:DinhLy AND n.ma STARTS WITH 'DL_NEN_'))
-            AND (n.trangThai IS NULL OR n.trangThai <> 'NHAP') RETURN n.ma
+            AND (n.trangThai IS NULL OR n.trangThai <> 'DA_RA_SOAT') RETURN n.ma
             """));
     }
 
     [Fact]
     public async Task SeedLapVaDaoThuTuGiuNguyenGraph()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.ResetAsync();
         await fixture.SeedAsync("10-kienthuc-A.cypher", "11-baitap-A.cypher", "12-tinhhuong-A.cypher", "20-dinhly-B.cypher", "21-chungminh-B.cypher");
         var first = await SnapshotAsync();
@@ -116,6 +119,7 @@ public sealed class SeedBTests(Neo4jFixture fixture)
     [Fact]
     public async Task SchemaVaKhungThatDayDu()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.ResetAsync();
         var constraints = await fixture.Db.ReadAsync("SHOW CONSTRAINTS YIELD type RETURN type");
         Assert.Equal(13, constraints.Count(r => r["type"].As<string>() == "UNIQUENESS"));

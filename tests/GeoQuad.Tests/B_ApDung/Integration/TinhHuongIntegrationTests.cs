@@ -10,6 +10,7 @@ public sealed class TinhHuongIntegrationTests(Neo4jFixture fixture)
     [Fact]
     public async Task TinhHuongLocToanBoKienThucVaDirectUrl()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.SeedReviewedForTestsAsync();
         await using var server = await MayChuThu.StartAsync(fixture);
         using var detail = await server.Client.GetAsync("/ApDung/TinhHuong/Xem/TH-01");
