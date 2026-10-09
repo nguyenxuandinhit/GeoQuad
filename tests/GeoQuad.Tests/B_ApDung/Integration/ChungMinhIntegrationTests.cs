@@ -10,6 +10,7 @@ public sealed class ChungMinhIntegrationTests(Neo4jFixture fixture)
     [Fact]
     public async Task ProofCoCanCuVaDirectUrlFailClosed()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.SeedReviewedForTestsAsync();
         await using var server = await MayChuThu.StartAsync(fixture);
         using var page = await server.Client.GetAsync("/ApDung/ChungMinh/Xem/CM-01");

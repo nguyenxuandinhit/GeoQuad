@@ -11,6 +11,7 @@ public sealed class DoDacIntegrationTests(Neo4jFixture fixture)
     [Fact]
     public async Task PostSoDoCsrfCanCuVaKhongGhiHocTap()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.SeedReviewedForTestsAsync();
         await using var server=await MayChuThu.StartAsync(fixture);
         var before=await CountsAsync();

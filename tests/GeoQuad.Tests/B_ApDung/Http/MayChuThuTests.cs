@@ -11,6 +11,7 @@ public sealed class MayChuThuTests(Neo4jFixture fixture)
     [Fact]
     public async Task ProductionDungCookieRoleVaCsrfThat()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.ResetAsync();
         await using var server = await MayChuThu.StartAsync(fixture);
         using var anonymous = await server.Client.GetAsync("/QuanTri/BaiTap");

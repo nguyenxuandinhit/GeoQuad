@@ -1,2 +1,11 @@
 ﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    // Luật cho [PhaiTich] (xem Infrastructure/Validation/PhaiTichAttribute.cs): ô tích phải
+    // được tích. Lấy trực tiếp `element.checked` vì jQuery Validate trả về undefined cho ô
+    // chưa tích, không phân biệt được với ô để trống.
+    $.validator.addMethod('phaitich', function (value, element) {
+        return element.type !== 'checkbox' || element.checked;
+    });
+    $.validator.unobtrusive.adapters.addBool('phaitich');
+</script>

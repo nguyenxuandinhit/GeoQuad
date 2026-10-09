@@ -51,7 +51,8 @@ UNWIND [
 MERGE (t:DinhLy {ma: row.ma})
 SET t:TinhChat,
     t.noiDung   = row.noiDung,
-    t.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop),
+    t.nguon     = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop) + '; thành viên C rà soát 08/10/2026',
     t.trangThai = 'DA_RA_SOAT'
 WITH t, row
 MATCH (h:KhaiNiem {ma: row.hinh})
@@ -108,7 +109,8 @@ SET c.ten       = row.ten,
     c.bieuThuc  = row.bieuThuc,
     c.bienSo    = row.bienSo,
     c.daiLuong  = row.daiLuong,
-    c.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop),
+    c.nguon     = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop) + '; thành viên C rà soát 08/10/2026',
     c.trangThai = 'DA_RA_SOAT'
 WITH c, row
 MATCH (h:KhaiNiem {ma: row.hinh})
@@ -143,7 +145,8 @@ UNWIND [
 MERGE (t:DinhLy {ma: row.ma})
 SET t:TinhChat,
     t.noiDung   = row.noiDung,
-    t.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
+    t.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop),
     t.trangThai = 'DA_RA_SOAT'
 WITH t, row
 MATCH (h:KhaiNiem {ma: row.hinh})
@@ -176,7 +179,8 @@ SET c.ten       = row.ten,
     c.bieuThuc  = row.bieuThuc,
     c.bienSo    = row.bienSo,
     c.daiLuong  = row.daiLuong,
-    c.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
+    c.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop),
     c.trangThai = 'DA_RA_SOAT'
 WITH c, row
 MATCH (h:KhaiNiem {ma: row.hinh})

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using GeoQuad.Web.Infrastructure;
 using GeoQuad.Web.Infrastructure.Auth;
+using GeoQuad.Web.Infrastructure.Validation;
 
 namespace GeoQuad.Web.Models;
 
@@ -37,8 +38,16 @@ public sealed class DangKyViewModel
     [Range(QuyUoc.LopNhoNhat, QuyUoc.LopLonNhat, ErrorMessage = "Em chọn lớp từ {1} đến {2}.")]
     public int Lop { get; set; } = QuyUoc.LopMacDinh;
 
+    private const string ChuaTich =
+        "Em cần tích vào ô xác nhận đã đọc thông báo quyền riêng tư "
+        + "và được cha mẹ/người giám hộ đồng ý.";
+
     [Display(Name = "Xác nhận quyền riêng tư")]
-    [Range(typeof(bool), "true", "true",
-        ErrorMessage = "Em cần tích vào ô xác nhận đã đọc thông báo quyền riêng tư và được cha mẹ/người giám hộ đồng ý.")]
+    // [PhaiTich] là luật thật, kiểm cả ở máy chủ. Còn [Required] ở đây chỉ để đặt lời nhắc
+    // tiếng Việt: ASP.NET tự thêm `data-val-required` cho mọi bool không nullable, mà luật
+    // `required` của jQuery Validate hiểu "ô tích phải được tích" nên nó cũng chặn đúng chỗ —
+    // thiếu dòng này thì trình duyệt hiện câu mặc định bằng tiếng Anh.
+    [Required(ErrorMessage = ChuaTich)]
+    [PhaiTich(ErrorMessage = ChuaTich)]
     public bool DongYQuyenRiengTu { get; set; }
 }

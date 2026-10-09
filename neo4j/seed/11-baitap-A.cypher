@@ -65,7 +65,8 @@ SET b.loai      = 'TRAC_NGHIEM',
     b.giaiThich = row.giaiThich,
     b.doKho     = row.doKho,
     b.hienThi   = true,
-    b.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop),
+    b.nguon     = 'Nhóm GeoQuad tự soạn theo SRS giả định A-01; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop) + '; đã kiểm lại phép tính',
     b.trangThai = 'DA_RA_SOAT'
 WITH b, row
 MATCH (l:Lop {so: row.lop})
@@ -103,7 +104,8 @@ SET b.loai      = 'DAP_AN_SO',
     b.giaiThich = row.giaiThich,
     b.doKho     = row.doKho,
     b.hienThi   = true,
-    b.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop),
+    b.nguon     = 'Nhóm GeoQuad tự soạn theo SRS giả định A-01; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop) + '; đã kiểm lại phép tính',
     b.trangThai = 'DA_RA_SOAT'
 WITH b, row
 MATCH (l:Lop {so: row.lop})
