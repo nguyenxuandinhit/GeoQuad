@@ -20,7 +20,7 @@ UNWIND [
 ] AS row
 MERGE (dk:DieuKien {ma: row.ma})
 SET dk.ten = row.noiDung, dk.noiDung = row.noiDung,
-    dk.nguon = 'Biên soạn theo SRS B.3; đối chiếu CT GDPT 2018 – Toán 8; thành viên C rà soát 08/10/2026', dk.trangThai = 'DA_RA_SOAT'
+    dk.nguon = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.3; đối chiếu CT GDPT 2018 – Toán 8; thành viên C rà soát 08/10/2026', dk.trangThai = 'DA_RA_SOAT'
 WITH dk MATCH (l:Lop {so:8})
 MERGE (dk)-[:THUOC_LOP]->(l);
 
@@ -48,7 +48,7 @@ UNWIND [
 ] AS row
 MERGE (d:DinhLy {ma: row.ma})
 SET d:DauHieu, d.ten = row.noiDung, d.noiDung = row.noiDung,
-    d.nguon = 'Biên soạn theo SRS B.4; đối chiếu CT GDPT 2018 – Toán 8; thành viên C rà soát 08/10/2026', d.trangThai = 'DA_RA_SOAT'
+    d.nguon = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.4; đối chiếu CT GDPT 2018 – Toán 8; thành viên C rà soát 08/10/2026', d.trangThai = 'DA_RA_SOAT'
 WITH d,row
 MATCH (nen:KhaiNiem {ma:row.nen}), (dich:KhaiNiem {ma:row.dich}),
       (dk:DieuKien {ma:row.dk}), (l:Lop {so:row.lop})
@@ -67,6 +67,6 @@ UNWIND [
 ] AS row
 MERGE (d:DinhLy {ma: row.ma})
 SET d.ten = row.noiDung, d.noiDung = row.noiDung,
-    d.nguon = 'Biên soạn theo SRS B.7; đối chiếu CT GDPT 2018 – Toán ' + toString(row.lop) + '; thành viên C rà soát 08/10/2026', d.trangThai = 'DA_RA_SOAT'
+    d.nguon = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.7; đối chiếu CT GDPT 2018 – Toán ' + toString(row.lop) + '; thành viên C rà soát 08/10/2026', d.trangThai = 'DA_RA_SOAT'
 WITH d,row MATCH (l:Lop {so:row.lop})
 MERGE (d)-[:THUOC_LOP]->(l);

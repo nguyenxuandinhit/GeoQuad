@@ -86,7 +86,8 @@ SET th.ten       = row.ten,
     th.moTa      = row.moTa,
     th.loiGiai   = row.loiGiai,
     th.thucHanh  = row.thucHanh,
-    th.nguon     = 'CT GDPT 2018 – Toán ' + toString(row.lop),
+    th.nguon     = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.8, lời giải nhóm tự viết; '
+                   + 'đối chiếu CT GDPT 2018 – Toán ' + toString(row.lop),
     th.trangThai = 'DA_RA_SOAT'
 WITH th, row
 MATCH (bc:BoiCanh {ma: row.boiCanh})

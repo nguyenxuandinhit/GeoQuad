@@ -4,14 +4,23 @@ using GeoQuad.Tests.B_ApDung.Integration;
 namespace GeoQuad.Tests.B_ApDung;
 
 // Flow tests inject a command runner through PATH. They never connect to Docker/Neo4j.
+//
+// Hai script backup/restore là bash POSIX. Trên Windows, `bash` tìm thấy trong PATH thường
+// là bash của WSL và không chạy được ("WSL (…) ERROR: CreateProcess"), nên dùng bash dò được ở
+// Neo4jFixture (bash của Git for Windows), rồi đổi đường dẫn Windows (C:\GeoQuad\…) sang dạng msys
+// (/c/GeoQuad/…) vì script so khớp tiền tố bằng đường dẫn POSIX.
+// Máy không có bash POSIX nào dùng được thì bỏ qua chứ không báo đỏ — xem Neo4jFixture.LyDoThieuBash.
 public sealed class BackupFlowTests
 {
+    private static readonly string? Bash = Neo4jFixture.BashPosix;
+
     [Theory]
     [InlineData("dump-fails", true, true)]
     [InlineData("recovery-unhealthy", true, false)]
     [InlineData("originally-stopped", false, false)]
     public async Task DumpFailureRecoversOriginalStateAndWaitsBeforeWeb(string mode,bool sourceRunning,bool webRecovered)
     {
+        if(Bash is null) return;   // xem Neo4jFixture.LyDoThieuBash
         var scratch=Path.Combine(Path.GetTempPath(),"geoquad-b-flow-"+Guid.NewGuid().ToString("N"));
         var output=Path.Combine(Neo4jFixture.Root,"backups","test-flow-"+Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(scratch);
@@ -19,12 +28,12 @@ public sealed class BackupFlowTests
         {
             var fake=Path.Combine(scratch,"docker");
             await File.WriteAllTextAsync(fake,FakeDocker);
-            await RunAsync("chmod",null,"+x",fake);
-            var result=await RunAsync("bash",new Dictionary<string,string> {
+            await RunAsync(Bash,null,"-c","chmod +x \"$1\"","chmod",Neo4jFixture.DangPosix(fake));
+            var result=await RunAsync(Bash,new Dictionary<string,string> {
                 ["PATH"]=scratch+Path.PathSeparator+Environment.GetEnvironmentVariable("PATH"),
                 ["GQ_FLOW_DIR"]=scratch,["GQ_FLOW_MODE"]=mode,["GQ_BACKUP_PASSWORD"]="flow-only" },
-                Path.Combine(Neo4jFixture.Root,"scripts/backup.sh"),"--project","geoquad-b-tests","--compose",Neo4jFixture.ComposeFile,
-                "--output",output,"--quiesced");
+                Neo4jFixture.DangPosix(Path.Combine(Neo4jFixture.Root,"scripts/backup.sh")),"--project","geoquad-b-tests",
+                "--compose",Neo4jFixture.DangPosix(Neo4jFixture.ComposeFile),"--output",Neo4jFixture.DangPosix(output),"--quiesced");
             Assert.NotEqual(0,result.ExitCode);
             Assert.DoesNotContain("ARCHIVE=",result.Output);
             var events=await File.ReadAllLinesAsync(Path.Combine(scratch,"events"));
@@ -46,6 +55,7 @@ public sealed class BackupFlowTests
     [Fact]
     public async Task InvalidChecksumIsRejectedBeforeAnyDockerCall()
     {
+        if(Bash is null) return;   // xem Neo4jFixture.LyDoThieuBash
         var directory=Path.Combine(Neo4jFixture.Root,"backups","test-checksum-"+Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(directory);
         try
@@ -55,8 +65,8 @@ public sealed class BackupFlowTests
             await File.WriteAllTextAsync(Path.Combine(directory,"sha256.txt"),new string('0',64));
             await File.WriteAllTextAsync(Path.Combine(directory,"image.txt"),"sha256:"+new string('0',64));
             await File.WriteAllTextAsync(Path.Combine(directory,"source-manifest.txt"),"test only");
-            var result=await RunAsync("bash",null,Path.Combine(Neo4jFixture.Root,"scripts/restore.sh"),"--archive",archive,
-                "--target-project","geoquad-b-restore-checksum-test");
+            var result=await RunAsync(Bash,null,Neo4jFixture.DangPosix(Path.Combine(Neo4jFixture.Root,"scripts/restore.sh")),
+                "--archive",Neo4jFixture.DangPosix(archive),"--target-project","geoquad-b-restore-checksum-test");
             Assert.NotEqual(0,result.ExitCode);
             Assert.Contains("Checksum",result.Output);
         }

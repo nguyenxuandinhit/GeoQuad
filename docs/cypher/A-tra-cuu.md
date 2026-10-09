@@ -795,10 +795,14 @@ không cần Neo4j (quy ước 2, điểm 9).
 | Ngày | Đề xuất | Lý do | Cách tạm đang dùng | Trạng thái |
 |---|---|---|---|---|
 | 08/10 | **Cả nhóm chốt**: README mục 2 điểm 6 và SRS mục 4 **xung đột** về `trangThai` ban đầu của seed. Cần chọn một hướng rồi sửa tài liệu còn lại cho khớp | SRS mục 4: *"Trạng thái nội dung đặt ban đầu là **NHAP**; chuyển sang DA_RA_SOAT khi đã đối chiếu nguồn và có người thứ hai rà soát (NFR-09)"*. README lại ghi seed thẳng `DA_RA_SOAT` vì "nhóm đã rà soát". Seed của A theo README, seed của B theo SRS → lệch nhau | Không có cách tạm. A **không** nới điều kiện lọc, vì nới là vi phạm BR-13/NFR-09 và sẽ hiện nội dung chưa rà soát cho học sinh | 💬 Cần nhóm chốt |
-| 08/10 | **Phần C**: hoàn tất việc "Rà soát US-03" rồi **đổi `trangThai` trong chính file seed của B** từ `'NHAP'` sang `'DA_RA_SOAT'` (hoặc B tự đổi sau khi C xác nhận) | US-03 giao C việc "Rà soát chéo: chạy hai file trên, đối chiếu từng mục với Phụ lục D/SRS Phụ lục B". `nguon` của B đã ghi sẵn "(chờ C đối chiếu SGK)". Đây là bước quy trình **chưa làm**, không phải lỗi mã của B | Chờ. Tuyệt đối **không** đổi bằng Cypher thủ công trên Neo4j Browser — chạy lại seed là mất | ⏳ Chờ C |
-| 08/10 | **Phần B**: cho các test trong `tests/.../B_ApDung/Integration/**` và `Http/MayChuThuTests` **bỏ qua** (`Assert.Skip` / `ITestOutputHelper` + điều kiện) khi chưa có `GQ_B_INTEGRATION=1`, thay vì ném `InvalidOperationException` | Hiện `dotnet test` trên máy sạch cho **18 test đỏ**, vi phạm Definition of Done của README ("`dotnet test` qua") và mục 2 điểm 12 | A không chạm; khi cần xác nhận phần A thì lọc `--filter FullyQualifiedName~A_TraCuu` | ⏳ Chờ B |
+| 08/10 | **Phần C**: hoàn tất việc "Rà soát US-03" rồi **đổi `trangThai` trong chính file seed của B** từ `'NHAP'` sang `'DA_RA_SOAT'` (hoặc B tự đổi sau khi C xác nhận) | US-03 giao C việc "Rà soát chéo: chạy hai file trên, đối chiếu từng mục với Phụ lục D/SRS Phụ lục B". `nguon` của B đã ghi sẵn "(chờ C đối chiếu SGK)". Đây là bước quy trình **chưa làm**, không phải lỗi mã của B | Chờ. Tuyệt đối **không** đổi bằng Cypher thủ công trên Neo4j Browser — chạy lại seed là mất | ✅ C xong 08/10 |
+| 08/10 | **Phần B**: cho các test trong `tests/.../B_ApDung/Integration/**` và `Http/MayChuThuTests` **bỏ qua** (`Assert.Skip` / `ITestOutputHelper` + điều kiện) khi chưa có `GQ_B_INTEGRATION=1`, thay vì ném `InvalidOperationException` | Hiện `dotnet test` trên máy sạch cho **18 test đỏ**, vi phạm Definition of Done của README ("`dotnet test` qua") và mục 2 điểm 12 | **A đã làm 09/10** thay B (chủ nhánh yêu cầu sửa gấp trước buổi báo cáo): thêm cờ `Neo4jFixture.DaBat` + `LyDoBoQua`, `InitializeAsync` thoát sớm thay vì ném lỗi, và 14 guard `if (!fixture.DaBat) return;` ở đầu từng test | ✅ A làm 09/10 |
 | 08/10 | **Phần B**: thêm dấu hiệu `DH_HCN_4` "Hình thang cân có một góc vuông là hình chữ nhật" vào `20-dinhly-B.cypher`, và định lý nền `DL_NEN_7` "Trong tam giác vuông, đường trung tuyến ứng với cạnh huyền bằng nửa cạnh huyền" | SGK Toán 8 có **4** dấu hiệu hình chữ nhật, seed hiện chỉ có 3. `DL_NEN_7` là căn cứ hay dùng khi chứng minh dấu hiệu hình chữ nhật | A không chạm file của B. Phần A đã tự bổ sung 8 tính chất và 2 công thức trong `10-kienthuc-A.cypher` | ⏳ Chờ B |
-| 08/10 | **Phần B**: 4 test `BackupFlowTests` gọi `bash`/WSL thật nên đỏ trên máy Windows không có WSL hoạt động | Test phụ thuộc môi trường, không phải lỗi logic | A không chạm | ⏳ Chờ B |
+| 08/10 | **Phần B**: 4 test `BackupFlowTests` gọi `bash`/WSL thật nên đỏ trên máy Windows không có WSL hoạt động | `Process.Start("bash")` trên Windows bắt được bash của WSL (`WSL (…) ERROR: CreateProcess`), và `scripts/backup.sh` so khớp tiền tố `backups/` bằng đường dẫn POSIX nên nhận `C:\GeoQuad\…` là đường dẫn tương đối | **A đã làm 09/10**: dò bash của Git for Windows rồi đổi `C:\GeoQuad\…` → `/c/GeoQuad/…`; không có bash POSIX nào chạy được thì bỏ qua. 4 test giờ **chạy thật** trên Windows, không phải bỏ qua | ✅ A làm 09/10 |
+| 09/10 | **Cả nhóm chốt**: C rà soát US-03 phát hiện chương trình khung GDPT 2018 chỉ nêu **nhận biết** hình bình hành / hình thoi ở lớp 4 (tr. 37), còn **tính chu vi, diện tích** các hình đặc biệt được nêu ở **lớp 6** (tr. 51). Phụ lục D.6 đang gắn `CT_HBH_CV`, `CT_HBH_DT`, `CT_THOI_CV`, `CT_THOI_DT` vào lớp 4 | SRS **OI-05** đã tự ghi bảng ánh xạ khái niệm – lớp ở Phụ lục B là "đề xuất, cần đối chiếu lại". Đây chính là lúc đối chiếu xong và thấy lệch | A **chưa đổi** vì ảnh hưởng lan rộng, xem phân tích ngay dưới | 💬 Cần nhóm chốt |
+| 09/10 | **Phần B**: `scripts/backup.sh` chưa chạy được trên Windows — `docker run -v "$output:/backup"` bị msys đổi `/c/…/ID:/backup` thành `C:\…\ID;C:\backup` nên bind mount sai và tạo rác `backups/<id>;C` | Script viết cho host POSIX (`docker` là binary POSIX). Trên Windows `docker.exe` cần đường dẫn Windows, còn chính script lại so khớp tiền tố `backups/` bằng đường dẫn POSIX — hai yêu cầu ngược nhau. Cần `cygpath -w` ở ranh giới gọi docker nếu muốn hỗ trợ Windows | A đã cho test `OfflineDumpRestore…` bỏ qua trên Windows kèm lý do (`BackupRestoreTests.LyDoBoQuaDienTap`). **Bài diễn tập backup/restore phải chạy trên Linux/macOS hoặc trong WSL** — artifact `plans/.../reports/backup-drill-B.json` trong repo là của máy B. Ba bài backup còn lại (`MissingArchive…` + 4 `BackupFlowTests`) chạy thật trên Windows | ⏳ Chờ B |
+| 09/10 | **Ngoại lệ quy ước 2.1 — ghi nhận để nhóm biết**: ngày 09/10 phần A có sửa 4 file của B (`20-dinhly-B.cypher`, `21-chungminh-B.cypher`, `Integration/Neo4jFixture.cs`, `BackupFlowTests.cs` và 8 file test tích hợp) | Chủ nhánh yêu cầu sửa hết trước buổi báo cáo vì B chưa áp patch của C; để nguyên thì 4 trang của B trống và `dotnet test` còn 18 test đỏ | Chỉ sửa `trangThai`/`nguon` và điều kiện bỏ qua test — **không** đổi logic nghiệp vụ, không thêm/bớt nút nào của B. B rà lại khi merge | ✅ Đã ghi nhận |
+| 09/10 | **Phần B**: áp dụng patch `C-gui-B-ra-soat-US03.patch` mà C gửi — đổi `NHAP` → `DA_RA_SOAT` cho 14 điều kiện + 20 dấu hiệu + 6 định lý nền, và thay chuỗi "chờ C đối chiếu SGK" trong `nguon` | C đã rà soát xong từng mã ngày 08/10 và ghi biên bản trong `docs/cypher/C-hoc-tap.md`. C không tự sửa file của B (đúng quy ước 2.1) nên bước áp patch thuộc B. B cũng cần cập nhật `Signs` và dãy `DL_NEN` trong `SeedBTests.cs` nếu thêm mã mới | **A đã làm 09/10** thay B: đổi 3 chỗ trong `20-dinhly-B.cypher` và 4 `ChungMinh` + 15 `Buoc` trong `21-chungminh-B.cypher`, thay hết chuỗi "chờ C" trong `nguon`. Kiểm lại từ DB sạch: 145/145 nút nội dung `DA_RA_SOAT`, tab Dấu hiệu hiện 20 thẻ, `/ApDung/GoiY` 14 điều kiện, CM-01…CM-04 và TH-01…TH-09 đều 200 | ✅ A làm 09/10 |
 | 08/10 | **Hợp đồng dữ liệu**: `20-dinhly-B.cypher` thêm quan hệ `THUOC_LOP` cho `DieuKien`, trong khi lược đồ README mục 4.2 không liệt kê quan hệ này cho `DieuKien` | Nếu giữ thì nên bổ sung vào mục 4.2 để A và C biết mà dùng | A không dùng `DieuKien` nên không ảnh hưởng | 💬 Cần nhóm chốt |
 
 ### Đề xuất cho B: hai mục bổ sung (dán được luôn)
@@ -822,6 +826,25 @@ Và vào khối định lý nền:
 > **chính xác** danh sách `DauHieu` (`Signs`) và dãy `DL_NEN_1..6`
 > (`Enumerable.Range(1, 6)`). Thêm hai mục trên **sẽ làm hai test đó đỏ** nếu B không cập
 > nhật cả `Signs` và dãy `DL_NEN` thành `Range(1, 7)`.
+
+### Phần A đã sửa `nguon` cho truy vết được (09/10)
+
+C mở finding: *"nguồn A vẫn ghi chung theo lớp nên cần A bổ sung tham chiếu chủ đề/trang
+nếu nhóm muốn cùng mức truy vết như B."* A đã sửa, mỗi loại nội dung ghi đúng nguồn gốc
+thật của nó thay vì gộp chung một chuỗi:
+
+| File | `nguon` mới |
+|---|---|
+| `01-khung.cypher` — 7 hình | Nhóm GeoQuad biên soạn theo SRS Phụ lục B.1; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; thành viên C rà soát 08/10/2026 |
+| `01-khung.cypher` — 6 yếu tố | Nhóm GeoQuad **tự soạn định nghĩa** (SRS Phụ lục B.1 không có cột định nghĩa); đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ |
+| `10-kienthuc-A.cypher` — 12 tính chất + 12 công thức của Phụ lục B | Nhóm GeoQuad biên soạn theo SRS Phụ lục B; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; thành viên C rà soát 08/10/2026 |
+| `10-kienthuc-A.cypher` — 8 tính chất + 2 công thức bổ sung | Nhóm GeoQuad biên soạn, **bổ sung ngoài Phụ lục B**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ — **không** ghi là đã rà soát, vì C rà soát trước khi A thêm các mục này |
+| `11-baitap-A.cypher` — 10 bài tập | Nhóm GeoQuad **tự soạn** theo SRS giả định A-01; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; **đã kiểm lại phép tính** |
+| `12-tinhhuong-A.cypher` — 9 tình huống | Nhóm GeoQuad biên soạn theo SRS Phụ lục B.8, **lời giải nhóm tự viết**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ |
+
+Không còn chuỗi nào mạo nhận là trích dẫn SGK. Khớp với quyết định nguồn mà C ghi trong
+`docs/cypher/C-hoc-tap.md`: nội dung do nhóm tự biên soạn, không chọn bộ SGK riêng, dùng
+chương trình khung GDPT 2018 để đối chiếu chủ đề và lớp (SRS OI-02).
 
 ### Phần A đã bổ sung gì ngoài Phụ lục B
 
@@ -871,6 +894,24 @@ hình thoi và hình chữ nhật mượn luôn công thức của hình thang r
 b". Với hai hình đó, hai cạnh song song của **cùng một cặp** bằng nhau, nên nhập chiều dài và
 chiều rộng sẽ ra kết quả **sai**. Kiến thức này giữ ở dạng tính chất `TC_HT_2` để vẫn có
 trong thư viện. Test `KhongDuaDuongTrungBinhVaoMayTinh` khoá lại quyết định này.
+
+### Chi tiết: finding của C về lớp của 4 công thức
+
+Nếu nhóm quyết đổi lớp 4 → lớp 6 cho `CT_HBH_CV`, `CT_HBH_DT`, `CT_THOI_CV`, `CT_THOI_DT`
+thì **kéo theo** những chỗ sau, nên đây là quyết định của cả nhóm, không phải sửa một dòng:
+
+| Ảnh hưởng | Chi tiết |
+|---|---|
+| Bài tập của A | `BT-008` (diện tích hình bình hành), `BT-009` (diện tích hình thoi), `BT-010` (chu vi hình thoi) đang ở lớp 4 → phải sang lớp 6. `BT-003` (nhận biết hình thoi) **giữ lớp 4** vì nhận biết đúng là lớp 4 |
+| Phân công US-04 | README ghi A làm "10 bài tập **cấp 1** (lớp 1–5)". Chuyển 3 bài sang lớp 6 thì cấp 1 còn **7 bài**, cấp 2 thành **18 bài** |
+| Máy tính hình học | Học sinh lớp 4 chọn hình thoi sẽ **không còn đại lượng nào** (cả chu vi và diện tích đều sang lớp 6), trang hiện thông báo "Ở lớp của em chưa có công thức nào cho hình này" |
+| Thư viện | Nội dung cấp 1 mỏng đi: lớp 4 mất 4 công thức |
+| Tài liệu | Phải sửa cột Lớp ở README Phụ lục D.6 (và SRS Phụ lục B.6) cho khớp |
+| Mặt tích cực | Giải quyết được **OI-05** của SRS — đúng chương trình hơn, và có bằng chứng đối chiếu để trình bày |
+
+Khuyến nghị của A: **chốt sau buổi demo**. Hiện tại đúng theo Phụ lục D nên không phải lỗi;
+đổi ngay trước demo thì cấp 1 gần như trống công thức, khó trình bày. Ghi vào phần
+"vấn đề còn mở" của báo cáo là cách an toàn hơn.
 
 ### Chi tiết: xung đột README vs SRS về `trangThai`
 

@@ -6,7 +6,7 @@
 // CO_BUOC.thuTu và mã CM-xx-Bn ổn định; CAN_CU trỏ định lý thật.
 MERGE (cm:ChungMinh {ma:'CM-01'})
 SET cm.ten = 'ABCD là hình chữ nhật.', cm.giaThiet = 'ABCD là hình bình hành, góc DAB bằng 90°.', cm.ketLuan = 'ABCD là hình chữ nhật.',
-    cm.nguon = 'Biên soạn theo SRS B.9; đối chiếu CT GDPT 2018 – Toán 8; thành viên B rà soát', cm.trangThai = 'DA_RA_SOAT'
+    cm.nguon = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.9, lời chứng minh nhóm tự viết; đã kiểm lại từng bước và căn cứ 09/10/2026', cm.trangThai = 'DA_RA_SOAT'
 WITH cm MATCH (d:DinhLy {ma:'DH_HCN_2'}), (l:Lop {so:8})
 MERGE (cm)-[:CHUNG_MINH_CHO]->(d)
 MERGE (cm)-[:THUOC_LOP]->(l);
@@ -45,7 +45,7 @@ MERGE (b)-[:CAN_CU]->(d);
 
 MERGE (cm:ChungMinh {ma:'CM-02'})
 SET cm.ten = 'ABCD là hình chữ nhật.', cm.giaThiet = 'ABCD là hình bình hành, AC = BD.', cm.ketLuan = 'ABCD là hình chữ nhật.',
-    cm.nguon = 'Biên soạn theo SRS B.9; đối chiếu CT GDPT 2018 – Toán 8; thành viên B rà soát', cm.trangThai = 'DA_RA_SOAT'
+    cm.nguon = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.9, lời chứng minh nhóm tự viết; đã kiểm lại từng bước và căn cứ 09/10/2026', cm.trangThai = 'DA_RA_SOAT'
 WITH cm MATCH (d:DinhLy {ma:'DH_HCN_3'}), (l:Lop {so:8})
 MERGE (cm)-[:CHUNG_MINH_CHO]->(d)
 MERGE (cm)-[:THUOC_LOP]->(l);
@@ -84,7 +84,7 @@ MERGE (b)-[:CAN_CU]->(d);
 
 MERGE (cm:ChungMinh {ma:'CM-03'})
 SET cm.ten = 'ABCD là hình thoi.', cm.giaThiet = 'ABCD là hình bình hành, AC vuông góc BD; O là giao điểm hai đường chéo.', cm.ketLuan = 'ABCD là hình thoi.',
-    cm.nguon = 'Biên soạn theo SRS B.9; đối chiếu CT GDPT 2018 – Toán 8; thành viên B rà soát', cm.trangThai = 'DA_RA_SOAT'
+    cm.nguon = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.9, lời chứng minh nhóm tự viết; đã kiểm lại từng bước và căn cứ 09/10/2026', cm.trangThai = 'DA_RA_SOAT'
 WITH cm MATCH (d:DinhLy {ma:'DH_THOI_3'}), (l:Lop {so:8})
 MERGE (cm)-[:CHUNG_MINH_CHO]->(d)
 MERGE (cm)-[:THUOC_LOP]->(l);
@@ -123,7 +123,7 @@ MERGE (b)-[:CAN_CU]->(d);
 
 MERGE (cm:ChungMinh {ma:'CM-04'})
 SET cm.ten = 'ABCD là hình bình hành.', cm.giaThiet = 'ABCD là tứ giác lồi, AB = CD và BC = DA.', cm.ketLuan = 'ABCD là hình bình hành.',
-    cm.nguon = 'Biên soạn theo SRS B.9; đối chiếu CT GDPT 2018 – Toán 8; thành viên B rà soát', cm.trangThai = 'DA_RA_SOAT'
+    cm.nguon = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B.9, lời chứng minh nhóm tự viết; đã kiểm lại từng bước và căn cứ 09/10/2026', cm.trangThai = 'DA_RA_SOAT'
 WITH cm MATCH (d:DinhLy {ma:'DH_HBH_2'}), (l:Lop {so:8})
 MERGE (cm)-[:CHUNG_MINH_CHO]->(d)
 MERGE (cm)-[:THUOC_LOP]->(l);

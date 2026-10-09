@@ -11,6 +11,7 @@ public sealed class PerformanceBTests(Neo4jFixture fixture)
     [Fact]
     public async Task GoiY100Concurrent1000RequestsP95AtMostTwoSeconds()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.SeedReviewedForTestsAsync();
         await using var server=await MayChuThu.StartAsync(fixture);
         const string route="/ApDung/GoiY?nen=HINH_BINH_HANH&dich=HINH_CHU_NHAT&co=DK_MOT_GOC_VUONG";
