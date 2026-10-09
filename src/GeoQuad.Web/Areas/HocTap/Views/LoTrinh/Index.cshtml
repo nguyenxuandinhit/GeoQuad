@@ -1,0 +1,56 @@
+@model GeoQuad.Web.Areas.HocTap.Models.LoTrinhViewModel
+@{
+    ViewData["Title"] = "Lộ trình học";
+}
+
+<div class="container py-4">
+    <h1>Lộ trình học</h1>
+    @if (Model.MucTieuHopLe.Count > 0)
+    {
+        <form method="get" asp-area="HocTap" asp-controller="LoTrinh" asp-action="Index" class="mb-4">
+            <label for="muc" class="form-label">Mục tiêu hình học</label>
+            <select id="muc" name="muc" class="form-select" onchange="this.form.submit()">
+                @foreach (var target in Model.MucTieuHopLe)
+                {
+                    <option value="@target.Ma" selected="@(target.Ma == Model.MucTieu)">@target.Ten (lớp @target.Lop)</option>
+                }
+            </select>
+            <noscript><button class="btn btn-primary mt-2" type="submit">Xem lộ trình</button></noscript>
+        </form>
+    }
+    @if (Model.Loi is not null)
+    {
+        <div class="alert alert-info" role="status">@Model.Loi</div>
+    }
+    @if (Model.CacBuoc.Count > 0)
+    {
+        <section aria-label="Tiến độ lộ trình">
+            @if (Model.CoTheHocNgay)
+            {
+                <p class="alert alert-success" role="status">Em có thể học ngay khái niệm này.</p>
+            }
+            <p>@Model.SoDaHoc / @Model.TongSo khái niệm đã học (@Model.PhanTram%)</p>
+            <progress class="w-100" value="@Model.SoDaHoc" max="@Model.TongSo" aria-label="Tiến độ lộ trình">@Model.PhanTram%</progress>
+            <ol class="list-group list-group-numbered mt-3">
+                @foreach (var step in Model.CacBuoc)
+                {
+                    <li class="list-group-item d-flex flex-wrap align-items-center gap-2">
+                        <a class="btn btn-outline-primary" style="min-height:44px" asp-area="KienThuc" asp-controller="ThuVien" asp-action="ChiTiet" asp-route-id="@step.Ma">@step.Ten</a>
+                        <span>Lớp @step.Lop</span>
+                        @if (step.DaHoc) { <span class="badge text-bg-success"><span aria-hidden="true">✓</span> Đã học</span> }
+                        @if (step.LaMucTieu) { <span class="badge text-bg-primary">Mục tiêu</span> }
+                        @if (!step.DaHoc)
+                        {
+                            <form method="post" asp-action="EmDaHieu" class="ms-auto">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="muc" value="@Model.MucTieu" />
+                                <input type="hidden" name="ma" value="@step.Ma" />
+                                <button class="btn btn-success" style="min-height:44px" type="submit">Em đã hiểu</button>
+                            </form>
+                        }
+                    </li>
+                }
+            </ol>
+        </section>
+    }
+</div>
