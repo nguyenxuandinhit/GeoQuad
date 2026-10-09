@@ -1,3 +1,4 @@
+@using GeoQuad.Web.Infrastructure
 @using GeoQuad.Web.Areas.KienThuc.Services
 @model GeoQuad.Web.Areas.KienThuc.Models.ThuVienViewModel
 @{
@@ -58,7 +59,12 @@
                 <option value="">Tất cả cấp</option>
                 @foreach (var cap in ThuVienQuyTac.CacCap)
                 {
-                    <option value="@cap" selected="@(Model.Cap == cap)">@ThuVienQuyTac.TenCap(cap)</option>
+                    @* Cấp nằm trên lớp đang xem thì nói rõ ngay trên nhãn, đừng để em chọn rồi
+                       nhận một trang trống mà không hiểu vì sao (US-09). *@
+                    var trongTam = ThuVienQuyTac.CapTrongTam(cap, Model.LopHienThi);
+                    <option value="@cap" selected="@(Model.Cap == cap)">
+                        @ThuVienQuyTac.TenCap(cap)@(trongTam ? "" : " — trên lớp của em")
+                    </option>
                 }
             </select>
         </div>
@@ -72,6 +78,13 @@
                     <option value="@i" selected="@(Model.Lop == i)">Lớp @i</option>
                 }
             </select>
+            @if (Model.LopHienThi < QuyUoc.LopLonNhat)
+            {
+                <div class="form-text">
+                    Danh sách dừng ở lớp @Model.LopHienThi vì đó là lớp em đang xem.
+                    Bật <strong>Xem trước kiến thức lớp trên</strong> ở thanh trên để thấy tới lớp 12.
+                </div>
+            }
         </div>
 
         <div class="col-12 col-sm-auto d-flex gap-2">
@@ -86,15 +99,44 @@
     @* ---- Danh sách thẻ nội dung ---- *@
     @if (Model.DanhSach.Count == 0)
     {
+        @* Nói đúng nguyên nhân. Hai nguyên nhân hay gặp nhất là chọn cấp hoặc lớp nằm trên
+           lớp đang xem — khi đó bộ lọc chắc chắn rỗng, và cái em cần là nút bật xem trước,
+           không phải lời khuyên chung chung (US-09). *@
+        var capQuaCao = Model.Cap is not null && !ThuVienQuyTac.CapTrongTam(Model.Cap, Model.LopHienThi);
+        var lopQuaCao = Model.Lop is not null && Model.Lop > Model.LopHienThi;
         <div class="alert alert-secondary" role="status">
-            <strong>Chưa có nội dung nào khớp với bộ lọc của em.</strong>
-            <div class="small mt-1">
-                Em thử bỏ bớt bộ lọc, hoặc bật "Xem trước kiến thức nâng cao" để xem nội dung lớp trên.
-                @if (Model.Loai == ThuVienQuyTac.LoaiDauHieu)
-                {
-                    <span>Riêng phần <em>Dấu hiệu nhận biết</em> sẽ có sau khi nhóm nạp dữ liệu định lý (US-03 phần B).</span>
-                }
-            </div>
+            @if (capQuaCao || lopQuaCao)
+            {
+                <strong>
+                    @if (capQuaCao)
+                    {
+                        @($"{ThuVienQuyTac.TenCap(Model.Cap)} bắt đầu từ lớp {ThuVienQuyTac.LopNhoNhatCuaCap(Model.Cap)}, ")
+                    }
+                    else
+                    {
+                        @($"Lớp {Model.Lop} ")
+                    }
+                    nằm trên lớp @Model.LopHienThi mà em đang xem, nên chưa có mục nào hiện ra.
+                </strong>
+                <div class="small mt-2">
+                    Em bật xem trước để đọc nội dung lớp trên — các mục đó sẽ mang nhãn
+                    <span class="badge bg-info text-dark">Nâng cao</span>.
+                </div>
+                <form method="post" action="/Home/NangCao" class="mt-2">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="tiepTuc" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+                    <input type="hidden" name="bat" value="true" />
+                    <button class="btn btn-primary gq-nut" type="submit">▲ Xem trước kiến thức lớp trên</button>
+                </form>
+            }
+            else
+            {
+                <strong>Chưa có nội dung nào khớp với bộ lọc của em.</strong>
+                <div class="small mt-1">
+                    Em thử bỏ bớt bộ lọc, hoặc bật "Xem trước kiến thức lớp trên" ở thanh trên
+                    để xem thêm nội dung của lớp lớn hơn.
+                </div>
+            }
         </div>
     }
     else

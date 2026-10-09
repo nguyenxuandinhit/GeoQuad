@@ -188,3 +188,89 @@ MERGE (h)-[:CO_CONG_THUC]->(c)
 WITH c, row
 MATCH (l:Lop {so: row.lop})
 MERGE (c)-[:THUOC_LOP]->(l);
+
+// ============================================================================
+// Bổ sung cấp 2 (lớp 9) và cấp 3 (lớp 10–12) — ngoài Phụ lục B.
+//
+// Lý do: Phụ lục B chỉ phủ tới lớp 8, nên chọn "Cấp 3" trong thư viện ra 0 mục.
+// Chủ đề tứ giác vẫn tiếp tục ở các lớp trên theo CT GDPT 2018:
+//   lớp 9  — chương Đường tròn: tứ giác nội tiếp, đường tròn nội/ngoại tiếp
+//   lớp 10 — hệ thức lượng và tích vô hướng: diện tích theo hai đường chéo
+//   lớp 11 — quan hệ song song trong không gian: thiết diện là hình bình hành
+//   lớp 12 — tọa độ trong không gian: diện tích bằng độ dài tích có hướng
+//
+// Chỉ thêm TinhChat, KHÔNG thêm CongThuc: công thức mới sẽ hiện trong dropdown
+// của Máy tính hình học (US-15) mà lớp MayTinhHinhHoc chưa biết tính. Công thức
+// nằm trong noiDung dạng KaTeX nên vẫn đọc được ở tab Tính chất.
+//
+// Trong chuỗi Cypher, "\" là ký tự điều khiển nên LaTeX phải viết "\\frac".
+// nguon kết thúc bằng "(bổ sung ngoài Phụ lục B)" để đếm riêng được, và KHÔNG
+// ghi là đã rà soát vì C rà soát trước khi A thêm các mục này.
+// ----------------------------------------------------------------------------
+UNWIND [
+  // ---- Lớp 9: đường tròn ----------------------------------------------------
+  {ma: 'TC_TG_3', hinh: 'TU_GIAC', lop: 9,
+   noiDung: 'Tứ giác nội tiếp một đường tròn thì tổng hai góc đối bằng $180^\\circ$.'},
+  {ma: 'TC_HCN_4', hinh: 'HINH_CHU_NHAT', lop: 9,
+   noiDung: 'Hình chữ nhật luôn nội tiếp được một đường tròn: tâm là giao điểm hai đường chéo, bán kính bằng nửa đường chéo $R = \\frac{d}{2}$.'},
+  {ma: 'TC_HV_4', hinh: 'HINH_VUONG', lop: 9,
+   noiDung: 'Hình vuông cạnh $a$ vừa nội tiếp vừa ngoại tiếp được đường tròn, hai đường tròn đồng tâm tại giao điểm hai đường chéo: bán kính ngoại tiếp $R = \\frac{a\\sqrt{2}}{2}$, bán kính nội tiếp $r = \\frac{a}{2}$.'},
+  {ma: 'TC_HTC_4', hinh: 'HINH_THANG_CAN', lop: 9,
+   noiDung: 'Hình thang cân luôn nội tiếp được một đường tròn, vì hai góc đối của nó bù nhau.'},
+  {ma: 'TC_THOI_4', hinh: 'HINH_THOI', lop: 9,
+   noiDung: 'Hình thoi luôn ngoại tiếp được một đường tròn: tâm là giao điểm hai đường chéo, bán kính bằng khoảng cách từ tâm đến một cạnh.'},
+  {ma: 'TC_HBH_5', hinh: 'HINH_BINH_HANH', lop: 9,
+   noiDung: 'Hình bình hành nội tiếp được một đường tròn khi và chỉ khi nó là hình chữ nhật.'},
+
+  // ---- Lớp 10: hệ thức lượng, tích vô hướng ---------------------------------
+  {ma: 'TC_TG_4', hinh: 'TU_GIAC', lop: 10,
+   noiDung: 'Tứ giác lồi có hai đường chéo $d_1$, $d_2$ cắt nhau tạo thành góc $\\varphi$ thì diện tích bằng $S = \\frac{1}{2} d_1 d_2 \\sin\\varphi$. Hai đường chéo vuông góc thì $\\sin\\varphi = 1$, trở về công thức diện tích hình thoi.'},
+  {ma: 'TC_HBH_6', hinh: 'HINH_BINH_HANH', lop: 10,
+   noiDung: 'Trong hình bình hành, tổng bình phương hai đường chéo bằng tổng bình phương bốn cạnh: $d_1^2 + d_2^2 = 2(a^2 + b^2)$.'},
+
+  // ---- Lớp 11: quan hệ song song trong không gian ---------------------------
+  {ma: 'TC_HBH_7', hinh: 'HINH_BINH_HANH', lop: 11,
+   noiDung: 'Cắt một hình hộp bằng mặt phẳng song song với một mặt bên thì thiết diện là một hình bình hành bằng mặt đó.'},
+
+  // ---- Lớp 12: tọa độ trong không gian --------------------------------------
+  {ma: 'TC_HBH_8', hinh: 'HINH_BINH_HANH', lop: 12,
+   noiDung: 'Trong hệ tọa độ $Oxyz$, diện tích hình bình hành $ABCD$ bằng độ dài tích có hướng của hai vectơ cạnh: $S = \\left| \\overrightarrow{AB} \\times \\overrightarrow{AD} \\right|$.'},
+  {ma: 'TC_HCN_5', hinh: 'HINH_CHU_NHAT', lop: 12,
+   noiDung: 'Trong hệ tọa độ $Oxyz$, tứ giác $ABCD$ là hình chữ nhật khi $\\overrightarrow{AB} = \\overrightarrow{DC}$ và $\\overrightarrow{AB} \\cdot \\overrightarrow{AD} = 0$.'}
+] AS row
+MERGE (t:DinhLy:TinhChat {ma: row.ma})
+SET t.noiDung   = row.noiDung,
+    t.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
+    t.trangThai = 'DA_RA_SOAT'
+WITH t, row
+MATCH (l:Lop {so: row.lop})
+MERGE (t)-[:THUOC_LOP]->(l)
+WITH t, row
+MATCH (k:KhaiNiem {ma: row.hinh})
+MERGE (k)-[:CO_TINH_CHAT]->(t);
+
+// ---- Bịt hai lỗ lớp 2 và lớp 7 (cùng lý do như khối trên) ------------------
+// Lớp 2 (Toán 2, hình học trực quan): nhận dạng tứ giác bằng cách đếm đỉnh,
+// cạnh, góc — chưa học tổng số đo góc nên không trùng với TC_TG_1 (lớp 8).
+// Lớp 7 (Toán 7, hình hộp chữ nhật và hình lăng trụ đứng): mặt của hình hộp
+// chữ nhật là hình chữ nhật, nối chủ đề tứ giác sang hình học không gian.
+UNWIND [
+  {ma: 'TC_TG_5', hinh: 'TU_GIAC', lop: 2,
+   noiDung: 'Tứ giác là hình có bốn đỉnh, bốn cạnh và bốn góc. Em đếm số cạnh của hình để biết đó có phải tứ giác hay không.'},
+  {ma: 'TC_HCN_6', hinh: 'HINH_CHU_NHAT', lop: 7,
+   noiDung: 'Sáu mặt của hình hộp chữ nhật đều là hình chữ nhật; hai mặt đối diện là hai hình chữ nhật bằng nhau.'},
+  {ma: 'TC_HV_5', hinh: 'HINH_VUONG', lop: 7,
+   noiDung: 'Sáu mặt của hình lập phương đều là hình vuông bằng nhau.'}
+] AS row
+MERGE (t:DinhLy:TinhChat {ma: row.ma})
+SET t.noiDung   = row.noiDung,
+    t.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+                  + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
+    t.trangThai = 'DA_RA_SOAT'
+WITH t, row
+MATCH (l:Lop {so: row.lop})
+MERGE (t)-[:THUOC_LOP]->(l)
+WITH t, row
+MATCH (k:KhaiNiem {ma: row.hinh})
+MERGE (k)-[:CO_TINH_CHAT]->(t);
