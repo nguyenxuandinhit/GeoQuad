@@ -14,6 +14,7 @@ public sealed class QuanTriBaiTapIntegrationTests(Neo4jFixture fixture)
     [Fact]
     public async Task AtomicEditRollbackTypeChangeAndHistory()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.SeedReviewedForTestsAsync();
         var repo=new BaiTapQuanTriRepository(fixture.Db);
         var form=QuanTriBaiTapTests.ValidForm();
@@ -55,6 +56,7 @@ public sealed class QuanTriBaiTapIntegrationTests(Neo4jFixture fixture)
     [Fact]
     public async Task HttpRolesCsrfImmutableIdPreviewVaTatCaLop()
     {
+        if (!fixture.DaBat) return;   // chưa bật GQ_B_INTEGRATION — xem Neo4jFixture.LyDoBoQua
         await fixture.SeedReviewedForTestsAsync();
         await using var server=await MayChuThu.StartAsync(fixture);
         using var guest=await server.Client.GetAsync("/QuanTri/BaiTap/Them");
