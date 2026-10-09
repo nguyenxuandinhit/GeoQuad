@@ -1,7 +1,7 @@
 @model GeoQuad.Web.Areas.ApDung.Models.TinhHuongViewModel
 @{ ViewData["Title"] = Model.TinhHuong.Ten; }
 <style>.scenario a,.scenario summary,.scenario button,.scenario input,.scenario select {min-height:48px;font-size:16px}.scenario p,.scenario li {overflow-wrap:anywhere}.scenario summary {padding:.7rem}</style>
-<main class="scenario">
+<div class="scenario">
 <h1>@Model.TinhHuong.Ten</h1>
 <p>@Model.TinhHuong.BoiCanh · Lớp @Model.TinhHuong.Lop @if(Model.NangCao) { <span class="badge bg-info text-dark">Nâng cao</span> }</p>
 <p>@Model.TinhHuong.MoTa</p>
@@ -43,4 +43,4 @@
     </section>
 }
 <a class="btn btn-outline-secondary" asp-action="Index">Quay lại tình huống</a>
-</main>
+</div>
