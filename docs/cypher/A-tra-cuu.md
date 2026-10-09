@@ -787,6 +787,18 @@ danh sách — không ghép chuỗi.
 BR-10, `VeHinhSvg` (US-16) dựng SVG theo số đo; cả hai là lớp thuần nên unit test được mà
 không cần Neo4j (quy ước 2, điểm 9).
 
+## A kiểm thử chéo phần B (09/10)
+
+A được README mục 1 phân việc "kiểm thử phần B". Kết quả đầy đủ nằm trong
+[`docs/kiem-thu.md`](../kiem-thu.md): **16/16 AC của US-13, US-14, US-17, US-18, US-25 đạt**,
+kiểm bằng HTTP thật trên `main` tại commit `0ca57e0`, không có regression. A cũng đóng thêm
+bốn gate trong phiếu đó: seed lặp (NFR-08), `seed.ps1` trên Windows PowerShell 5.1,
+payload ≤ 2 MB (NFR-14), và các dấu hiệu tiếp cận kiểm được bằng máy (NFR-11).
+
+Hai gate còn mở, đã ghi rõ lý do trong phiếu: nhìn bằng mắt trên trình duyệt (360px, focus,
+KaTeX, 4G ≤ 3s) và drill sao lưu trên Windows (`backup.ps1` khai báo `#Requires -Version 7.2`,
+máy demo chỉ có PowerShell 5.1).
+
 ## Đề xuất thay đổi chung
 
 > README mục 2, điểm 1: nếu thấy cần sửa file của PHẦN 0 hoặc của phần khác thì **không sửa**,
@@ -801,6 +813,7 @@ không cần Neo4j (quy ước 2, điểm 9).
 | 08/10 | **Phần B**: 4 test `BackupFlowTests` gọi `bash`/WSL thật nên đỏ trên máy Windows không có WSL hoạt động | `Process.Start("bash")` trên Windows bắt được bash của WSL (`WSL (…) ERROR: CreateProcess`), và `scripts/backup.sh` so khớp tiền tố `backups/` bằng đường dẫn POSIX nên nhận `C:\GeoQuad\…` là đường dẫn tương đối | **A đã làm 09/10**: dò bash của Git for Windows rồi đổi `C:\GeoQuad\…` → `/c/GeoQuad/…`; không có bash POSIX nào chạy được thì bỏ qua. 4 test giờ **chạy thật** trên Windows, không phải bỏ qua | ✅ A làm 09/10 |
 | 09/10 | **Cả nhóm chốt**: C rà soát US-03 phát hiện chương trình khung GDPT 2018 chỉ nêu **nhận biết** hình bình hành / hình thoi ở lớp 4 (tr. 37), còn **tính chu vi, diện tích** các hình đặc biệt được nêu ở **lớp 6** (tr. 51). Phụ lục D.6 đang gắn `CT_HBH_CV`, `CT_HBH_DT`, `CT_THOI_CV`, `CT_THOI_DT` vào lớp 4 | SRS **OI-05** đã tự ghi bảng ánh xạ khái niệm – lớp ở Phụ lục B là "đề xuất, cần đối chiếu lại". Đây chính là lúc đối chiếu xong và thấy lệch | A **chưa đổi** vì ảnh hưởng lan rộng, xem phân tích ngay dưới | 💬 Cần nhóm chốt |
 | 09/10 | **Phần B**: `scripts/backup.sh` chưa chạy được trên Windows — `docker run -v "$output:/backup"` bị msys đổi `/c/…/ID:/backup` thành `C:\…\ID;C:\backup` nên bind mount sai và tạo rác `backups/<id>;C` | Script viết cho host POSIX (`docker` là binary POSIX). Trên Windows `docker.exe` cần đường dẫn Windows, còn chính script lại so khớp tiền tố `backups/` bằng đường dẫn POSIX — hai yêu cầu ngược nhau. Cần `cygpath -w` ở ranh giới gọi docker nếu muốn hỗ trợ Windows | A đã cho test `OfflineDumpRestore…` bỏ qua trên Windows kèm lý do (`BackupRestoreTests.LyDoBoQuaDienTap`). **Bài diễn tập backup/restore phải chạy trên Linux/macOS hoặc trong WSL** — artifact `plans/.../reports/backup-drill-B.json` trong repo là của máy B. Ba bài backup còn lại (`MissingArchive…` + 4 `BackupFlowTests`) chạy thật trên Windows | ⏳ Chờ B |
+| 09/10 | **Phần B**: thêm `DL_NEN_8` "Hai đường thẳng song song bị cắt bởi một cát tuyến thì hai góc trong cùng phía bù nhau", rồi trỏ `CAN_CU` của `CM-01` bước 2 + bước 4 và `CM-04` bước 3 sang mã mới | A kiểm thử chéo phần B ngày 09/10 (xem `docs/kiem-thu.md`): ba bước đó đang ghi căn cứ `DL_NEN_5`, mà `DL_NEN_5` phát biểu về góc **so le trong**, còn lập luận lại dùng biến thể **trong cùng phía**. Kết luận toán học vẫn đúng, chỉ là câu căn cứ nêu chưa khớp biến thể | Không có cách tạm. A **không** tự thêm vì thêm `DL_NEN_8` kéo theo `Enumerable.Range(1, 6)` trong `SeedBTests.cs` và sát giờ báo cáo. Đã nói trước với thầy là ghi chú đã biết | ⏳ Chờ B |
 | 09/10 | **Ngoại lệ quy ước 2.1 — ghi nhận để nhóm biết**: ngày 09/10 phần A có sửa 4 file của B (`20-dinhly-B.cypher`, `21-chungminh-B.cypher`, `Integration/Neo4jFixture.cs`, `BackupFlowTests.cs` và 8 file test tích hợp) | Chủ nhánh yêu cầu sửa hết trước buổi báo cáo vì B chưa áp patch của C; để nguyên thì 4 trang của B trống và `dotnet test` còn 18 test đỏ | Chỉ sửa `trangThai`/`nguon` và điều kiện bỏ qua test — **không** đổi logic nghiệp vụ, không thêm/bớt nút nào của B. B rà lại khi merge | ✅ Đã ghi nhận |
 | 09/10 | **Phần B**: áp dụng patch `C-gui-B-ra-soat-US03.patch` mà C gửi — đổi `NHAP` → `DA_RA_SOAT` cho 14 điều kiện + 20 dấu hiệu + 6 định lý nền, và thay chuỗi "chờ C đối chiếu SGK" trong `nguon` | C đã rà soát xong từng mã ngày 08/10 và ghi biên bản trong `docs/cypher/C-hoc-tap.md`. C không tự sửa file của B (đúng quy ước 2.1) nên bước áp patch thuộc B. B cũng cần cập nhật `Signs` và dãy `DL_NEN` trong `SeedBTests.cs` nếu thêm mã mới | **A đã làm 09/10** thay B: đổi 3 chỗ trong `20-dinhly-B.cypher` và 4 `ChungMinh` + 15 `Buoc` trong `21-chungminh-B.cypher`, thay hết chuỗi "chờ C" trong `nguon`. Kiểm lại từ DB sạch: 145/145 nút nội dung `DA_RA_SOAT`, tab Dấu hiệu hiện 20 thẻ, `/ApDung/GoiY` 14 điều kiện, CM-01…CM-04 và TH-01…TH-09 đều 200 | ✅ A làm 09/10 |
 | 08/10 | **Hợp đồng dữ liệu**: `20-dinhly-B.cypher` thêm quan hệ `THUOC_LOP` cho `DieuKien`, trong khi lược đồ README mục 4.2 không liệt kê quan hệ này cho `DieuKien` | Nếu giữ thì nên bổ sung vào mục 4.2 để A và C biết mà dùng | A không dùng `DieuKien` nên không ảnh hưởng | 💬 Cần nhóm chốt |

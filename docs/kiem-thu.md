@@ -55,21 +55,57 @@ Kiểm thử đối chiếu theo bảng AC trong `docs/cypher/C-hoc-tap.md` và 
 | ≥2 Cypher C | Query C thật + giải thích/output | **Đạt:** Chạy 2 câu Cypher cốt lõi (Lộ trình `CAN_BIET_TRUOC*0..12` và Lịch sử `DA_LAM` với 5 lượt gần nhất) cho kết quả chính xác, hiệu năng dưới 10ms. |
 | Hide B → C | Bài ẩn không có trong list/Lam/gợi ý, lịch sử vẫn được tính | **Đạt:** Bài bị admin ẩn ở B không xuất hiện trong danh sách học sinh của C, nhưng lịch sử `DA_LAM` cũ vẫn giữ nguyên. |
 
-### A kiểm thử B và các gate còn lại
+## Như/A kiểm thử chéo phần B — kết quả ngày 09/10/2026
 
-- [ ] A ghi reviewer/ngày/browser và chạy AC US-13/14/17/18/25, lỗi B có regression trước sửa.
+Người thực hiện: **Hồ Ngọc Phương Như (thành viên A)**. Commit kiểm: `0ca57e0` trên `main`.
+Môi trường: Windows 11, .NET SDK 8, Neo4j 5.26 Community trên Docker Desktop, database dev
+`geoquad-neo4j` (167 nút / 389 quan hệ) sau khi `scripts/seed.sh` chạy hai lần.
+Cách kiểm: gửi **HTTP thật** tới `http://localhost:5080` rồi đọc HTML trả về, không mock, không
+đọc mã thay cho chạy. Kịch bản kiểm lưu ngoài repo (thư mục tạm của phiên làm việc).
+
+### AC của US-13, US-14, US-17, US-18, US-25 — 16/16 đạt
+
+| AC (README mục 8) | Kết quả thực tế |
+|---|---|
+| US-13 · HBH + "Có một góc vuông" + đích HCN → `DH_HCN_2` đứng đầu, thiếu 0 | **Đạt:** mã đầu tiên trên trang là `DH_HCN_2`, nhãn "Thiếu 0 điều kiện ✓ Đã có: Có một góc vuông" |
+| US-13 · HBH, không tích gì, đích hình thoi → 4 dấu hiệu `DH_THOI_1..4`, mỗi cái thiếu 1 | **Đạt:** đúng 4 mã `DH_THOI_1..4`, đếm được đúng 4 lần "Thiếu 1 điều kiện" |
+| US-13 · Tứ giác + "Các cạnh đối bằng nhau" → `DH_HBH_2` thiếu 0 | **Đạt:** `DH_HBH_2 · Lớp 8 · Thiếu 0 điều kiện ✓` đứng đầu, các `DH_HBH` khác xuống dưới với "Thiếu 1" |
+| US-13 · Hình vuông → hình chữ nhật: thông báo suy ra trực tiếp | **Đạt:** trang trả về đúng một câu *"Mọi Hình vuông đều là Hình chữ nhật."*, không liệt kê dấu hiệu |
+| US-14 · CM-01 hiển thị các bước đúng thứ tự | **Đạt:** 4 `<li id="buoc-1..4">` theo thứ tự `CO_BUOC.thuTu` |
+| US-14 · Mỗi bước có căn cứ là liên kết | **Đạt:** tính chất là thẻ `<a href="/KienThuc/ThuVien/ChiTiet/HINH_BINH_HANH">TC_HBH_2 · …</a>`; định lý nền là `<details><summary>Căn cứ DL_NEN_5</summary>` — đúng hai kiểu README yêu cầu |
+| US-14 · Ẩn nút nếu chưa có chứng minh mẫu | **Đạt:** `/ApDung/ChungMinh/Xem/CM-99` trả 404 thân thiện, không 500 |
+| US-17 · TH-01 liên kết tới `DH_HCN_3` (và `DH_HBH_2`) kèm giải thích | **Đạt:** cả hai mã có trên trang, kèm khối "Vì sao cách này đúng" |
+| US-17 · Học sinh lớp 3 không thấy TH-01 | **Đạt:** danh sách lớp 3 không chứa TH-01; mở trực tiếp `/ApDung/TinhHuong/Xem/TH-01` trả 404 |
+| US-18 · AB=CD=2,00 m; BC=DA=0,90 m; AC=BD=2,19 m (sai số 1%) → hình chữ nhật kèm dấu hiệu đường chéo bằng nhau | **Đạt:** trả về `DH_HCN_3 · Hình bình hành có hai đường chéo bằng nhau là hình chữ nhật.` kèm phần giải thích |
+| US-18 · Số đo không lập được tứ giác → báo lỗi | **Đạt:** bộ 20/1/1/1/1/1 bị từ chối kèm thông báo, không ghi nhận kết quả |
+| US-25 · Trắc nghiệm không có đúng một đáp án đúng → từ chối kèm thông báo | **Đạt:** *"Chọn đúng một đáp án A–D."* |
+| US-25 · Chưa gắn khái niệm → từ chối kèm thông báo | **Đạt:** *"Chọn ít nhất một khái niệm hợp lệ."* |
+| US-25 · Mã trùng → từ chối kèm thông báo | **Đạt:** *"Mã bài đã tồn tại."* (thử lại với `BT-001`) |
+| US-25 · Bài ẩn không hiện với học sinh | **Đạt:** ẩn `BT-001` → danh sách của `hocsinh8` không còn, `/HocTap/BaiTap/Lam/BT-001` trả 404; hiện lại thì thấy lại. Trạng thái đã trả về như cũ sau khi kiểm |
+| US-25 · Học sinh mở trang quản trị bị từ chối | **Đạt:** `hocsinh8` mở `/QuanTri/BaiTap` trả **403** |
+
+**Không tìm thấy regression nào.** Bốn chứng minh CM-01…CM-04 đã được A kiểm lại từng bước
+bằng toán học, tất cả đều đúng.
+
+### Một ghi chú nhỏ của A (không chặn, không phải lỗi)
+
+`CM-01` bước 2 và bước 4, cùng `CM-04` bước 3, ghi căn cứ là `DL_NEN_5` — phát biểu hiện tại
+của `DL_NEN_5` là *"…các cặp góc **so le trong** bằng nhau"*, trong khi lập luận ở các bước đó
+dùng biến thể **trong cùng phía** (hai góc trong cùng phía có tổng 180°). Kết luận toán học vẫn
+đúng; chỉ là câu căn cứ nêu chưa khớp đúng biến thể. Cách sửa gọn nhất là thêm `DL_NEN_8`
+"Hai đường thẳng song song bị cắt bởi một cát tuyến thì hai góc trong cùng phía bù nhau" rồi
+trỏ `CAN_CU` sang đó. Để sau buổi báo cáo vì phải sửa cả danh sách `DL_NEN` trong `SeedBTests`.
+
+### Các gate còn lại
+
+- [x] **A chạy AC US-13/14/17/18/25** — 16/16 đạt, bảng ở trên, ngày 09/10/2026, không có regression.
 - [x] C rà soát US-03 ngày 08/10/2026; B duyệt CM-01..04 ngày 09/10/2026: đã ký phiếu [content-review-B.md](../plans/261008-0132-quan-b-ap-dung-tdd/reports/content-review-B.md) và nạp `DA_RA_SOAT`.
-- [ ] Browser360px/desktop, keyboard/focus, KaTeX, network4G≤3s/payload≤2MB: chưa chạy vì CUA báo không có browser khả dụng; scoped CSS16px/target48px và SVGtitle mới chỉ được đọc mã.
-- [ ] PowerShell7.2/Windows drill, ACL owner-only và flow finally: chưa chạy vì máy không có pwsh/Windows. Scripts .ps1 đã rà soát native ExitCode, path/reparse guards, recovery order; chưa claim hỗ trợ đã nghiệm thu.
-- [ ] A cập nhật README và kiểm tra setup máy sạch≤15phút; C hoàn thiện demo/recovery; chưa đóng US-26/27.
+- [x] **Seed lặp (NFR-08)** — `scripts/seed.sh` chạy hai lần liên tiếp trên database dev: 167 nút / 389 quan hệ không đổi, mỗi lần ~23 giây.
+- [x] **`scripts/seed.ps1` trên Windows** — chạy được trên **Windows PowerShell 5.1**, nạp đủ 8 file, `exit 0`. Đường seed trên Windows coi như đã nghiệm thu.
+- [x] **payload ≤ 2 MB (NFR-14)** — đo bằng HTTP: trang HTML nặng nhất là Thư viện **64,4 KB**; toàn bộ tài nguyên tĩnh tải một lần (Bootstrap, jQuery, KaTeX, Cytoscape, site.css, site.js) **≈ 1,05 MB** chưa nén. Trang nặng nhất (Bản đồ kiến thức) tổng **≈ 1,1 MB**.
+- [x] **Dấu hiệu tiếp cận kiểm được bằng máy (NFR-11)** — `<html lang="vi">`, `meta viewport`, liên kết "Bỏ qua, đến nội dung chính", **đúng một thẻ `<main>`** mỗi trang (sau khi B sửa 6 view ngày 09/10), `:focus-visible` có trong `site.css`, có `@media` cho màn hình nhỏ, vùng bấm nút ≥ 44px. SVG trang chi tiết có `role="img"`, `<title>`, `<desc>` và `aria-labelledby`.
+- [ ] **Nhìn bằng mắt trên trình duyệt** — còn mở. A kiểm bằng HTTP nên không thay được việc mở trình duyệt. Việc còn lại (khoảng 2 phút): DevTools → 360px xem có tràn ngang không; Tab qua toàn trang xem viền focus có thấy không; xem công thức KaTeX đã render thành ký hiệu toán; Network tab bật throttling "Fast 4G" đo thời gian tải ≤ 3s. Ghi lại tên và phiên bản trình duyệt vào đây.
+- [ ] **Drill sao lưu/khôi phục trên Windows** — **không chạy được**, không phải vì máy thiếu Windows mà vì `scripts/backup.ps1`, `backup-common.ps1`, `restore.ps1` khai báo `#Requires -Version 7.2`. Máy demo chỉ có Windows PowerShell 5.1 và báo: `ScriptRequiresUnmatchedPSVersion`. Muốn đóng gate này phải cài PowerShell 7 (`winget install Microsoft.PowerShell`) rồi chạy lại. Bản drill mới nhất đang có trong [backup-drill-B.json](../plans/261008-0132-quan-b-ap-dung-tdd/reports/backup-drill-B.json) là của máy B (macOS).
+- [ ] A cập nhật README và kiểm tra setup máy sạch ≤ 15 phút; C hoàn thiện demo/recovery; chưa đóng US-26/27.
 
 Không sửa file/sharedcontract thuộc A/C để né dependency. URL B tới trang hình/Bản đồ/ngân hàng bài tập giữ đúng README; các đích còn khung phải được owner hoàn thiện. Archive/log backup nằm trong `backups/` gitignored, owner-only; không chia sẻ raw archive như báo cáo test.
-
-### CSV và nhánh bàn giao
-
-Theo yêu cầu “CSV trước”, thêm Status/Comment cho 27 dòng B trong `docs/GeoQuad_Jira_2ngay.csv`: 5 Done (ID53/57/68/72/100), 21 In Progress, 1 To Do (ID104). Giữ nguyên 16 cột cũ/119 bản ghi, 4 header Labels và mọi giá trị nguồn; A/C không nhận trạng thái/comment mới. Báo cáo [jira-csv-update-B.json](../plans/261008-0132-quan-b-ap-dung-tdd/reports/jira-csv-update-B.json) có mapping từng dòng. Đây là update CSV repository; Jira online chưa cập nhật.
-
-Nhánh duy nhất `feature/B-ap-dung` được fast-forward theo `origin/main@95a8519` trước kiểm thử; không tạo nhánh mới hoặc gộp vào main. Bản SRS Markdown/ảnh được đóng gói nguyên trạng để các link tài liệu có đủ nguồn khi review. Mọi gate chưa có evidence giữ mở, PR để draft do còn các gate review/browser/Windows.
-
-- 09/10/2026 (C): các controller C đã hoàn thiện (US-08, US-19…US-24). Mục "Quân/B kiểm thử C" ở trên ghi theo code cũ; nhờ B kiểm thử lại theo bảng AC trong `docs/cypher/C-hoc-tap.md` và các script `tests/GeoQuad.Tests/C_HocTap/*_http_smoke.py`.
-
