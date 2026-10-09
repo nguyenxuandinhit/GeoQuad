@@ -1,8 +1,6 @@
-// GeoQuad · B · bản nháp theo SRS B.3/B.4/B.7.
-// Chờ C review SGK/chương trình: không tự công bố DA_RA_SOAT.
+// GeoQuad · B · Đã được thành viên C rà soát ngày 08/10/2026 (US-03).
 // MERGE theo nhãn gốc + ma bảo toàn placeholder/quan hệ A.
 // UNWIND trải bảng; WITH chuyển biến; SET cập nhật nội dung; THUOC_LOP là lớp đầu tiên.
-// Nguồn dưới đây là nguồn dự kiến, chưa phải chứng cứ review độc lập.
 
 UNWIND [
   {ma: 'DK_MOT_CAP_CANH_DOI_SONG', noiDung: 'Có một cặp cạnh đối song song'},
@@ -22,7 +20,7 @@ UNWIND [
 ] AS row
 MERGE (dk:DieuKien {ma: row.ma})
 SET dk.ten = row.noiDung, dk.noiDung = row.noiDung,
-    dk.nguon = 'CT GDPT 2018 – Toán 8 (chờ C đối chiếu SGK)', dk.trangThai = 'NHAP'
+    dk.nguon = 'Biên soạn theo SRS B.3; đối chiếu CT GDPT 2018 – Toán 8; thành viên C rà soát 08/10/2026', dk.trangThai = 'DA_RA_SOAT'
 WITH dk MATCH (l:Lop {so:8})
 MERGE (dk)-[:THUOC_LOP]->(l);
 
@@ -50,7 +48,7 @@ UNWIND [
 ] AS row
 MERGE (d:DinhLy {ma: row.ma})
 SET d:DauHieu, d.ten = row.noiDung, d.noiDung = row.noiDung,
-    d.nguon = 'CT GDPT 2018 – Toán 8 (chờ C đối chiếu SGK)', d.trangThai = 'NHAP'
+    d.nguon = 'Biên soạn theo SRS B.4; đối chiếu CT GDPT 2018 – Toán 8; thành viên C rà soát 08/10/2026', d.trangThai = 'DA_RA_SOAT'
 WITH d,row
 MATCH (nen:KhaiNiem {ma:row.nen}), (dich:KhaiNiem {ma:row.dich}),
       (dk:DieuKien {ma:row.dk}), (l:Lop {so:row.lop})
@@ -69,6 +67,6 @@ UNWIND [
 ] AS row
 MERGE (d:DinhLy {ma: row.ma})
 SET d.ten = row.noiDung, d.noiDung = row.noiDung,
-    d.nguon = 'CT GDPT 2018 – Toán ' + toString(row.lop) + ' (chờ C đối chiếu SGK)', d.trangThai = 'NHAP'
+    d.nguon = 'Biên soạn theo SRS B.7; đối chiếu CT GDPT 2018 – Toán ' + toString(row.lop) + '; thành viên C rà soát 08/10/2026', d.trangThai = 'DA_RA_SOAT'
 WITH d,row MATCH (l:Lop {so:row.lop})
 MERGE (d)-[:THUOC_LOP]->(l);

@@ -95,7 +95,7 @@ public sealed class SeedBTests(Neo4jFixture fixture)
             grounds.Select(r => string.Join(",", r["grounds"].As<List<string>>())));
         Assert.Empty(await fixture.Db.ReadAsync("""
             MATCH (n) WHERE (n:DauHieu OR n:ChungMinh OR (n:DinhLy AND n.ma STARTS WITH 'DL_NEN_'))
-            AND (n.trangThai IS NULL OR n.trangThai <> 'NHAP') RETURN n.ma
+            AND (n.trangThai IS NULL OR n.trangThai <> 'DA_RA_SOAT') RETURN n.ma
             """));
     }
 
