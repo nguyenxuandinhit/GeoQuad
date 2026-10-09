@@ -14,9 +14,31 @@ builder.Services.AddControllersWithViews();
 
 // ---- Neo4j (US-01) ----
 builder.Services.Configure<Neo4jOptions>(builder.Configuration.GetSection(Neo4jOptions.Section));
+builder.Services.PostConfigure<Neo4jOptions>(options =>
+{
+    var uri = Environment.GetEnvironmentVariable("NEO4J_URI")
+           ?? Environment.GetEnvironmentVariable("Neo4j_Uri")
+           ?? Environment.GetEnvironmentVariable("NEO4J_URL");
+    if (!string.IsNullOrWhiteSpace(uri)) options.Uri = uri;
+
+    var user = Environment.GetEnvironmentVariable("NEO4J_USER")
+            ?? Environment.GetEnvironmentVariable("Neo4j_User")
+            ?? Environment.GetEnvironmentVariable("NEO4J_USERNAME");
+    if (!string.IsNullOrWhiteSpace(user)) options.User = user;
+
+    var pass = Environment.GetEnvironmentVariable("NEO4J_PASSWORD")
+            ?? Environment.GetEnvironmentVariable("Neo4j_Password");
+    if (!string.IsNullOrWhiteSpace(pass)) options.Password = pass;
+
+    var db = Environment.GetEnvironmentVariable("NEO4J_DATABASE")
+          ?? Environment.GetEnvironmentVariable("Neo4j_Database")
+          ?? Environment.GetEnvironmentVariable("NEO4J_DB");
+    if (!string.IsNullOrWhiteSpace(db)) options.Database = db;
+});
 builder.Services.AddSingleton<IDriver>(sp =>
 {
     var o = sp.GetRequiredService<IOptions<Neo4jOptions>>().Value;
+    Console.WriteLine($"[Neo4j] Đang kết nối tới: {o.Uri} | User: {o.User} | Database: {o.Database}");
     return GraphDatabase.Driver(o.Uri, AuthTokens.Basic(o.User, o.Password));
 });
 builder.Services.AddSingleton<IGraphDb, GraphDb>();
