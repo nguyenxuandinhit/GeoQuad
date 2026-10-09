@@ -38,7 +38,7 @@
             </ul>
         </section>
     }
-    @if (Model.MaChungMinh is not null) { <a asp-area="ApDung" asp-controller="ChungMinh" asp-action="Xem" asp-route-ma="@Model.MaChungMinh">Xem chứng minh liên quan</a> }
+    @if (Model.MaChungMinh is not null) { <a asp-area="ApDung" asp-controller="ChungMinh" asp-action="Xem" asp-route-id="@Model.MaChungMinh">Xem chứng minh liên quan</a> }
     @if (Model.LaKhach)
     {
         <div class="mt-3"><partial name="_MoiDangNhap" model="@("/HocTap/BaiTap/Lam/" + Model.Ma)" /></div>
