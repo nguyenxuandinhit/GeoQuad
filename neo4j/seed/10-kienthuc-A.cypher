@@ -145,8 +145,8 @@ UNWIND [
 MERGE (t:DinhLy {ma: row.ma})
 SET t:TinhChat,
     t.noiDung   = row.noiDung,
-    t.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
-                  + toString(row.lop),
+    t.nguon     = 'Nhóm GeoQuad biên soạn theo CT GDPT 2018 – Toán '
+                  + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
     t.trangThai = 'DA_RA_SOAT'
 WITH t, row
 MATCH (h:KhaiNiem {ma: row.hinh})
@@ -179,8 +179,8 @@ SET c.ten       = row.ten,
     c.bieuThuc  = row.bieuThuc,
     c.bienSo    = row.bienSo,
     c.daiLuong  = row.daiLuong,
-    c.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
-                  + toString(row.lop),
+    c.nguon     = 'Nhóm GeoQuad biên soạn theo CT GDPT 2018 – Toán '
+                  + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
     c.trangThai = 'DA_RA_SOAT'
 WITH c, row
 MATCH (h:KhaiNiem {ma: row.hinh})
@@ -230,7 +230,7 @@ UNWIND [
 
   // ---- Lớp 11: quan hệ song song trong không gian ---------------------------
   {ma: 'TC_HBH_7', hinh: 'HINH_BINH_HANH', lop: 11,
-   noiDung: 'Cắt một hình hộp bằng mặt phẳng song song với một mặt bên thì thiết diện là một hình bình hành bằng mặt đó.'},
+   noiDung: 'Liên hệ hình học không gian (lớp 11): cắt một hình hộp bằng mặt phẳng song song với một mặt bên thì thiết diện là một hình bình hành bằng mặt đó.'},
 
   // ---- Lớp 12: tọa độ trong không gian --------------------------------------
   {ma: 'TC_HBH_8', hinh: 'HINH_BINH_HANH', lop: 12,
@@ -240,7 +240,7 @@ UNWIND [
 ] AS row
 MERGE (t:DinhLy:TinhChat {ma: row.ma})
 SET t.noiDung   = row.noiDung,
-    t.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+    t.nguon     = 'Nhóm GeoQuad biên soạn theo CT GDPT 2018 – Toán '
                   + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
     t.trangThai = 'DA_RA_SOAT'
 WITH t, row
@@ -259,13 +259,13 @@ UNWIND [
   {ma: 'TC_TG_5', hinh: 'TU_GIAC', lop: 2,
    noiDung: 'Tứ giác là hình có bốn đỉnh, bốn cạnh và bốn góc. Em đếm số cạnh của hình để biết đó có phải tứ giác hay không.'},
   {ma: 'TC_HCN_6', hinh: 'HINH_CHU_NHAT', lop: 7,
-   noiDung: 'Sáu mặt của hình hộp chữ nhật đều là hình chữ nhật; hai mặt đối diện là hai hình chữ nhật bằng nhau.'},
+   noiDung: 'Liên hệ hình học trực quan (lớp 7): sáu mặt của hình hộp chữ nhật đều là hình chữ nhật, hai mặt đối diện là hai hình chữ nhật bằng nhau.'},
   {ma: 'TC_HV_5', hinh: 'HINH_VUONG', lop: 7,
-   noiDung: 'Sáu mặt của hình lập phương đều là hình vuông bằng nhau.'}
+   noiDung: 'Liên hệ hình học trực quan (lớp 7): sáu mặt của hình lập phương đều là hình vuông bằng nhau.'}
 ] AS row
 MERGE (t:DinhLy:TinhChat {ma: row.ma})
 SET t.noiDung   = row.noiDung,
-    t.nguon     = 'Nhóm GeoQuad biên soạn, bổ sung ngoài Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
+    t.nguon     = 'Nhóm GeoQuad biên soạn theo CT GDPT 2018 – Toán '
                   + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
     t.trangThai = 'DA_RA_SOAT'
 WITH t, row
