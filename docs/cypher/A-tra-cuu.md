@@ -97,6 +97,14 @@ RETURN h.ma AS hinh, collect(t.ma) AS tinhChat ORDER BY hinh;
 Mỗi tính chất có đúng 1 `CO_TINH_CHAT` và 1 `THUOC_LOP`; cả 12 nút đều có `nguon` và
 `trangThai = 'DA_RA_SOAT'` (BR-13).
 
+**Sửa 16/10 theo `docs/geoquad-doi-chieu-toan8-tap1.md` (mục B2 #7 và #11)**: `TC_HCN_2`
+thiếu vế "cắt nhau tại trung điểm của mỗi đường" mà SGK nêu trong cùng một định lí —
+`noiDung` đã sửa thành *"Hai đường chéo của hình chữ nhật bằng nhau và cắt nhau tại trung
+điểm của mỗi đường."* 11/12 mã trong khối này (trừ `TC_HCN_1`, sách không phát biểu riêng)
+được thêm trường `doiChieu` trong UNWIND rồi nối vào cuối `nguon` bằng `CASE WHEN ... END`,
+ghi rõ bài/mục/trang SGK Toán 8, tập một (Kết nối tri thức với cuộc sống) — xem file seed.
+Nội dung và số lượng 12 tính chất không đổi.
+
 ### US-03 · Seed 12 công thức (`neo4j/seed/10-kienthuc-A.cypher`)
 
 ```cypher
@@ -406,7 +414,7 @@ ORDER BY lop, loai, tieuDe
 | `n:TinhChat` trong `WHERE` | `n:Nhan` dùng như biểu thức đúng/sai: "nút này có nhãn đó không" |
 | `$lop`, `$loai`, `$capLoc`, `$lopLoc`, `$tk` | **tham số**; dữ liệu từ URL không bao giờ nối vào chuỗi truy vấn (NFR-05) |
 | `$lopLoc IS NULL OR l.so = $lopLoc` | mẫu "lọc tuỳ chọn": tham số null thì bỏ qua điều kiện, khỏi phải ghép câu động |
-| `l.so <= $lop` | lọc theo lớp (BR-04). `$lop` = `ICurrentUser.LopHienThi`, bằng 12 khi bật xem trước nâng cao |
+| `l.so <= $lop` | lọc theo lớp (BR-04). `$lop` = `ICurrentUser.Lop`: em chỉ thấy nội dung từ lớp 1 tới lớp của mình |
 | `n.trangThai = 'DA_RA_SOAT'` | chỉ hiện nội dung đã rà soát (BR-13). Nhờ điều kiện này, nút "tạm" của mảng khác (chưa có `trangThai`) tự bị bỏ qua |
 | `OPTIONAL MATCH` | như `MATCH` nhưng không có cũng vẫn giữ dòng, các biến thành `null`. Dùng vì tính chất/công thức mới có hình sở hữu, còn hình thì không |
 | `-[:CO_TINH_CHAT\|CO_CONG_THUC]->` | `\|` là **"hoặc"** giữa hai kiểu quan hệ: đi theo cả hai trong một bước |
@@ -419,16 +427,16 @@ ORDER BY lop, loai, tieuDe
 
 **Kết quả mong đợi trên dữ liệu seed** (chưa có dữ liệu phần B nên tab Dấu hiệu rỗng)
 
-Khách lớp 4, **không** bật xem trước nâng cao (`$lop = 4`, các tham số lọc đều null) — **14 mục**:
+Khách lớp 4 (`$lop = 4`, các tham số lọc đều null) — **14 mục**:
 
 | loai | các mục |
 |---|---|
 | KhaiNiem | HINH_CHU_NHAT (1), HINH_VUONG (1), TU_GIAC (3), HINH_BINH_HANH (4), HINH_THOI (4) |
 | CongThuc | CT_HCN_CV, CT_HCN_DT, CT_HV_CV, CT_HV_DT, CT_TG_CHUVI (lớp 3); CT_HBH_CV, CT_HBH_DT, CT_THOI_CV, CT_THOI_DT (lớp 4) |
 
-Không có `HINH_THANG_CAN` (lớp 6), không mục nào mang nhãn "Nâng cao" — **đúng AC**.
+Không có `HINH_THANG_CAN` (lớp 6) và không có nội dung lớp 6, lớp 8 nào — **đúng AC**.
 
-Khách lớp 4, **bật** xem trước nâng cao (`$lop = 12`) — **31 mục**:
+Học sinh lớp 12 (`$lop = 12`) — **31 mục**:
 
 | loai | số mục |
 |---|---|
@@ -437,8 +445,8 @@ Khách lớp 4, **bật** xem trước nâng cao (`$lop = 12`) — **31 mục**:
 | CongThuc | 12 |
 | DauHieu | 0 (chờ `20-dinhly-B.cypher`) |
 
-`HINH_THANG_CAN` xuất hiện, lớp 6 > lớp 4 nên mang nhãn **"Nâng cao"** — **đúng AC**.
-17 thẻ mang nhãn "Nâng cao" (mọi nội dung lớp 6 và lớp 8).
+`HINH_THANG_CAN` xuất hiện vì lớp 6 ≤ lớp 12. Chênh lệch 17 mục giữa hai lần chạy chính là
+toàn bộ nội dung lớp 6 và lớp 8 mà học sinh lớp 4 không được nhận.
 
 Huy hiệu "Đã học" — tạo thử một quan hệ rồi xem:
 
@@ -450,9 +458,9 @@ MERGE (tk)-[h:DA_HOC]->(k) ON CREATE SET h.luc = datetime();
 `hocsinh8` mở tab Hình thì chỉ "Hình thoi" có huy hiệu **✓ Đã học**; khách mở cùng trang thì
 không thẻ nào có huy hiệu. Xoá thử nghiệm: `MATCH (:TaiKhoan)-[h:DA_HOC]->() DELETE h;`
 
-**Nhãn "Nâng cao" tính ở đâu?** Không tính trong Cypher. Truy vấn trả `lop` của từng mục;
-`ThuVienQuyTac.LaNangCao(lopNoiDung, lopHocSinh)` so với `ICurrentUser.Lop` (lớp **thật**, không
-phải `LopHienThi`). Tách như vậy để unit test được mà không cần Neo4j (quy ước 2, điểm 9).
+**Lọc lớp làm ở đâu?** Ngay trong Cypher, bằng `l.so <= $lop`, chứ không lọc ở view: trình
+duyệt của học sinh lớp 4 không bao giờ nhận được nội dung lớp 8 (BR-04). Truy vấn vẫn trả `lop`
+của từng mục để thẻ hiện nhãn "Lớp N".
 
 ### US-10 · Chi tiết khái niệm (FR-11, UC-03, SCR-05)
 
@@ -817,6 +825,9 @@ máy demo chỉ có PowerShell 5.1).
 | 09/10 | **Ngoại lệ quy ước 2.1 — ghi nhận để nhóm biết**: ngày 09/10 phần A có sửa 4 file của B (`20-dinhly-B.cypher`, `21-chungminh-B.cypher`, `Integration/Neo4jFixture.cs`, `BackupFlowTests.cs` và 8 file test tích hợp) | Chủ nhánh yêu cầu sửa hết trước buổi báo cáo vì B chưa áp patch của C; để nguyên thì 4 trang của B trống và `dotnet test` còn 18 test đỏ | Chỉ sửa `trangThai`/`nguon` và điều kiện bỏ qua test — **không** đổi logic nghiệp vụ, không thêm/bớt nút nào của B. B rà lại khi merge | ✅ Đã ghi nhận |
 | 09/10 | **Phần B**: áp dụng patch `C-gui-B-ra-soat-US03.patch` mà C gửi — đổi `NHAP` → `DA_RA_SOAT` cho 14 điều kiện + 20 dấu hiệu + 6 định lý nền, và thay chuỗi "chờ C đối chiếu SGK" trong `nguon` | C đã rà soát xong từng mã ngày 08/10 và ghi biên bản trong `docs/cypher/C-hoc-tap.md`. C không tự sửa file của B (đúng quy ước 2.1) nên bước áp patch thuộc B. B cũng cần cập nhật `Signs` và dãy `DL_NEN` trong `SeedBTests.cs` nếu thêm mã mới | **A đã làm 09/10** thay B: đổi 3 chỗ trong `20-dinhly-B.cypher` và 4 `ChungMinh` + 15 `Buoc` trong `21-chungminh-B.cypher`, thay hết chuỗi "chờ C" trong `nguon`. Kiểm lại từ DB sạch: 145/145 nút nội dung `DA_RA_SOAT`, tab Dấu hiệu hiện 20 thẻ, `/ApDung/GoiY` 14 điều kiện, CM-01…CM-04 và TH-01…TH-09 đều 200 | ✅ A làm 09/10 |
 | 08/10 | **Hợp đồng dữ liệu**: `20-dinhly-B.cypher` thêm quan hệ `THUOC_LOP` cho `DieuKien`, trong khi lược đồ README mục 4.2 không liệt kê quan hệ này cho `DieuKien` | Nếu giữ thì nên bổ sung vào mục 4.2 để A và C biết mà dùng | A không dùng `DieuKien` nên không ảnh hưởng | 💬 Cần nhóm chốt |
+| 16/10 | **Cả nhóm chốt**: `docs/geoquad-doi-chieu-toan8-tap1.md` (đối chiếu Toán 8, tập một, Chương III với seed) xác nhận lại đúng finding 08/10 ở trên — 23 mã có `nguon` kết thúc `"(bổ sung ngoài Phụ lục B)"` trong `10-kienthuc-A.cypher` (và một số mã lớp 9-12 khác) đang bị `SET ... trangThai = 'DA_RA_SOAT'` dù comment ngay trong file nói rõ "KHÔNG ghi là đã rà soát". Danh sách đầy đủ 23 mã nằm ở mục C của file đối chiếu (hành động `XEM_LAI_TRANG_THAI`) | Review gate (CLAUDE.md, NFR-09) coi `trangThai='DA_RA_SOAT'` là "đã có người thứ hai rà soát". 23 mã này mới chỉ do A tự biên soạn, chưa ai đối chiếu nguồn SGK | A **không tự đổi** `trangThai` lần này — đổi sẽ **ẩn** 23 mục khỏi mọi trang hiển thị (lọc `trangThai = 'DA_RA_SOAT'` tuyệt đối, xem `ChiTietRepository`/`ThuVienRepository`/`MayTinhRepository`/`BanDoRepository`), là thay đổi hiển thị ảnh hưởng người dùng, không phải việc A tự quyết | 💬 Cần nhóm chốt |
+| 16/10 | **Phần 0 (khung chung)**: `01-khung.cypher` — nút `TU_GIAC` chưa có khái niệm "tứ giác lồi" và quy ước sách dùng "tứ giác" ngầm hiểu là tứ giác lồi | SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 10 mục 1, tr.49: sách coi cả hình lõm/hình tự cắt là tứ giác rồi quy ước phần còn lại dùng tứ giác lồi. Chi tiết ở `docs/geoquad-doi-chieu-toan8-tap1.md` mục B2 #3 | A không sửa `01-khung.cypher` (ngoài phạm vi). Nhóm cần quyết định: thêm ghi chú vào `noiDung`/thuộc tính mới của `TU_GIAC`, hay tạo nút `KhaiNiem` riêng — việc này ảnh hưởng mọi tính chất dùng chữ "tứ giác" | 💬 Cần nhóm chốt |
+| 16/10 | **Phần B**: `20-dinhly-B.cypher` thiếu 2 dấu hiệu SGK có: (1) hình thang có hai cạnh bên bằng nhau **và** hai đáy không bằng nhau là hình thang cân (Bài 11, Luyện tập chung); (2) tứ giác có hai đường chéo bằng nhau **và** cắt nhau tại trung điểm của mỗi đường là hình chữ nhật (Bài 13, Ví dụ 2) | Cả hai là dấu hiệu nhiều điều kiện cùng lúc, trong khi mỗi `DauHieu` hiện tại chỉ có một `dk` (một `DieuKien`). `DK_CHEO_BANG_NHAU` và `DK_CHEO_CAT_TRUNG_DIEM` đã có sẵn cho dấu hiệu (2); dấu hiệu (1) cần hai `DieuKien` mới (hai cạnh bên bằng nhau, hai đáy không bằng nhau) | A không sửa file của B. Xem khối Cypher đề xuất + lưu ý về đa điều kiện ngay dưới | 💬 Cần nhóm chốt + B kiểm tra tính năng gợi ý dấu hiệu (`GoiYService`) có xử lý được nhiều `DieuKien` cho một `DauHieu` không trước khi dán |
 
 ### Đề xuất cho B: hai mục bổ sung (dán được luôn)
 
@@ -840,6 +851,35 @@ Và vào khối định lý nền:
 > (`Enumerable.Range(1, 6)`). Thêm hai mục trên **sẽ làm hai test đó đỏ** nếu B không cập
 > nhật cả `Signs` và dãy `DL_NEN` thành `Range(1, 7)`.
 
+### Đề xuất cho B: hai dấu hiệu từ Toán 8 tập một (16/10, chưa dán được luôn)
+
+Nguồn: `docs/geoquad-doi-chieu-toan8-tap1.md` mục B2 #4 và #5, mục C. Khác với hai mục
+phía trên, **mỗi dấu hiệu dưới đây cần hai `DieuKien` cùng lúc**, còn lược đồ `DauHieu`
+hiện tại của B chỉ có một trường `dk` (một điều kiện). B cần quyết định cách mở rộng
+(ví dụ đổi `dk` thành danh sách, hoặc dùng quan hệ `CAN` nhiều lần) và kiểm tra
+`GoiYService` (gợi ý dấu hiệu) có đọc được nhiều điều kiện không, **trước khi** dán hai
+mục này — nên không đánh dấu "dán được luôn" như hai mục trên.
+
+Hình thang cân (Bài 11, Luyện tập chung; cần 2 `DieuKien` mới):
+
+```cypher
+  {ma: 'DH_HTC_?', lop: 8,
+   noiDung: 'Hình thang có hai cạnh bên bằng nhau và hai đáy không bằng nhau là hình thang cân.',
+   nen: 'HINH_THANG', dieuKien: ['DK_HAI_CANH_BEN_BANG', 'DK_HAI_DAY_KHONG_BANG'], dich: 'HINH_THANG_CAN'}
+```
+
+Hình chữ nhật (Bài 13, Ví dụ 2; hai `DieuKien` đã có sẵn):
+
+```cypher
+  {ma: 'DH_HCN_?', lop: 8,
+   noiDung: 'Tứ giác có hai đường chéo bằng nhau và cắt nhau tại trung điểm của mỗi đường là hình chữ nhật.',
+   nen: 'TU_GIAC', dieuKien: ['DK_CHEO_BANG_NHAU', 'DK_CHEO_CAT_TRUNG_DIEM'], dich: 'HINH_CHU_NHAT'}
+```
+
+`?` là mã kế tiếp B tự cấp sau khi chốt cách biểu diễn nhiều điều kiện. Sách trình bày cả
+hai là ví dụ đã chứng minh (không phải định lí đánh số) — `nguon` nên ghi rõ "Ví dụ", không
+phải "Định lí".
+
 ### Phần A đã sửa `nguon` cho truy vết được (09/10)
 
 C mở finding: *"nguồn A vẫn ghi chung theo lớp nên cần A bổ sung tham chiếu chủ đề/trang
@@ -851,7 +891,7 @@ thật của nó thay vì gộp chung một chuỗi:
 | `01-khung.cypher` — 7 hình | Nhóm GeoQuad biên soạn theo SRS Phụ lục B.1; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; thành viên C rà soát 08/10/2026 |
 | `01-khung.cypher` — 6 yếu tố | Nhóm GeoQuad **tự soạn định nghĩa** (SRS Phụ lục B.1 không có cột định nghĩa); đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ |
 | `10-kienthuc-A.cypher` — 12 tính chất + 12 công thức của Phụ lục B | Nhóm GeoQuad biên soạn theo SRS Phụ lục B; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; thành viên C rà soát 08/10/2026 |
-| `10-kienthuc-A.cypher` — 22 tính chất + 2 công thức bổ sung | Nhóm GeoQuad biên soạn, **bổ sung ngoài Phụ lục B**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ — **không** ghi là đã rà soát, vì C rà soát trước khi A thêm các mục này |
+| `10-kienthuc-A.cypher` — 23 tính chất + 2 công thức bổ sung | Nhóm GeoQuad biên soạn, **bổ sung ngoài Phụ lục B**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ — **không** ghi là đã rà soát, vì C rà soát trước khi A thêm các mục này |
 | `11-baitap-A.cypher` — 10 bài tập | Nhóm GeoQuad **tự soạn** theo SRS giả định A-01; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩; **đã kiểm lại phép tính** |
 | `12-tinhhuong-A.cypher` — 9 tình huống | Nhóm GeoQuad biên soạn theo SRS Phụ lục B.8, **lời giải nhóm tự viết**; đối chiếu CT GDPT 2018 – Toán ⟨lớp⟩ |
 
@@ -861,7 +901,7 @@ chương trình khung GDPT 2018 để đối chiếu chủ đề và lớp (SRS 
 
 ### Phần A đã bổ sung gì ngoài Phụ lục B
 
-Hai đợt bổ sung, tổng **22 tính chất + 2 công thức**.
+Ba đợt bổ sung, tổng **23 tính chất + 2 công thức**.
 
 **Đợt 1 (08/10) — vá chỗ thiếu ở lớp 8.** Phụ lục B **không có mục nào về đối xứng**, trong khi
 trục đối xứng và tâm đối xứng thuộc chương tứ giác ở SGK Toán 8; cũng thiếu tổng góc ngoài,
@@ -881,6 +921,11 @@ vẫn tiếp tục ở các lớp trên theo CT GDPT 2018, nên bổ sung 14 tí
 | 11 | Toán 11 — quan hệ song song, thiết diện | `TC_HBH_7` (ghi rõ là **liên hệ** hình học không gian) |
 | 12 | Toán 12 — tọa độ không gian, tích có hướng | `TC_HBH_8` ($S = \lvert\overrightarrow{AB} \times \overrightarrow{AD}\rvert$), `TC_HCN_5` |
 
+**Đợt 3 (16/10) — đối chiếu Toán 8, tập một.** `docs/geoquad-doi-chieu-toan8-tap1.md` đối
+chiếu Chương III (Bài 10-14) với seed, phát hiện SGK có một nhận xét riêng chưa có trong thư
+viện: *"Trong hình bình hành, hai góc kề một cạnh bất kì bù nhau"* (Bài 12, mục 1, Nhận xét
+sau Định lí 1, tr.58) → thêm `TC_HBH_9` (lớp 8). Cùng lúc sửa nội dung `TC_HV_3` (xem dưới).
+
 **Chỉ thêm `TinhChat`, không thêm `CongThuc` và không thêm `KhaiNiem`:**
 công thức mới sẽ xuất hiện trong dropdown của Máy tính hình học (US-15) mà lớp
 `MayTinhHinhHoc` chưa biết tính — chính lỗi đã gặp với đường trung bình hình thang; còn
@@ -894,8 +939,8 @@ MATCH (n)-[:THUOC_LOP]->(l:Lop)
 WHERE ((n:KhaiNiem AND n.loai = 'HINH') OR n:TinhChat OR n:DauHieu OR n:CongThuc)
   AND n.trangThai = 'DA_RA_SOAT'
 RETURN l.so AS lop, count(n) AS so ORDER BY lop;
--- 1:2  2:1  3:6  4:6  5:3  6:1  7:2  8:43  9:6  10:2  11:1  12:2
--- cấp 1: 18   cấp 2: 52   cấp 3: 5
+-- 1:2  2:1  3:6  4:6  5:3  6:1  7:2  8:44  9:6  10:2  11:1  12:2
+-- cấp 1: 18   cấp 2: 53   cấp 3: 5
 ```
 
 AC của US-03 ghi *"đủ 14 điều kiện, 20 dấu hiệu, 12 tính chất, 12 công thức"* — hiểu chữ
@@ -904,10 +949,10 @@ Mọi mục mới có `nguon` kết thúc bằng **"(bổ sung ngoài Phụ lụ
 
 ```cypher
 MATCH (n) WHERE n.nguon ENDS WITH '(bổ sung ngoài Phụ lục B)'
-RETURN labels(n) AS nhan, count(n) AS so;        -- TinhChat 22, CongThuc 2
+RETURN labels(n) AS nhan, count(n) AS so;        -- TinhChat 23, CongThuc 2
 ```
 
-**8 tính chất mới** (`10-kienthuc-A.cypher`), tất cả lớp 8:
+**9 tính chất ở lớp 8** (`10-kienthuc-A.cypher`):
 
 | ma | Hình | Nội dung |
 |---|---|---|
@@ -918,10 +963,13 @@ RETURN labels(n) AS nhan, count(n) AS so;        -- TinhChat 22, CongThuc 2
 | TC_HCN_3 | Hình chữ nhật | Hai trục đối xứng + một tâm đối xứng |
 | TC_THOI_3 | Hình thoi | Hai trục đối xứng là hai đường chéo + một tâm đối xứng |
 | TC_HV_2 | Hình vuông | Bốn trục đối xứng + một tâm đối xứng |
-| TC_HV_3 | Hình vuông | Hai đường chéo bằng nhau, vuông góc và là phân giác các góc |
+| TC_HV_3 | Hình vuông | Hai đường chéo bằng nhau, vuông góc, cắt nhau tại trung điểm của mỗi đường và là phân giác các góc |
+| TC_HBH_9 | Hình bình hành | Hai góc kề một cạnh bất kì bù nhau (16/10, SGK Toán 8 tập một, Bài 12) |
 
 `TC_HV_1` của Phụ lục B (*"Hình vuông có tất cả tính chất của hình chữ nhật và của hình
-thoi"*) **giữ nguyên không sửa**; `TC_HV_3` phát biểu cụ thể bổ sung cho nó.
+thoi"*) **giữ nguyên không sửa**; `TC_HV_3` phát biểu cụ thể bổ sung cho nó. `TC_HV_3` sửa
+16/10 vì thiếu vế "cắt nhau tại trung điểm của mỗi đường" mà SGK Toán 8 tập một nêu đủ ở
+Định lí 3, Bài 14 (xem `docs/geoquad-doi-chieu-toan8-tap1.md` mục B2 #6).
 
 **2 công thức mới**:
 
