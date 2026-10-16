@@ -4,20 +4,11 @@ namespace GeoQuad.Web.Areas.KienThuc.Models;
 public sealed record KhaiNiemChiTiet(
     string Ma, string Ten, string Loai, string DinhNghia, string? GhiChuTieuHoc);
 
-public sealed record MucTinhChat(string Ma, string NoiDung, int Lop)
-{
-    public bool NangCao { get; init; }
-}
+public sealed record MucTinhChat(string Ma, string NoiDung, int Lop);
 
-public sealed record MucCongThuc(string Ma, string Ten, string? BieuThuc, int Lop)
-{
-    public bool NangCao { get; init; }
-}
+public sealed record MucCongThuc(string Ma, string Ten, string? BieuThuc, int Lop);
 
-public sealed record MucDauHieu(string Ma, string NoiDung, int Lop)
-{
-    public bool NangCao { get; init; }
-}
+public sealed record MucDauHieu(string Ma, string NoiDung, int Lop);
 
 /// <summary>Liên kết "tổng quát hơn" / "đặc biệt hơn" (BR-11).</summary>
 public sealed record LienKetKhaiNiem(string Ma, string Ten);
@@ -52,16 +43,12 @@ public sealed class ChiTietViewModel
     public string? Svg { get; init; }
 
     public int LopHocSinh { get; init; }
-    public int LopHienThi { get; init; }
     public bool DaDangNhap { get; init; }
 
     /// <summary>Khách vừa bấm "Em đã hiểu" nên cần mời đăng nhập (BR-09).</summary>
     public bool MoiDangNhap { get; init; }
 
     public bool LaCap1 => LopHocSinh <= 5;
-
-    /// <summary>Bản thân khái niệm này vượt lớp của học sinh (quy ước 2.7).</summary>
-    public bool NangCao { get; init; }
 
     /// <summary>Ghi chú tiểu học chỉ hiện với học sinh cấp 1 (BR-11).</summary>
     public bool HienGhiChuTieuHoc

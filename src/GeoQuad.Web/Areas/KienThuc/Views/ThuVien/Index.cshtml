@@ -24,12 +24,7 @@
 
     <h1 class="h2">Thư viện kiến thức</h1>
     <p class="gq-ngu-canh-lop">
-        Đang hiện nội dung <strong>tới lớp @Model.LopHienThi</strong>.
-        @if (Model.XemNangCao)
-        {
-            <span>Có cả nội dung trên lớp @Model.LopHocSinh, mang nhãn
-            <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>.</span>
-        }
+        Đang hiện nội dung <strong>từ lớp 1 tới lớp @Model.LopHocSinh</strong>.
     </p>
 
     @* ---- Tab loại nội dung (SCR-04) ---- *@
@@ -61,9 +56,9 @@
                 {
                     @* Cấp nằm trên lớp đang xem thì nói rõ ngay trên nhãn, đừng để em chọn rồi
                        nhận một trang trống mà không hiểu vì sao (US-09). *@
-                    var trongTam = ThuVienQuyTac.CapTrongTam(cap, Model.LopHienThi);
+                    var trongTam = ThuVienQuyTac.CapTrongTam(cap, Model.LopHocSinh);
                     <option value="@cap" selected="@(Model.Cap == cap)">
-                        @ThuVienQuyTac.TenCap(cap)@(trongTam ? "" : " — trên lớp của em")
+                        @ThuVienQuyTac.TenCap(cap)@(trongTam ? "" : " - trên lớp của em")
                     </option>
                 }
             </select>
@@ -73,16 +68,15 @@
             <label class="form-label" for="gq-lop">Lớp</label>
             <select class="form-select gq-nut" id="gq-lop" name="lop">
                 <option value="">Tất cả lớp</option>
-                @for (var i = 1; i <= Model.LopHienThi; i++)
+                @for (var i = 1; i <= Model.LopHocSinh; i++)
                 {
                     <option value="@i" selected="@(Model.Lop == i)">Lớp @i</option>
                 }
             </select>
-            @if (Model.LopHienThi < QuyUoc.LopLonNhat)
+            @if (Model.LopHocSinh < QuyUoc.LopLonNhat)
             {
                 <div class="form-text">
-                    Danh sách dừng ở lớp @Model.LopHienThi vì đó là lớp em đang xem.
-                    Bật <strong>Xem trước kiến thức lớp trên</strong> ở thanh trên để thấy tới lớp 12.
+                    Danh sách dừng ở lớp @Model.LopHocSinh vì đó là lớp em đang học.
                 </div>
             }
         </div>
@@ -100,10 +94,10 @@
     @if (Model.DanhSach.Count == 0)
     {
         @* Nói đúng nguyên nhân. Hai nguyên nhân hay gặp nhất là chọn cấp hoặc lớp nằm trên
-           lớp đang xem — khi đó bộ lọc chắc chắn rỗng, và cái em cần là nút bật xem trước,
-           không phải lời khuyên chung chung (US-09). *@
-        var capQuaCao = Model.Cap is not null && !ThuVienQuyTac.CapTrongTam(Model.Cap, Model.LopHienThi);
-        var lopQuaCao = Model.Lop is not null && Model.Lop > Model.LopHienThi;
+           lớp của em — khi đó bộ lọc chắc chắn rỗng, và phải nói rõ lý do chứ không để
+           trang trống (US-09). *@
+        var capQuaCao = Model.Cap is not null && !ThuVienQuyTac.CapTrongTam(Model.Cap, Model.LopHocSinh);
+        var lopQuaCao = Model.Lop is not null && Model.Lop > Model.LopHocSinh;
         <div class="alert alert-secondary" role="status">
             @if (capQuaCao || lopQuaCao)
             {
@@ -116,25 +110,17 @@
                     {
                         @($"Lớp {Model.Lop} ")
                     }
-                    nằm trên lớp @Model.LopHienThi mà em đang xem, nên chưa có mục nào hiện ra.
+                    nằm trên lớp @Model.LopHocSinh của em, nên chưa có mục nào hiện ra.
                 </strong>
                 <div class="small mt-2">
-                    Em bật xem trước để đọc nội dung lớp trên — các mục đó sẽ mang nhãn
-                    <span class="badge bg-info text-dark">Nâng cao</span>.
+                    Em chọn một cấp hoặc một lớp từ lớp @Model.LopHocSinh trở xuống nhé.
                 </div>
-                <form method="post" action="/Home/NangCao" class="mt-2">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="tiepTuc" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
-                    <input type="hidden" name="bat" value="true" />
-                    <button class="btn btn-primary gq-nut" type="submit">▲ Xem trước kiến thức lớp trên</button>
-                </form>
             }
             else
             {
                 <strong>Chưa có nội dung nào khớp với bộ lọc của em.</strong>
                 <div class="small mt-1">
-                    Em thử bỏ bớt bộ lọc, hoặc bật "Xem trước kiến thức lớp trên" ở thanh trên
-                    để xem thêm nội dung của lớp lớn hơn.
+                    Em thử bỏ bớt bộ lọc, hoặc bấm nút <strong>Bỏ lọc</strong> để xem lại tất cả.
                 </div>
             }
         </div>
@@ -152,11 +138,6 @@
                             <div class="d-flex flex-wrap gap-1 mb-2">
                                 <span class="badge text-bg-secondary">@n.TenLoai</span>
                                 <span class="badge text-bg-light text-dark border">Lớp @n.Lop</span>
-                                @if (n.NangCao)
-                                {
-                                    <span class="badge text-bg-warning gq-nhan-nang-cao"
-                                          title="Nội dung của lớp trên lớp em đang học">Nâng cao</span>
-                                }
                                 @if (n.DaHoc)
                                 {
                                     <span class="badge text-bg-success" title="Em đã đánh dấu đã hiểu">✓ Đã học</span>

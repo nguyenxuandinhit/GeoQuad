@@ -28,24 +28,17 @@ public sealed class ThuVienService : IThuVienService
         var capLoc = ThuVienQuyTac.ChuanHoaCap(cap);
         var lopLoc = ThuVienQuyTac.ChuanHoaLop(lop);
 
-        var danhSach = await _repo.DuyetAsync(
-            _nguoiDung.LopHienThi, loaiLoc, capLoc, lopLoc, _nguoiDung.TaiKhoanId);
-
-        // Gắn nhãn "Nâng cao" cho nội dung vượt lớp thật của học sinh (quy ước 2.7).
         var lopHocSinh = _nguoiDung.Lop;
-        var coNhan = danhSach
-            .Select(n => n with { NangCao = ThuVienQuyTac.LaNangCao(n.Lop, lopHocSinh) })
-            .ToList();
+        var danhSach = await _repo.DuyetAsync(
+            lopHocSinh, loaiLoc, capLoc, lopLoc, _nguoiDung.TaiKhoanId);
 
         return new ThuVienViewModel
         {
-            DanhSach = coNhan,
+            DanhSach = danhSach,
             Loai = loaiLoc,
             Cap = capLoc,
             Lop = lopLoc,
-            LopHienThi = _nguoiDung.LopHienThi,
             LopHocSinh = lopHocSinh,
-            XemNangCao = _nguoiDung.XemNangCao,
             DaDangNhap = _nguoiDung.DaDangNhap
         };
     }

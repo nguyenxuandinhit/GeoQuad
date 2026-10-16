@@ -71,7 +71,7 @@ Phần seed được chia để cân độ khó: B có story chức năng khó n
 4. **Seed chạy lặp lại không sinh trùng**: `MERGE` theo khóa `ma` (với `Lop` là `so`) (NFR-08).
 5. **Seed không phụ thuộc thứ tự chạy giữa A, B, C**: khi cần tham chiếu nút của mảng khác, `MERGE` nút đó theo **nhãn gốc + `ma`** (ví dụ `MERGE (t:DinhLy {ma:'TC_HBH_2'})`), không gắn nhãn phụ, không gán thuộc tính. Mảng sở hữu nút đó `MERGE` cùng khóa rồi `SET` nhãn phụ và thuộc tính. Nút "tạm" chưa có `trangThai` nên các truy vấn hiển thị (lọc `trangThai = 'DA_RA_SOAT'`) tự bỏ qua.
 6. Mọi nút nội dung do seed tạo có `nguon` (ví dụ `'CT GDPT 2018 – Toán 8'`) và `trangThai: 'DA_RA_SOAT'` (BR-13; nhóm đã rà soát theo Phụ lục B của SRS).
-7. **Lọc theo lớp (BR-04)**: truy vấn nhận `$lop = ICurrentUser.LopHienThi` (bằng lớp của người dùng; bằng 12 khi bật "Xem trước kiến thức nâng cao"). Nội dung có lớp lớn hơn `ICurrentUser.Lop` phải hiển thị nhãn **"Nâng cao"**.
+7. **Lọc theo lớp (BR-04)**: truy vấn nhận `$lop = ICurrentUser.Lop`. Học sinh chỉ thấy nội dung từ lớp 1 tới lớp của mình; nội dung lớp trên bị ẩn hoàn toàn, không có chế độ xem trước.
 8. **Khách (BR-09)**: không ghi bất kỳ dữ liệu học tập nào (`DA_HOC`, `DA_LAM`); nút cần đăng nhập thì mời đăng nhập.
 9. Logic thuần (chấm điểm, tính toán, kiểm tra hợp lệ, thoát ký tự, vẽ SVG…) viết trong lớp không phụ thuộc Neo4j để unit test được.
 10. Giao diện (NFR-03, NFR-04, NFR-11): chữ nội dung ≥ 16px, nút ≥ 44×44px (cấp 1 ≥ 48×48px), đáp ứng từ chiều rộng 360px, không chỉ dùng màu để truyền thông tin, SVG có `<title>`; công thức bằng KaTeX (NFR-12); thông báo lỗi tiếng Việt nói rõ cách sửa.
@@ -145,7 +145,7 @@ Route: `{area:exists}/{controller=Home}/{action=Index}/{id?}` và `{controller=H
 |---|---|---|
 | `/` | 0 | SCR-01 Trang chủ |
 | `/TaiKhoan/DangKy`, `/TaiKhoan/DangNhap`, `/TaiKhoan/DangXuat` | 0 | SCR-02, SCR-03 |
-| `/Home/ChonLop` (POST `lop`), `/Home/NangCao` (POST `bat`) | 0 | Bộ chọn lớp của khách; công tắc "Xem trước kiến thức nâng cao" |
+| `/Home/ChonLop` (POST `lop`) | 0 | Bộ chọn lớp của khách |
 | `/KienThuc/ThuVien?loai=&cap=&lop=` | A | SCR-04 Thư viện kiến thức |
 | `/KienThuc/ThuVien/ChiTiet/{ma}` | A | SCR-05 Chi tiết khái niệm |
 | `/KienThuc/ThuVien/DaHieu/{ma}` (POST) | A | "Em đã hiểu" |
@@ -233,7 +233,7 @@ Trang chưa làm xong vẫn trả về trang "Đang xây dựng" (PHẦN 0 tạo
   Dùng `session.ExecuteReadAsync` / `ExecuteWriteAsync`. Thêm `GraphDbErrors.IsUniqueViolation(Exception)` nhận diện mã `Neo.ClientError.Schema.ConstraintValidationFailed`.
 - `scripts/seed.ps1`, `scripts/seed.sh`: chạy lần lượt mọi file `neo4j/seed/*.cypher` theo thứ tự tên bằng `docker compose exec -T neo4j cypher-shell -u neo4j -p geoquad123 -f /seed/<file>`; in tên file; dừng nếu lỗi; tham số tùy chọn `-Dev` / `--dev` để chạy thêm `/dev-seed/*.cypher`.
 - Trang chủ (SCR-01): ô tìm kiếm lớn (GET `/KienThuc/ThuVien/TimKiem?q=`), thẻ lối tắt (Bản đồ kiến thức, Nên dùng định lý nào?, Hình học quanh ta, Bài tập, Máy tính hình học), lời chào học sinh, dòng nhỏ "Kết nối Neo4j: OK – N nút".
-- `_Layout.cshtml`: thanh điều hướng (Thư viện, Bản đồ, Máy tính, Nên dùng định lý nào?, Hình học quanh ta, Bài tập, Lộ trình, Tiến độ, Hồ sơ, Quản trị chỉ admin), bộ chọn lớp (khách), công tắc "Xem trước kiến thức nâng cao", nạp KaTeX auto-render cho `$...$` / `$$...$$`, `@RenderSection("Styles"/"Scripts", false)`.
+- `_Layout.cshtml`: thanh điều hướng (Thư viện, Bản đồ, Máy tính, Nên dùng định lý nào?, Hình học quanh ta, Bài tập, Lộ trình, Tiến độ, Hồ sơ, Quản trị chỉ admin), bộ chọn lớp (khách), nạp KaTeX auto-render cho `$...$` / `$$...$$`, `@RenderSection("Styles"/"Scripts", false)`.
 - Tạo sẵn 4 Area, controller và view "Đang xây dựng" cho mọi URL ở mục 3.2, `_ViewStart.cshtml` trỏ layout chung, `<Ten>Module.cs` rỗng đã được gọi trong `Program.cs`; 3 file `docs/cypher/*.md` có tiêu đề và mục "Đề xuất thay đổi chung"; mỗi thư mục test có một test mẫu chạy được.
 
 **AC:** `docker compose up` khởi động đủ Neo4j và web; trang chủ truy vấn được Neo4j.
@@ -291,8 +291,7 @@ Trùng tên (lỗi ràng buộc) → "Tên đăng nhập đã tồn tại". Đă
       string? BietDanh { get; }
       bool LaQuanTri { get; }
       int Lop { get; }              // học sinh: claim "lop"; khách: cookie gq_lop; mặc định 8
-      bool XemNangCao { get; }      // cookie gq_nangcao
-      int LopHienThi { get; }       // XemNangCao ? 12 : Lop — dùng làm tham số $lop
+                                    // cũng là tham số $lop khi lọc nội dung (BR-04)
   }
   ```
 - Khách dùng được tra cứu, máy tính, gợi ý, tình huống, bài tập; bộ chọn lớp lưu cookie `gq_lop`. Partial view dùng chung `_MoiDangNhap.cshtml` ("Đăng nhập để lưu tiến độ của em") để các phần hiển thị khi khách bấm chức năng cần lưu.
@@ -332,7 +331,7 @@ Mỗi bài tập: `THUOC_LOP`, ≥ 1 `LIEN_QUAN_DEN` (khái niệm của PHẦN 
 ## 7. PHẦN A – Tra cứu & trực quan (Thành viên A, 23 điểm)
 
 ### US-09 · Duyệt thư viện kiến thức (2 điểm) – FR-10, UC-03, SCR-04
-`/KienThuc/ThuVien`: tab loại nội dung (Hình · Tính chất · Dấu hiệu · Công thức), lọc cấp và lớp, thẻ nội dung có nhãn lớp, nhãn "Nâng cao" (quy ước 2.7), huy hiệu "Đã học" với hình học sinh đã đánh dấu. Mỗi thẻ liên kết tới chi tiết của hình liên quan.
+`/KienThuc/ThuVien`: tab loại nội dung (Hình · Tính chất · Dấu hiệu · Công thức), lọc cấp và lớp, thẻ nội dung có nhãn lớp, huy hiệu "Đã học" với hình học sinh đã đánh dấu. Mỗi thẻ liên kết tới chi tiết của hình liên quan.
 ```cypher
 MATCH (n)-[:THUOC_LOP]->(l:Lop)-[:THUOC_CAP]->(cap:CapHoc)
 WHERE ((n:KhaiNiem AND n.loai = 'HINH') OR n:TinhChat OR n:DauHieu OR n:CongThuc)
@@ -351,7 +350,7 @@ RETURN n.ma AS ma, coalesce(n.ten, n.noiDung) AS tieuDe, n.bieuThuc AS bieuThuc,
        EXISTS { MATCH (:TaiKhoan {id: $tk})-[:DA_HOC]->(n) } AS daHoc
 ORDER BY lop, loai, tieuDe
 ```
-**AC:** học sinh lớp 4 không thấy nội dung lớp 6 (Hình thang cân) trừ khi bật xem trước nâng cao; bật lên thì thấy kèm nhãn "Nâng cao".
+**AC:** học sinh lớp 4 không thấy nội dung lớp 6 (Hình thang cân); chọn cấp hoặc lớp nằm trên lớp 4 thì trang nói rõ lý do thay vì để trống.
 
 ### US-10 · Chi tiết khái niệm và "Em đã hiểu" (5 điểm) – FR-11, UC-03, SCR-05
 `/KienThuc/ThuVien/ChiTiet/{ma}`: tab Định nghĩa · Tính chất · Dấu hiệu nhận biết · Công thức (KaTeX) · Ví dụ thực tế · Bài tập; hình SVG minh họa cho 7 hình; ghi chú tiểu học (BR-11) với học sinh cấp 1; liên kết "tổng quát hơn" / "đặc biệt hơn"; tab rỗng thì ẩn; mã không tồn tại → trang 404 thân thiện; nút "Em đã hiểu" (khách bấm → `_MoiDangNhap`).
@@ -502,7 +501,7 @@ WHERE all(x IN d WHERE x.trangThai = 'DA_RA_SOAT')
 RETURN [x IN d | x.noiDung] AS cacBuoc, size(d) AS soBuoc
 ORDER BY soBuoc LIMIT 3
 ```
-(`d` là danh sách các dấu hiệu trên đường đi. Ví dụ tứ giác → hình vuông: "Tứ giác có ba góc vuông là hình chữ nhật" rồi "Hình chữ nhật có hai cạnh kề bằng nhau là hình vuông". Nếu vẫn không có thì "Chưa có dấu hiệu phù hợp, em thử xem Bản đồ kiến thức".) Học sinh lớp < 8 thấy "Dấu hiệu nhận biết được học ở lớp 8" và gợi ý bật "Xem trước kiến thức nâng cao".
+(`d` là danh sách các dấu hiệu trên đường đi. Ví dụ tứ giác → hình vuông: "Tứ giác có ba góc vuông là hình chữ nhật" rồi "Hình chữ nhật có hai cạnh kề bằng nhau là hình vuông". Nếu vẫn không có thì "Chưa có dấu hiệu phù hợp, em thử xem Bản đồ kiến thức".) Học sinh lớp < 8 thấy "Dấu hiệu nhận biết được học từ lớp 8…" kèm gợi ý sang Bản đồ kiến thức hoặc Thư viện kiến thức.
 
 **AC:** hình bình hành + "Có một góc vuông" + đích hình chữ nhật → `DH_HCN_2` đứng đầu, thiếu 0; hình bình hành, không tích gì, đích hình thoi → 4 dấu hiệu (`DH_THOI_1..4`), mỗi cái thiếu 1 điều kiện (`DH_THOI_1` có hình nền là Tứ giác, vẫn hợp lệ theo BR-07); tứ giác + "Các cạnh đối bằng nhau" → hình bình hành: `DH_HBH_2` thiếu 0; hình vuông → hình chữ nhật: thông báo suy ra trực tiếp. Unit test cho lớp dựng mô hình kết quả (sắp xếp, ✓/✗, thông báo 5a/5b).
 
@@ -633,7 +632,7 @@ MATCH (tk:TaiKhoan {id: $tk}) DETACH DELETE tk   // xóa tài khoản và mọi 
 **AC:** đổi lớp 7 → 8 thì Thư viện hiển thị nội dung lớp 8 mặc định; đổi mật khẩu yêu cầu mật khẩu cũ đúng; xóa tài khoản thì đăng xuất và không còn nút `TaiKhoan` đó.
 
 ### US-19 · Ngân hàng bài tập (2 điểm) – FR-50, SCR-13
-`/HocTap/BaiTap`: bộ lọc cấp, lớp, dạng, độ khó, khái niệm (kết hợp được); cột "Đã làm / Đã đúng" cho học sinh; nhãn "Nâng cao".
+`/HocTap/BaiTap`: bộ lọc cấp, lớp, dạng, độ khó, khái niệm (kết hợp được); cột "Đã làm / Đã đúng" cho học sinh.
 ```cypher
 MATCH (bt:BaiTap {hienThi: true})-[:THUOC_LOP]->(l:Lop)-[:THUOC_CAP]->(cap:CapHoc)
 WHERE l.so <= $lop

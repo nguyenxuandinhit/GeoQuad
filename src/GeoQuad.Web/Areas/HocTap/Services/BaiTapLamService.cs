@@ -9,9 +9,9 @@ public sealed class BaiTapLamService(ILamBaiRepository repo, ICurrentUser user,
 {
     public async Task<(BaiTapChiTiet? Bai, LanLamToken? Token, bool CoLoiGiaiMau)> MoAsync(string ma, string? guestNonce)
     {
-        var bai = await repo.ChiTietAsync(ma, user.LopHienThi);
+        var bai = await repo.ChiTietAsync(ma, user.Lop);
         if (bai is null || bai.Loai is not ("TRAC_NGHIEM" or "DAP_AN_SO" or "CHUNG_MINH")) return (null, null, false);
-        var proof = bai.MaChungMinh is not null && await repo.LaChungMinhCongKhaiAsync(bai.MaChungMinh, user.LopHienThi);
+        var proof = bai.MaChungMinh is not null && await repo.LaChungMinhCongKhaiAsync(bai.MaChungMinh, user.Lop);
         return (bai, tokens.Tao(ma, user.TaiKhoanId, guestNonce), proof && !string.IsNullOrWhiteSpace(bai.LoiGiaiMau));
     }
 
@@ -52,7 +52,7 @@ public sealed class BaiTapLamService(ILamBaiRepository repo, ICurrentUser user,
         if (user.TaiKhoanId is null) return null;
         var saved = await repo.KetQuaAsync(user.TaiKhoanId, maLan);
         if (saved is null) return null;
-        var bai = await repo.ChiTietAsync(saved.MaBaiTap, user.LopHienThi);
+        var bai = await repo.ChiTietAsync(saved.MaBaiTap, user.Lop);
         return bai is null ? null : await TaoKetQuaAsync(bai, saved.DapAn, saved.DapAnDung, saved.Dung, laKhach: false);
     }
 
@@ -60,13 +60,13 @@ public sealed class BaiTapLamService(ILamBaiRepository repo, ICurrentUser user,
         string answer, bool dung)
     {
         if (string.IsNullOrEmpty(nonce) || !tokens.ThuGiaiMa(token, ma, "guest:" + nonce, out _)) return null;
-        var bai = await repo.ChiTietAsync(ma, user.LopHienThi);
+        var bai = await repo.ChiTietAsync(ma, user.Lop);
         if (bai is null || bai.Loai == "CHUNG_MINH") return null;
         var key = ChamBai.DapAnDungDangChuoi(bai.Loai, bai.DapAnDung, bai.DapAnSo);
         return await TaoKetQuaAsync(bai, answer, key, dung, laKhach: true);
     }
 
-    public Task<string?> BaiTiepTheoKhachAsync(string ma) => repo.BaiTiepTheoKhachAsync(ma, user.LopHienThi);
+    public Task<string?> BaiTiepTheoKhachAsync(string ma) => repo.BaiTiepTheoKhachAsync(ma, user.Lop);
 
     public bool TryReadToken(string token, string? guestNonce, out LanLamClaim claim)
     {
@@ -84,7 +84,7 @@ public sealed class BaiTapLamService(ILamBaiRepository repo, ICurrentUser user,
     {
         var (bai, _, _) = await MoBaiKhongTaoTokenAsync(ma);
         if (bai is null || bai.Loai != "CHUNG_MINH" || string.IsNullOrWhiteSpace(bai.LoiGiaiMau) || bai.MaChungMinh is null) return null;
-        if (!await repo.LaChungMinhCongKhaiAsync(bai.MaChungMinh, user.LopHienThi)) return null;
+        if (!await repo.LaChungMinhCongKhaiAsync(bai.MaChungMinh, user.Lop)) return null;
         return new(bai.Ma, bai.De, "", "", "", false, bai.LoiGiaiMau, bai.MaChungMinh);
     }
 
@@ -95,7 +95,7 @@ public sealed class BaiTapLamService(ILamBaiRepository repo, ICurrentUser user,
     private async Task<KetQuaLamBaiViewModel> TaoKetQuaAsync(BaiTapChiTiet bai, string answer, string key,
         bool correct, bool laKhach)
     {
-        var lienQuan = await repo.KienThucLienQuanAsync(bai.Ma, user.LopHienThi);
+        var lienQuan = await repo.KienThucLienQuanAsync(bai.Ma, user.Lop);
         return new(bai.Ma, bai.De, answer, key, bai.DonVi, correct, bai.GiaiThich, bai.MaChungMinh,
             LaKhach: laKhach, LopHocSinh: user.Lop)
         {

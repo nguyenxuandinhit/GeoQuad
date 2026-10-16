@@ -1,13 +1,15 @@
 @model GeoQuad.Web.Areas.ApDung.Models.GoiYViewModel
 @{ ViewData["Title"] = "Nên dùng định lý nào?"; }
 <style>
-    .goiy input,.goiy select,.goiy button,.goiy .btn { min-height:48px; font-size:16px }
+    .goiy input:not([type="checkbox"]),.goiy select,.goiy button,.goiy .btn { min-height:48px; font-size:16px }
     .goiy label { display:block; padding:.5rem 0; overflow-wrap:anywhere }
+    .goiy .goiy-dieu-kien { display:flex; align-items:flex-start; gap:.65rem; min-height:48px; line-height:1.5; cursor:pointer }
+    .goiy-dieu-kien input[type="checkbox"] { flex:0 0 20px; width:20px; height:20px; min-height:20px; margin:2px 0 0; accent-color:var(--gq-nau) }
+    .goiy-dieu-kien span { min-width:0 }
     .goiy article { padding:1rem; border:1px solid #ccd; border-radius:.5rem; margin:1rem 0; overflow-wrap:anywhere }
 </style>
 <div class="goiy">
 <h1>Nên dùng định lý nào?</h1>
-@if (Model.NangCao) { <p class="badge bg-info text-dark">Nâng cao</p> }
 <form method="get">
     <label for="nen">1. Tứ giác ABCD đã biết là</label>
     <select id="nen" name="nen" class="form-select">
@@ -15,7 +17,7 @@
     </select>
     <fieldset><legend class="fs-5 mt-3">2. Điều kiện đã có</legend>
         @foreach (var d in Model.Catalog.DieuKien) {
-            <label><input type="checkbox" name="co" value="@d.Ma" checked="@Model.Request.Co.Contains(d.Ma)" /> @d.NoiDung</label>
+            <label class="goiy-dieu-kien"><input type="checkbox" name="co" value="@d.Ma" checked="@Model.Request.Co.Contains(d.Ma)" /><span>@d.NoiDung</span></label>
         }
     </fieldset>
     <label for="dich">3. Cần chứng minh ABCD là</label>

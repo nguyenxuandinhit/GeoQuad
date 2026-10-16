@@ -32,8 +32,6 @@ public class TimKiemServiceTests
         public string? BietDanh { get; init; }
         public bool LaQuanTri { get; init; }
         public int Lop { get; init; } = 8;
-        public bool XemNangCao { get; init; }
-        public int LopHienThi => XemNangCao ? 12 : Lop;
     }
 
     private static KetQuaTimKiem Muc(string ma, string nhan, int lop = 8, double diem = 1.0)
@@ -139,31 +137,16 @@ public class TimKiemServiceTests
     }
 
     [Fact]
-    public async Task TruyenLopHienThiXuongTruyVan()
+    public async Task TruyenLopCuaHocSinhXuongTruyVan()
     {
+        // BR-04: chỉ tìm trong nội dung tới lớp của em, lọc ngay trong Cypher.
         var repo = new RepoGia(_ => []);
-        var service = new TimKiemService(repo, new NguoiDungGia { Lop = 4, XemNangCao = true });
+        var service = new TimKiemService(repo, new NguoiDungGia { Lop = 4 });
 
-        await service.TimAsync("thoi");
+        var vm = await service.TimAsync("thoi");
 
-        Assert.Equal(12, repo.LopNhan);
-    }
-
-    [Fact]
-    public async Task GanNhanNangCaoTheoLopThat()
-    {
-        var repo = new RepoGia(_ =>
-        [
-            Muc("HINH_THOI", "KhaiNiem", lop: 4),
-            Muc("HINH_THANG_CAN", "KhaiNiem", lop: 6)
-        ]);
-        var service = new TimKiemService(repo, new NguoiDungGia { Lop = 4, XemNangCao = true });
-
-        var vm = await service.TimAsync("hinh");
-        var muc = vm.TheoNhom[0].Muc;
-
-        Assert.False(muc.Single(m => m.Ma == "HINH_THOI").NangCao);
-        Assert.True(muc.Single(m => m.Ma == "HINH_THANG_CAN").NangCao);
+        Assert.Equal(4, repo.LopNhan);
+        Assert.Equal(4, vm.LopHocSinh);
     }
 
     [Fact]

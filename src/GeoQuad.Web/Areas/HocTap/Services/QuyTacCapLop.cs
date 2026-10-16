@@ -10,11 +10,11 @@ public static class QuyTacCapLop
         ["CAP_3"] = (10, 12, "Cấp 3"),
     };
 
-    /// <summary>Lớp thuộc cấp (hoặc mọi lớp khi chưa chọn cấp), không vượt lớp hiển thị.</summary>
-    public static IReadOnlyList<int> CacLop(string? cap, int lopHienThi)
+    /// <summary>Lớp thuộc cấp (hoặc mọi lớp khi chưa chọn cấp), không vượt lớp của học sinh.</summary>
+    public static IReadOnlyList<int> CacLop(string? cap, int lopHocSinh)
     {
         var (tu, den) = cap is not null && Cap.TryGetValue(cap, out var c) ? (c.Tu, c.Den) : (1, 12);
-        return Enumerable.Range(tu, Math.Max(0, Math.Min(den, lopHienThi) - tu + 1)).ToArray();
+        return Enumerable.Range(tu, Math.Max(0, Math.Min(den, lopHocSinh) - tu + 1)).ToArray();
     }
 
     public static bool LopThuocCap(int lop, string cap) =>

@@ -16,24 +16,23 @@ public sealed class BaiTapService(IBaiTapRepository repo, ICurrentUser user)
         var loc = new BaiTapLoc(
             ChuanHoa(boLoc.Cap), boLoc.Lop, ChuanHoa(boLoc.Loai), boLoc.DoKho,
             ChuanHoa(boLoc.KhaiNiem));
-        var khaiNiem = await repo.KhaiNiemAsync(user.LopHienThi);
-        var loi = KiemTra(loc, user.LopHienThi);
+        var khaiNiem = await repo.KhaiNiemAsync(user.Lop);
+        var loi = KiemTra(loc, user.Lop);
         var baiTap = loi is null
-            ? await repo.LocAsync(user.LopHienThi, loc, user.TaiKhoanId)
+            ? await repo.LocAsync(user.Lop, loc, user.TaiKhoanId)
             : [];
-        return new BaiTapDanhSach(loc, baiTap, khaiNiem, user.Lop,
-            user.LopHienThi, user.DaDangNhap, loi);
+        return new BaiTapDanhSach(loc, baiTap, khaiNiem, user.Lop, user.DaDangNhap, loi);
     }
 
     private static string? ChuanHoa(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant();
 
-    private static string? KiemTra(BaiTapLoc loc, int lopHienThi)
+    private static string? KiemTra(BaiTapLoc loc, int lopNguoiDung)
     {
         if (loc.Cap is not null && !CapHopLe.Contains(loc.Cap))
             return "Cấp học không hợp lệ.";
-        if (loc.Lop is < 1 or > 12 || loc.Lop > lopHienThi)
-            return "Lớp lọc không phù hợp với lớp đang xem.";
+        if (loc.Lop is < 1 or > 12 || loc.Lop > lopNguoiDung)
+            return $"Em chỉ xem được bài tập từ lớp 1 tới lớp {lopNguoiDung}. Em chọn lại lớp nhỏ hơn nhé.";
         if (loc.Cap is not null && loc.Lop is { } lop && !QuyTacCapLop.LopThuocCap(lop, loc.Cap))
             return $"Lớp {lop} không thuộc {QuyTacCapLop.TenCap(loc.Cap)}. Em chọn lại lớp hoặc cấp học nhé.";
         if (loc.Loai is not null && !LoaiHopLe.Contains(loc.Loai))

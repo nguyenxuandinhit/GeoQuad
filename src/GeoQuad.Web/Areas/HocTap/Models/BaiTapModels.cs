@@ -24,10 +24,9 @@ public sealed record BaiTapDanhSach(
     IReadOnlyList<BaiTapTomTat> BaiTap,
     IReadOnlyList<KhaiNiemLoc> KhaiNiem,
     int LopNguoiDung,
-    int LopHienThi,
     bool DaDangNhap,
     string? Loi = null)
 {
-    /// <summary>Các lớp hiện trong ô "Lớp": thuộc cấp đang chọn và không vượt lớp hiển thị.</summary>
-    public IReadOnlyList<int> LopChon => Services.QuyTacCapLop.CacLop(BoLoc.Cap, LopHienThi);
+    /// <summary>Các lớp hiện trong ô "Lớp": thuộc cấp đang chọn và không vượt lớp của em.</summary>
+    public IReadOnlyList<int> LopChon => Services.QuyTacCapLop.CacLop(BoLoc.Cap, LopNguoiDung);
 }

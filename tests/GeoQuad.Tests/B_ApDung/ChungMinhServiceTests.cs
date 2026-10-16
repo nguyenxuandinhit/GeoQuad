@@ -32,13 +32,13 @@ public sealed class ChungMinhServiceTests
     }
 
     [Fact]
-    public async Task AdvancedGradeIsForwardedAndInvalidCodeDoesNotReadRepository()
+    public async Task GradeIsForwardedAndInvalidCodeDoesNotReadRepository()
     {
         var repo=new ProofFake(Enumerable.Range(1,3).Select(i => new BuocItem(i,"Bước",[new("DL_NEN_1","Căn cứ",null)])).ToArray());
-        var service=new ChungMinhService(repo,new CurrentUserGia(3,true));
+        var service=new ChungMinhService(repo,new CurrentUserGia(3));
         Assert.Null(await service.XemAsync(new string('A',65))); Assert.Equal(0,repo.Reads);
         var model=await service.XemAsync("CM-01");
-        Assert.True(model!.NangCao); Assert.Equal(12,repo.Grade);
+        Assert.NotNull(model); Assert.Equal(3,repo.Grade);
     }
 
     private sealed class ProofFake(IReadOnlyList<BuocItem> steps) : IChungMinhRepository

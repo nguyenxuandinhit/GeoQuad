@@ -17,7 +17,6 @@ public sealed record BanDoCanh(string Tu, string Den);
 public sealed record BanDoDuLieu(
     IReadOnlyList<BanDoNut> Nut,
     IReadOnlyList<BanDoCanh> Canh,
-    int LopHienThi,
     int LopHocSinh);
 
 /// <summary>Kết quả ô "Vì sao … là …?" (US-12).</summary>
@@ -34,7 +33,7 @@ public sealed class BanDoViewModel
 {
     public required BanDoDuLieu DuLieu { get; init; }
 
-    /// <summary>Lớp đang lọc (null = tới lớp đang hiển thị của người dùng).</summary>
+    /// <summary>Lớp đang lọc (null = tới lớp của học sinh).</summary>
     public int? LopLoc { get; init; }
 
     public bool DaDangNhap { get; init; }

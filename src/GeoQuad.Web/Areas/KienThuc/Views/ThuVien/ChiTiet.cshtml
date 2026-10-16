@@ -24,11 +24,6 @@
     <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
         <h1 class="h2 mb-0">@k.Ten</h1>
         <span class="badge text-bg-light text-dark border">Lớp @Model.ChiTiet.Lop</span>
-        @if (Model.NangCao)
-        {
-            <span class="badge text-bg-warning gq-nhan-nang-cao"
-                  title="Nội dung của lớp trên lớp em đang học">Nâng cao</span>
-        }
         @if (Model.ChiTiet.DaHoc)
         {
             <span class="badge text-bg-success">✓ Em đã hiểu</span>
@@ -142,10 +137,6 @@
                                 <li class="list-group-item">
                                     @t.NoiDung
                                     <span class="badge text-bg-light text-dark border ms-1">Lớp @t.Lop</span>
-                                    @if (t.NangCao)
-                                    {
-                                        <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>
-                                    }
                                 </li>
                             }
                         </ul>
@@ -162,10 +153,6 @@
                                 <li class="list-group-item">
                                     @d.NoiDung
                                     <span class="badge text-bg-light text-dark border ms-1">Lớp @d.Lop</span>
-                                    @if (d.NangCao)
-                                    {
-                                        <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>
-                                    }
                                 </li>
                             }
                         </ul>
@@ -186,10 +173,6 @@
                                 <dt>
                                     @c.Ten
                                     <span class="badge text-bg-light text-dark border">Lớp @c.Lop</span>
-                                    @if (c.NangCao)
-                                    {
-                                        <span class="badge text-bg-warning gq-nhan-nang-cao">Nâng cao</span>
-                                    }
                                 </dt>
                                 <dd>$$@c.BieuThuc$$</dd>
                             }
@@ -213,7 +196,7 @@
                                 var t = Model.ChiTiet.TongQuatHon[i];
                                 <a href="/KienThuc/ThuVien/ChiTiet/@t.Ma">@t.Ten.ToLower()</a>@(i < Model.ChiTiet.TongQuatHon.Count - 1 ? ", " : "")
                             }
-                            — vì nó là một trường hợp đặc biệt.
+                            - vì nó là một trường hợp đặc biệt.
                             <a href="/KienThuc/MayTinh?hinh=@k.Ma">Máy tính hình học</a>
                             tự mượn công thức đó và ghi rõ mượn của hình nào.
                         </div>

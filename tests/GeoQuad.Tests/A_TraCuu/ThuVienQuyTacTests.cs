@@ -2,7 +2,7 @@ using GeoQuad.Web.Areas.KienThuc.Services;
 
 namespace GeoQuad.Tests.A_TraCuu;
 
-/// <summary>US-09: chuẩn hoá bộ lọc và nhãn "Nâng cao" (FR-10, BR-04).</summary>
+/// <summary>US-09: chuẩn hoá bộ lọc theo loại, cấp và lớp (FR-10, BR-04).</summary>
 public class ThuVienQuyTacTests
 {
     [Theory]
@@ -52,21 +52,6 @@ public class ThuVienQuyTacTests
     public void ChuanHoaLopBoGiaTriNgoaiKhoang(int? vao)
         => Assert.Null(ThuVienQuyTac.ChuanHoaLop(vao));
 
-    [Fact]
-    public void NoiDungVuotLopHocSinhThiLaNangCao()
-    {
-        // Học sinh lớp 4 bật xem trước: Hình thang cân (lớp 6) phải mang nhãn "Nâng cao".
-        Assert.True(ThuVienQuyTac.LaNangCao(lopNoiDung: 6, lopHocSinh: 4));
-        Assert.True(ThuVienQuyTac.LaNangCao(lopNoiDung: 8, lopHocSinh: 4));
-    }
-
-    [Fact]
-    public void NoiDungBangHoacDuoiLopHocSinhThiKhongPhaiNangCao()
-    {
-        Assert.False(ThuVienQuyTac.LaNangCao(lopNoiDung: 4, lopHocSinh: 4));
-        Assert.False(ThuVienQuyTac.LaNangCao(lopNoiDung: 3, lopHocSinh: 4));
-        Assert.False(ThuVienQuyTac.LaNangCao(lopNoiDung: 1, lopHocSinh: 12));
-    }
 
     [Theory]
     [InlineData(1, "CAP_1")]
@@ -113,12 +98,12 @@ public class ThuVienQuyTacTests
     // Lớp 6 là lớp đầu của cấp 2 nên vừa đủ với tới.
     [InlineData("CAP_2", 6, true)]
     [InlineData("CAP_3", 9, false)]
-    // Bật xem trước nâng cao thì lớp hiển thị là 12, với tới cả ba cấp.
+    // Học sinh lớp 12 với tới cả ba cấp.
     [InlineData("CAP_1", 12, true)]
     [InlineData("CAP_2", 12, true)]
     [InlineData("CAP_3", 12, true)]
-    public void CapTrongTamTheoLopDangXem(string cap, int lopHienThi, bool mong)
-        => Assert.Equal(mong, ThuVienQuyTac.CapTrongTam(cap, lopHienThi));
+    public void CapTrongTamTheoLopHocSinh(string cap, int lopHocSinh, bool mong)
+        => Assert.Equal(mong, ThuVienQuyTac.CapTrongTam(cap, lopHocSinh));
 
     [Fact]
     public void LopDauCuaCapLuonTrongTamCuaChinhNo()

@@ -1,76 +1,67 @@
+﻿@{
+    var duongDan = Context.Request.Path.Value ?? "/";
+    var laTrangChu = duongDan == "/" || duongDan.Equals("/Home", StringComparison.OrdinalIgnoreCase) || duongDan.Equals("/Home/Index", StringComparison.OrdinalIgnoreCase);
+}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#206957" />
     <title>@ViewData["Title"] – GeoQuad</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/katex/katex.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/goc-hoc-tap.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <a class="gq-bo-qua" href="#noi-dung">Bỏ qua, đến nội dung chính</a>
-
-    <header>
-        <nav class="navbar navbar-expand-lg gq-nav" aria-label="Điều hướng chính">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    <span class="gq-logo" aria-hidden="true">◇</span>
-                    <span>GeoQuad</span>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#gq-nav" aria-controls="gq-nav" aria-expanded="false"
-                        aria-label="Mở menu điều hướng">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="gq-nav">
-                    <ul class="navbar-nav gq-nav-chinh me-auto">
-                        <li class="nav-item"><a class="nav-link" href="/KienThuc/ThuVien">Thư viện</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/KienThuc/BanDo">Bản đồ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/KienThuc/MayTinh">Máy tính</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">Áp dụng</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/ApDung/GoiY">Nên dùng định lý nào?</a></li>
-                                <li><a class="dropdown-item" href="/ApDung/TinhHuong">Hình học quanh ta</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">Học tập</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/HocTap/BaiTap">Bài tập</a></li>
-                                <li><a class="dropdown-item" href="/HocTap/LoTrinh">Lộ trình học</a></li>
-                                <li><a class="dropdown-item" href="/HocTap/TienDo">Tiến độ của em</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="/HocTap/HoSo">Hồ sơ của em</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <partial name="_KhoiTaiKhoan" />
-                </div>
-            </div>
-        </nav>
-
-        @* Thanh ngữ cảnh: luôn cho thấy đang xem nội dung tới lớp nào. *@
-        <partial name="_BoChonLop" />
-    </header>
-
-    <main id="noi-dung" class="container gq-noi-dung">
-        @RenderBody()
-    </main>
-
-    <footer class="gq-chan-trang">
-        <div class="container">
-            <small>GeoQuad · Hình học phẳng – chủ đề tứ giác · Dữ liệu lưu trong Neo4j</small>
+    <aside class="offcanvas-lg offcanvas-start gq-thanh-ben" tabindex="-1" id="gq-menu" aria-labelledby="gq-ten-menu">
+        <div class="gq-thanh-ben__dau">
+            <a class="gq-thuong-hieu" href="/" aria-label="GeoQuad – Trang chủ">
+                <span class="gq-logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m16 3 13 7-5 18H8L3 10Z"/><path d="m3 10 21 18M16 3 8 28M3 10h26"/></svg></span>
+                <span id="gq-ten-menu">GeoQuad<span class="gq-thuong-hieu__phu">Cùng em hiểu hình học</span></span>
+            </a>
+            <button class="btn-close d-lg-none" type="button" data-bs-dismiss="offcanvas" data-bs-target="#gq-menu" aria-label="Đóng menu"></button>
         </div>
-    </footer>
-
+        <nav class="gq-menu" aria-label="Điều hướng chính">
+            <a class="gq-menu__lien-ket @(laTrangChu ? "active" : "")" href="/" aria-current="@(laTrangChu ? "page" : null)"><partial name="_BieuTuong" model='@("nha")' /> Góc học tập</a>
+            @foreach (var (nhom, muc) in new[] {
+                ("KHÁM PHÁ", new[] { ("/KienThuc/ThuVien", "sach", "Thư viện kiến thức"), ("/KienThuc/BanDo", "ban-do", "Bản đồ kiến thức"), ("/ApDung/TinhHuong", "la", "Hình học quanh ta") }),
+                ("LUYỆN TẬP", new[] { ("/HocTap/BaiTap", "but", "Bài tập"), ("/HocTap/LoTrinh", "lo-trinh", "Lộ trình học"), ("/HocTap/TienDo", "tien-do", "Tiến độ của em") }),
+                ("CÔNG CỤ HỖ TRỢ", new[] { ("/KienThuc/MayTinh", "may-tinh", "Máy tính hình học"), ("/ApDung/GoiY", "den", "Gợi ý định lý") })
+            })
+            {
+                <p class="gq-menu__nhom">@nhom</p>
+                @foreach (var (url, bieuTuong, ten) in muc)
+                {
+                    var dangChon = duongDan.StartsWith(url, StringComparison.OrdinalIgnoreCase);
+                    <a class="gq-menu__lien-ket @(dangChon ? "active" : "")" href="@url" aria-current="@(dangChon ? "page" : null)"><partial name="_BieuTuong" model="bieuTuong" /> @ten</a>
+                }
+            }
+        </nav>
+        <div class="gq-loi-nhac"><partial name="_BieuTuong" model='@("mam")' /><strong>Mỗi ngày, hiểu thêm một chút.</strong><p>Không cần vội. Em cứ học theo nhịp của mình nhé!</p></div>
+        <a class="gq-lien-ket-rieng-tu" href="/Home/QuyenRiengTu">Quyền riêng tư</a>
+    </aside>
+    <div class="gq-khong-gian">
+        <header class="gq-dau-trang">
+            <div class="gq-dau-trang__trong">
+                <button class="btn gq-nut-menu d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#gq-menu" aria-controls="gq-menu" aria-label="Mở menu điều hướng"><partial name="_BieuTuong" model='@("menu")' /></button>
+                <span class="gq-ten-trang">@(laTrangChu ? "Góc học tập" : ViewData["Title"])</span>
+                <form class="gq-tim-nhanh" method="get" action="/KienThuc/ThuVien/TimKiem" role="search">
+                    <partial name="_BieuTuong" model='@("tim")' />
+                    <label class="visually-hidden" for="gq-tim-nhanh">Tìm kiến thức hình học</label>
+                    <input id="gq-tim-nhanh" type="search" name="q" value="@Context.Request.Query["q"]" placeholder="Em muốn tìm kiến thức gì?" required />
+                    <button type="submit" aria-label="Tìm kiếm"><partial name="_BieuTuong" model='@("mui-ten")' /></button>
+                </form>
+                <partial name="_KhoiTaiKhoan" />
+            </div>
+            <partial name="_BoChonLop" />
+        </header>
+        <main id="noi-dung" class="container gq-noi-dung" tabindex="-1">@RenderBody()</main>
+        <footer class="gq-chan-trang"><div class="container"><span>GeoQuad · Cùng em khám phá thế giới tứ giác</span><a href="/Home/QuyenRiengTu">Quyền riêng tư</a></div></footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script defer src="~/lib/katex/katex.min.js"></script>

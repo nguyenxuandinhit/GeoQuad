@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace GeoQuad.Tests.Chung;
 
-/// <summary>US-07: chế độ khách và lớp hiển thị (FR-03, BR-04, BR-09).</summary>
+/// <summary>US-07: chế độ khách và lớp của người dùng (FR-03, BR-04, BR-09).</summary>
 public class CurrentUserTests
 {
     /// <summary>Dựng ICurrentUser từ một HttpContext giả, không cần Neo4j.</summary>
@@ -14,8 +14,7 @@ public class CurrentUserTests
         bool daDangNhap = false,
         string? lopClaim = null,
         string vaiTro = VaiTro.HocSinh,
-        string? cookieLop = null,
-        string? cookieNangCao = null)
+        string? cookieLop = null)
     {
         var http = new DefaultHttpContext();
 
@@ -23,11 +22,6 @@ public class CurrentUserTests
         if (cookieLop is not null)
         {
             cookies.Add($"{GqCookie.Lop}={cookieLop}");
-        }
-
-        if (cookieNangCao is not null)
-        {
-            cookies.Add($"{GqCookie.NangCao}={cookieNangCao}");
         }
 
         if (cookies.Count > 0)
@@ -105,39 +99,11 @@ public class CurrentUserTests
         Assert.False(TaoNguoiDung(daDangNhap: true, lopClaim: "8").LaQuanTri);
     }
 
+    /// <summary>BR-04: không còn chế độ xem trước, lớp lọc nội dung luôn là lớp của em.</summary>
     [Fact]
-    public void KhongBatNangCaoThiLopHienThiBangLop()
+    public void LopLocNoiDungLuonLaLopCuaEm()
     {
-        var nd = TaoNguoiDung(cookieLop: "4");
-
-        Assert.False(nd.XemNangCao);
-        Assert.Equal(4, nd.Lop);
-        Assert.Equal(4, nd.LopHienThi);
+        Assert.Equal(4, TaoNguoiDung(cookieLop: "4").Lop);
+        Assert.Equal(8, TaoNguoiDung(daDangNhap: true, lopClaim: "8").Lop);
     }
-
-    [Fact]
-    public void BatNangCaoThiLopHienThiBang12()
-    {
-        var nd = TaoNguoiDung(cookieLop: "4", cookieNangCao: "1");
-
-        Assert.True(nd.XemNangCao);
-        Assert.Equal(4, nd.Lop);          // lớp thật không đổi, dùng để gắn nhãn "Nâng cao"
-        Assert.Equal(12, nd.LopHienThi);  // nhưng truy vấn lấy tới lớp 12
-    }
-
-    [Fact]
-    public void BatNangCaoApDungCaChoHocSinh()
-    {
-        var nd = TaoNguoiDung(daDangNhap: true, lopClaim: "8", cookieNangCao: "1");
-
-        Assert.Equal(8, nd.Lop);
-        Assert.Equal(12, nd.LopHienThi);
-    }
-
-    [Theory]
-    [InlineData("0")]
-    [InlineData("true")]
-    [InlineData("")]
-    public void CookieNangCaoChiNhanGiaTri1(string gia)
-        => Assert.False(TaoNguoiDung(cookieNangCao: gia).XemNangCao);
 }

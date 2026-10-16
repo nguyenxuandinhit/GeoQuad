@@ -1,70 +1,81 @@
-@model TrangChuViewModel
+﻿@model TrangChuViewModel
 @{
-    ViewData["Title"] = "Trang chủ";
+    ViewData["Title"] = "Góc học tập";
 }
-
-<section class="gq-hero">
-    <p class="gq-hero__nhan">Hình học phẳng · chủ đề tứ giác</p>
-    <h1 class="gq-hero__tieu-de">
-        Chào em@(string.IsNullOrEmpty(Model.BietDanh) ? "" : ", " + Model.BietDanh)!
-    </h1>
-    <p class="gq-hero__mo-ta">
-        Tra cứu kiến thức, xem bản đồ "hình nào là trường hợp đặc biệt của hình nào",
-        tính toán, làm bài tập có chấm ngay và theo lộ trình học của riêng em.
-    </p>
-
-    <form class="gq-tim-lon" method="get" action="/KienThuc/ThuVien/TimKiem" role="search">
-        <label class="visually-hidden" for="gq-tim">Em muốn tìm gì?</label>
-        <div class="input-group input-group-lg">
-            <span class="input-group-text" aria-hidden="true">🔍</span>
-            <input class="form-control" type="search" id="gq-tim" name="q"
-                   placeholder="Tìm: hình thoi, dấu hiệu hình chữ nhật, diện tích…"
-                   aria-describedby="gq-tim-mo-ta" />
-            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
-        </div>
-        <div class="form-text" id="gq-tim-mo-ta">Em gõ có dấu hay không dấu đều được.</div>
-    </form>
-</section>
-
-@if (!Model.DaDangNhap)
-{
-    <partial name="_MoiDangNhap" model="@("/")" />
-}
-
-<h2 class="h5 gq-tieu-de-muc">Em bắt đầu từ đâu?</h2>
-
-<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
-    @foreach (var (url, bieuTuong, ten, moTa) in new[]
-    {
-        ("/KienThuc/ThuVien",  "📚", "Thư viện kiến thức",    "Hình, tính chất, dấu hiệu nhận biết và công thức theo lớp."),
-        ("/KienThuc/BanDo",    "🗺️", "Bản đồ kiến thức",      "Hình nào là trường hợp đặc biệt của hình nào."),
-        ("/KienThuc/MayTinh",  "🧮", "Máy tính hình học",     "Tính chu vi, diện tích, đường chéo và vẽ hình."),
-        ("/ApDung/GoiY",       "💡", "Nên dùng định lý nào?", "Nhập giả thiết em có, nhận gợi ý dấu hiệu nên dùng."),
-        ("/ApDung/TinhHuong",  "🏠", "Hình học quanh ta",     "Tứ giác trong nhà cửa, mảnh vườn và đồ dùng."),
-        ("/HocTap/BaiTap",     "✏️", "Bài tập",               "Luyện tập và được chấm ngay kèm giải thích.")
-    })
-    {
-        <div class="col">
-            <a class="card h-100 gq-the-loi-tat" href="@url">
-                <div class="card-body">
-                    <span class="gq-the-loi-tat__bieu-tuong" aria-hidden="true">@bieuTuong</span>
-                    <h3 class="h6 card-title">@ten</h3>
-                    <p class="card-text">@moTa</p>
-                </div>
-            </a>
-        </div>
-    }
+<div class="gq-chao">
+    <div><p class="gq-nhan-nho">GÓC NHỎ CHO NHỮNG KHÁM PHÁ LỚN</p><h1>Chào em@(string.IsNullOrWhiteSpace(Model.BietDanh) ? "" : ", " + Model.BietDanh)! <span class="gq-chao__hoa" aria-hidden="true">✳</span></h1><p>Hôm nay, mình cùng hiểu thêm một điều mới nhé.</p></div>
+    <span class="gq-chu-de"><span class="gq-chu-de__cham" aria-hidden="true"></span> Hình học phẳng · Tứ giác</span>
 </div>
-
-<p class="gq-trang-thai-neo4j" role="status">
-    @if (Model.KetNoiOk)
-    {
-        <span class="gq-den gq-den--ok" aria-hidden="true"></span>
-        <span>Kết nối Neo4j: OK — @Model.SoNut nút</span>
-    }
-    else
-    {
-        <span class="gq-den gq-den--loi" aria-hidden="true"></span>
-        <span>Kết nối Neo4j: LỖI — @Model.LoiKetNoi</span>
-    }
-</p>
+@if (!Model.KetNoiOk)
+{
+    <div class="alert alert-warning gq-loi-du-lieu" role="alert"><strong>Kiến thức đang tạm thời chưa tải được.</strong> Em thử tải lại trang sau một chút nhé.<details><summary>Thông tin kết nối</summary><p>@Model.LoiKetNoi</p></details></div>
+}
+<div class="gq-trang-chu">
+    <div class="gq-cot-chinh">
+        <section class="gq-bat-dau" aria-labelledby="gq-tieu-de-bat-dau">
+            <div class="gq-bat-dau__chu">
+                <span class="gq-nhan-bai"><span aria-hidden="true">✦</span> HỌC TỪ NHỮNG ĐIỀU QUEN THUỘC</span>
+                <h2 id="gq-tieu-de-bat-dau">Hình học dễ hiểu,<br />khám phá thật vui.</h2>
+                <p>Từ một ô cửa đến một cánh diều -<br class="d-none d-xl-block" /> cùng tìm hiểu những hình tứ giác quanh em.</p>
+                <a class="btn btn-primary" href="@(Model.DaDangNhap ? "/HocTap/LoTrinh" : "/KienThuc/ThuVien")">@(Model.DaDangNhap ? "Mở lộ trình của em" : "Bắt đầu khám phá") <partial name="_BieuTuong" model='@("mui-ten")' /></a>
+                <span class="gq-bat-dau__ghi-chu">Học theo lớp · Hiểu từng bước</span>
+            </div>
+            <svg class="gq-vuon-hinh" viewBox="0 0 310 280" role="img" aria-label="Hình vuông, hình bình hành và hình thoi trên trang giấy kẻ ô">
+                <defs><pattern id="gq-o-ly" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0v22" fill="none" stroke="#c8dcd1" stroke-width=".7"/></pattern></defs>
+                <rect x="16" y="17" width="275" height="245" rx="22" fill="#e5efe4"/><rect x="16" y="17" width="275" height="245" rx="22" fill="url(#gq-o-ly)"/>
+                <g transform="rotate(-10 107 94)"><rect x="53" y="39" width="100" height="100" rx="3" fill="#f4cf6c" stroke="#6b6740" stroke-width="2"/><path d="M63 49h10v10H63Z" fill="none" stroke="#6b6740"/><text x="47" y="33">A</text><text x="154" y="33">B</text><text x="155" y="155">C</text><text x="44" y="155">D</text></g>
+                <g transform="rotate(9 223 173)"><path d="m225 108 48 67-48 67-48-67Z" fill="#9fc9b0" stroke="#366451" stroke-width="2"/><path d="M225 109v132m-48-66h96" stroke="#366451" stroke-dasharray="4 5"/><circle cx="225" cy="175" r="3" fill="#366451"/></g>
+                <path d="m48 193 78-15-24 60-78 15Z" fill="#f6eee1" stroke="#9f856b" stroke-width="2"/>
+                <path d="m178 53 5-9m-5 9 10 2M127 222l7 10m-7-10-8 9" fill="none" stroke="#487563" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="266" cy="74" r="5" fill="#ecb286"/><circle cx="158" cy="253" r="3" fill="#487563"/>
+            </svg>
+        </section>
+        <section class="gq-kham-pha" aria-labelledby="gq-tieu-de-kham-pha">
+            <div class="gq-dau-muc"><div><h2 id="gq-tieu-de-kham-pha">Em muốn khám phá gì?</h2><p>Chọn một cách học mà em thích.</p></div><span class="gq-chu-viet-tay" aria-hidden="true">Bắt đầu từ tò mò ↙</span></div>
+            <div class="gq-luoi-kham-pha">
+                @foreach (var (url, mau, bieuTuong, ten, moTa, nut) in new[] {
+                    ("/KienThuc/ThuVien", "xanh", "sach", "Thư viện kiến thức", "Nhận biết các hình, tìm hiểu tính chất và công thức.", "Mở thư viện"),
+                    ("/KienThuc/BanDo", "tim", "ban-do", "Kết nối các hình", "Xem các hình tứ giác có quan hệ với nhau thế nào.", "Xem bản đồ"),
+                    ("/ApDung/TinhHuong", "cam", "la", "Hình học quanh ta", "Tìm hình học trong ngôi nhà, mảnh vườn và đồ vật.", "Khám phá ngay")
+                })
+                {
+                    <a class="gq-the-kham-pha gq-mau-@mau" href="@url"><span class="gq-o-bieu-tuong"><partial name="_BieuTuong" model="bieuTuong" /></span><h3>@ten</h3><p>@moTa</p><span class="gq-the-kham-pha__nut">@nut <partial name="_BieuTuong" model='@("mui-ten")' /></span></a>
+                }
+            </div>
+        </section>
+        <section class="gq-luyen-tap" aria-labelledby="gq-tieu-de-luyen-tap">
+            <span class="gq-luyen-tap__bieu-tuong"><partial name="_BieuTuong" model='@("but")' /></span>
+            <div><span class="gq-nhan-nho">THỬ SỨC MỘT CHÚT</span><h2 id="gq-tieu-de-luyen-tap">Học rồi, mình cùng luyện tập!</h2><p>Chọn bài theo lớp, xem kết quả và hiểu cách giải.</p></div>
+            <a class="btn btn-outline-primary" href="/HocTap/BaiTap">Chọn bài tập <partial name="_BieuTuong" model='@("mui-ten")' /></a>
+        </section>
+    </div>
+    <div class="gq-cot-phu">
+        <section class="gq-hanh-trinh" aria-labelledby="gq-tieu-de-hanh-trinh">
+            <div class="gq-hanh-trinh__dau"><span class="gq-o-bieu-tuong"><partial name="_BieuTuong" model='@("lo-trinh")' /></span><span>DÀNH CHO EM</span></div>
+            <h2 id="gq-tieu-de-hanh-trinh">Từng bước hiểu bài</h2><p>Chưa biết bắt đầu ở đâu?<br />Em thử đi theo ba bước này nhé.</p>
+            <ol class="gq-ba-buoc">
+                <li><span>1</span><div><a href="/KienThuc/ThuVien">Khám phá kiến thức</a><p>Làm quen với hình và tính chất.</p></div></li>
+                <li><span>2</span><div><a href="/HocTap/BaiTap">Thử làm bài tập</a><p>Áp dụng điều em vừa học.</p></div></li>
+                <li><span>3</span><div><a href="/HocTap/TienDo">Nhìn lại tiến bộ</a><p>Biết mình đã hiểu đến đâu.</p></div></li>
+            </ol>
+            <a class="gq-hanh-trinh__lien-ket" href="/HocTap/LoTrinh">Xem lộ trình học <partial name="_BieuTuong" model='@("mui-ten")' /></a>
+        </section>
+        <section class="gq-cong-cu" aria-labelledby="gq-tieu-de-cong-cu">
+            <h2 id="gq-tieu-de-cong-cu">Cần một chút trợ giúp?</h2>
+            <a href="/KienThuc/MayTinh"><span class="gq-o-bieu-tuong"><partial name="_BieuTuong" model='@("may-tinh")' /></span><span><strong>Máy tính hình học</strong><small>Tính toán và vẽ hình</small></span><partial name="_BieuTuong" model='@("mui-ten")' /></a>
+            <a href="/ApDung/GoiY"><span class="gq-o-bieu-tuong"><partial name="_BieuTuong" model='@("den")' /></span><span><strong>Gợi ý định lý</strong><small>Tìm hướng giải bài toán</small></span><partial name="_BieuTuong" model='@("mui-ten")' /></a>
+        </section>
+        @if (!Model.DaDangNhap)
+        {
+            <section class="gq-luu-tien-do"><span aria-hidden="true">✧</span><h2>Lưu lại từng tiến bộ</h2><p>Đăng nhập để lưu bài đã học, kết quả luyện tập và lộ trình của riêng em.</p><a href="/TaiKhoan/DangNhap">Đăng nhập <partial name="_BieuTuong" model='@("mui-ten")' /></a><small>Chưa có tài khoản? <a href="/TaiKhoan/DangKy">Đăng ký</a></small></section>
+        }
+        else
+        {
+            <section class="gq-luu-tien-do"><span aria-hidden="true">✧</span><h2>Mỗi bước đều đáng nhớ</h2><p>Xem lại bài đã làm và tìm phần kiến thức em muốn luyện thêm.</p><a href="/HocTap/TienDo">Xem tiến độ của em <partial name="_BieuTuong" model='@("mui-ten")' /></a></section>
+        }
+    </div>
+</div>
+@if (Model.KetNoiOk)
+{
+    <details class="gq-ket-noi"><summary>Trạng thái dữ liệu</summary><p>Kết nối Neo4j: OK - @Model.SoNut nút</p></details>
+}

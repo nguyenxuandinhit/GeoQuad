@@ -3,15 +3,13 @@
 @*
     Thanh ngữ cảnh (US-01, US-07): luôn cho học sinh thấy đang xem nội dung tới lớp nào.
     Khách đổi lớp ngay tại đây; học sinh đã đăng nhập đổi lớp ở trang Hồ sơ (US-08).
-    Khi bật "Xem trước kiến thức nâng cao" thì thanh này đổi màu và có nút tắt, để em
-    không bị lẫn vì thấy nội dung lớp trên (BR-04).
+    Em chỉ thấy nội dung từ lớp 1 tới lớp của mình, không có nội dung lớp trên (BR-04).
 *@
 @{
     var duongDanHienTai = $"{Context.Request.Path}{Context.Request.QueryString}";
-    var nangCao = NguoiDung.XemNangCao;
 }
 
-<div class="gq-thanh-lop @(nangCao ? "gq-thanh-lop--nangcao" : "")">
+<div class="gq-thanh-lop">
     <div class="container gq-thanh-lop__trong">
 
         <div class="gq-thanh-lop__lop">
@@ -38,36 +36,9 @@
         </div>
 
         <div class="gq-thanh-lop__trangthai">
-            @if (nangCao)
-            {
-                <span class="gq-pill-nangcao">
-                    <span aria-hidden="true">▲</span>
-                    Đang xem trước tới <strong>lớp @NguoiDung.LopHienThi</strong>
-                </span>
-                <form method="post" action="/Home/NangCao" class="m-0">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
-                    <input type="hidden" name="bat" value="false" />
-                    <button class="btn btn-sm gq-nut-tat" type="submit">
-                        Tắt, chỉ xem lớp @NguoiDung.Lop
-                    </button>
-                </form>
-            }
-            else
-            {
-                <span class="gq-thanh-lop__nhan gq-thanh-lop__nhan--mo">
-                    Đang xem nội dung tới lớp @NguoiDung.LopHienThi
-                </span>
-                <form method="post" action="/Home/NangCao" class="m-0">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="tiepTuc" value="@duongDanHienTai" />
-                    <input type="hidden" name="bat" value="true" />
-                    <button class="btn btn-sm gq-nut-bat" type="submit"
-                            title="Xem thêm kiến thức của lớp trên, các mục đó sẽ được đánh dấu Nâng cao">
-                        ▲ Xem trước kiến thức lớp trên
-                    </button>
-                </form>
-            }
+            <span class="gq-thanh-lop__nhan gq-thanh-lop__nhan--mo">
+                Đang xem nội dung từ lớp 1 tới lớp @NguoiDung.Lop
+            </span>
         </div>
 
     </div>

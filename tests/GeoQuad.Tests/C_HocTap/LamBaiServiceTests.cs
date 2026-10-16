@@ -176,8 +176,6 @@ public sealed class LamBaiServiceTests
         public string? BietDanh => null;
         public bool LaQuanTri => false;
         public int Lop => 8;
-        public bool XemNangCao => false;
-        public int LopHienThi => Lop;
     }
 
     private sealed class FakeRepo : ILamBaiRepository
@@ -187,11 +185,11 @@ public sealed class LamBaiServiceTests
         public bool TuChoiGhi { get; set; }
         private static readonly BaiTapChiTiet Exercise = new("BT-014", "Tính diện tích.", "DAP_AN_SO", 8, 2,
             [], null, 96m, .01m, "cm²", "Dùng công thức diện tích.", null, null);
-        public Task<BaiTapChiTiet?> ChiTietAsync(string ma, int lopHienThi) =>
+        public Task<BaiTapChiTiet?> ChiTietAsync(string ma, int lopHocSinh) =>
             Task.FromResult<BaiTapChiTiet?>(!AnBai && ma == Exercise.Ma ? Exercise : null);
-        public Task<bool> LaChungMinhCongKhaiAsync(string ma, int lopHienThi) => Task.FromResult(false);
-        public Task<string?> BaiTiepTheoKhachAsync(string maHienTai, int lopHienThi) => Task.FromResult<string?>(null);
-        public Task<KienThucBaiTap> KienThucLienQuanAsync(string ma, int lopHienThi) => Task.FromResult(new KienThucBaiTap(
+        public Task<bool> LaChungMinhCongKhaiAsync(string ma, int lopHocSinh) => Task.FromResult(false);
+        public Task<string?> BaiTiepTheoKhachAsync(string maHienTai, int lopHocSinh) => Task.FromResult<string?>(null);
+        public Task<KienThucBaiTap> KienThucLienQuanAsync(string ma, int lopHocSinh) => Task.FromResult(new KienThucBaiTap(
             [new KienThucLienQuan("CT_THOI_DT", "Diện tích hình thoi", @"S = \frac{d_1 d_2}{2}", 8)],
             [new KhaiNiemLienQuan("HINH_THOI", "Hình thoi", 8)]));
         public Task<BanGhiLuotLam?> KetQuaAsync(string taiKhoanId, string maLan) => Task.FromResult(Attempts.FirstOrDefault(a => a.MaLan == maLan));

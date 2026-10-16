@@ -34,9 +34,9 @@ public sealed class ChungMinhIntegrationTests(Neo4jFixture fixture)
         server.Cookies.Add(server.Client.BaseAddress!,new Cookie("gq_lop","3"));
         using var grade3 = await server.Client.GetAsync("/ApDung/ChungMinh/Xem/CM-02");
         Assert.Equal(HttpStatusCode.NotFound,grade3.StatusCode);
-        server.Cookies.Add(server.Client.BaseAddress!,new Cookie("gq_nangcao","1"));
-        using var advanced = await server.Client.GetAsync("/ApDung/ChungMinh/Xem/CM-02");
-        Assert.Equal(HttpStatusCode.OK,advanced.StatusCode);
+        server.Cookies.Add(server.Client.BaseAddress!,new Cookie("gq_lop","12"));
+        using var grade12 = await server.Client.GetAsync("/ApDung/ChungMinh/Xem/CM-02");
+        Assert.Equal(HttpStatusCode.OK,grade12.StatusCode);
         await fixture.Db.WriteAsync("MATCH (cm:ChungMinh {ma:'CM-02'}) SET cm.trangThai='NHAP'");
         using var draft = await server.Client.GetAsync("/ApDung/ChungMinh/Xem/CM-02");
         Assert.Equal(HttpStatusCode.NotFound,draft.StatusCode);

@@ -13,9 +13,6 @@ public sealed record NoiDungThuVien(
     string? MaHinh,
     bool DaHoc)
 {
-    /// <summary>Lớp của nội dung lớn hơn lớp thật của học sinh (quy ước 2.7).</summary>
-    public bool NangCao { get; init; }
-
     public string TenLoai => ThuVienQuyTac.TenLoai(Loai);
 
     /// <summary>
@@ -36,13 +33,9 @@ public sealed class ThuVienViewModel
     public string? Cap { get; init; }
     public int? Lop { get; init; }
 
-    /// <summary>Lớp dùng để lọc nội dung: bằng 12 khi bật xem trước nâng cao (BR-04).</summary>
-    public int LopHienThi { get; init; }
-
-    /// <summary>Lớp thật của người dùng, dùng để quyết định nhãn "Nâng cao".</summary>
+    /// <summary>Lớp của học sinh — cũng là lớp cao nhất được hiện nội dung (BR-04).</summary>
     public int LopHocSinh { get; init; }
 
-    public bool XemNangCao { get; init; }
     public bool DaDangNhap { get; init; }
 
     /// <summary>Học sinh cấp 1 cần nút bấm lớn hơn (NFR-04).</summary>
