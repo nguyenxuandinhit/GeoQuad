@@ -24,35 +24,48 @@
 // Mỗi tính chất: CO_TINH_CHAT từ hình tương ứng, THUOC_LOP tới lớp xuất hiện lần đầu.
 UNWIND [
   {ma: 'TC_TG_1',    hinh: 'TU_GIAC',         lop: 8,
-   noiDung: 'Tổng bốn góc của một tứ giác bằng 360°.'},
+   noiDung: 'Tổng bốn góc của một tứ giác bằng 360°.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 10, mục 2, Định lí'},
   {ma: 'TC_HT_1',    hinh: 'HINH_THANG',      lop: 8,
-   noiDung: 'Hai góc kề một cạnh bên của hình thang có tổng bằng 180°.'},
+   noiDung: 'Hai góc kề một cạnh bên của hình thang có tổng bằng 180°.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 11, mục 1, Ví dụ 1'},
   {ma: 'TC_HTC_1',   hinh: 'HINH_THANG_CAN',  lop: 8,
-   noiDung: 'Hai cạnh bên của hình thang cân bằng nhau.'},
+   noiDung: 'Hai cạnh bên của hình thang cân bằng nhau.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 11, mục 1, Ví dụ 1'},
   {ma: 'TC_HTC_2',   hinh: 'HINH_THANG_CAN',  lop: 8,
-   noiDung: 'Hai đường chéo của hình thang cân bằng nhau.'},
+   noiDung: 'Hai đường chéo của hình thang cân bằng nhau.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 11, Định lí 2 và Định lí 3, tr.54'},
   {ma: 'TC_HBH_1',   hinh: 'HINH_BINH_HANH',  lop: 8,
-   noiDung: 'Các cạnh đối của hình bình hành bằng nhau.'},
+   noiDung: 'Các cạnh đối của hình bình hành bằng nhau.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 12, Định lí 1, tr.58'},
   {ma: 'TC_HBH_2',   hinh: 'HINH_BINH_HANH',  lop: 8,
-   noiDung: 'Các góc đối của hình bình hành bằng nhau.'},
+   noiDung: 'Các góc đối của hình bình hành bằng nhau.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 12, Định lí 1, tr.58'},
   {ma: 'TC_HBH_3',   hinh: 'HINH_BINH_HANH',  lop: 8,
-   noiDung: 'Hai đường chéo của hình bình hành cắt nhau tại trung điểm của mỗi đường.'},
+   noiDung: 'Hai đường chéo của hình bình hành cắt nhau tại trung điểm của mỗi đường.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 12, Định lí 1, tr.58'},
   {ma: 'TC_HCN_1',   hinh: 'HINH_CHU_NHAT',   lop: 8,
-   noiDung: 'Hình chữ nhật có bốn góc vuông.'},
+   noiDung: 'Hình chữ nhật có bốn góc vuông.',
+   doiChieu: null},
   {ma: 'TC_HCN_2',   hinh: 'HINH_CHU_NHAT',   lop: 8,
-   noiDung: 'Hai đường chéo của hình chữ nhật bằng nhau.'},
+   noiDung: 'Hai đường chéo của hình chữ nhật bằng nhau và cắt nhau tại trung điểm của mỗi đường.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 13, Định lí 1'},
   {ma: 'TC_THOI_1',  hinh: 'HINH_THOI',       lop: 8,
-   noiDung: 'Hai đường chéo của hình thoi vuông góc với nhau.'},
+   noiDung: 'Hai đường chéo của hình thoi vuông góc với nhau.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 14, Định lí 1 của hình thoi'},
   {ma: 'TC_THOI_2',  hinh: 'HINH_THOI',       lop: 8,
-   noiDung: 'Hai đường chéo của hình thoi là các đường phân giác của các góc của hình thoi.'},
+   noiDung: 'Hai đường chéo của hình thoi là các đường phân giác của các góc của hình thoi.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 14, Định lí 2 của hình thoi'},
   {ma: 'TC_HV_1',    hinh: 'HINH_VUONG',      lop: 8,
-   noiDung: 'Hình vuông có tất cả tính chất của hình chữ nhật và của hình thoi.'}
+   noiDung: 'Hình vuông có tất cả tính chất của hình chữ nhật và của hình thoi.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 14, mục 2, ô chú thích'}
 ] AS row
 MERGE (t:DinhLy {ma: row.ma})
 SET t:TinhChat,
     t.noiDung   = row.noiDung,
     t.nguon     = 'Nhóm GeoQuad biên soạn theo SRS Phụ lục B; đối chiếu CT GDPT 2018 – Toán '
-                  + toString(row.lop) + '; thành viên C rà soát 08/10/2026',
+                  + toString(row.lop) + '; thành viên C rà soát 08/10/2026'
+                  + CASE WHEN row.doiChieu IS NULL THEN '' ELSE '; ' + row.doiChieu END,
     t.trangThai = 'DA_RA_SOAT'
 WITH t, row
 MATCH (h:KhaiNiem {ma: row.hinh})
@@ -124,29 +137,45 @@ MERGE (c)-[:THUOC_LOP]->(l);
 // tâm đối xứng là một phần của chương tứ giác ở SGK Toán 8; thiếu cả tổng góc ngoài
 // và đường trung bình hình thang. AC của US-03 ghi "đủ 12 tính chất" — hiểu là mức
 // tối thiểu, nên bổ sung chỉ làm dày thêm, không bỏ mục nào của Phụ lục B.
+// TC_HV_3 và TC_HBH_9 được cập nhật/thêm theo docs/geoquad-doi-chieu-toan8-tap1.md
+// (mục B2 #6 và #8): TC_HV_3 thiếu vế "cắt nhau tại trung điểm của mỗi đường" mà
+// Định lí 3 Bài 14 có nêu; TC_HBH_9 là Nhận xét sau Định lí 1 Bài 12 mà seed chưa có.
 UNWIND [
   {ma: 'TC_TG_2',    hinh: 'TU_GIAC',         lop: 8,
-   noiDung: 'Tổng bốn góc ngoài của một tứ giác, mỗi đỉnh lấy một góc ngoài, bằng 360°.'},
+   noiDung: 'Tổng bốn góc ngoài của một tứ giác, mỗi đỉnh lấy một góc ngoài, bằng 360°.',
+   doiChieu: null},
   {ma: 'TC_HT_2',    hinh: 'HINH_THANG',      lop: 8,
-   noiDung: 'Đường trung bình của hình thang song song với hai đáy và bằng nửa tổng hai đáy.'},
+   noiDung: 'Đường trung bình của hình thang song song với hai đáy và bằng nửa tổng hai đáy.',
+   doiChieu: null},
   {ma: 'TC_HTC_3',   hinh: 'HINH_THANG_CAN',  lop: 8,
-   noiDung: 'Hình thang cân có một trục đối xứng là đường thẳng đi qua trung điểm của hai đáy.'},
+   noiDung: 'Hình thang cân có một trục đối xứng là đường thẳng đi qua trung điểm của hai đáy.',
+   doiChieu: null},
   {ma: 'TC_HBH_4',   hinh: 'HINH_BINH_HANH',  lop: 8,
-   noiDung: 'Giao điểm hai đường chéo của hình bình hành là tâm đối xứng của hình bình hành đó.'},
+   noiDung: 'Giao điểm hai đường chéo của hình bình hành là tâm đối xứng của hình bình hành đó.',
+   doiChieu: null},
   {ma: 'TC_HCN_3',   hinh: 'HINH_CHU_NHAT',   lop: 8,
-   noiDung: 'Hình chữ nhật có hai trục đối xứng là hai đường thẳng đi qua trung điểm của hai cặp cạnh đối, và có tâm đối xứng là giao điểm hai đường chéo.'},
+   noiDung: 'Hình chữ nhật có hai trục đối xứng là hai đường thẳng đi qua trung điểm của hai cặp cạnh đối, và có tâm đối xứng là giao điểm hai đường chéo.',
+   doiChieu: null},
   {ma: 'TC_THOI_3',  hinh: 'HINH_THOI',       lop: 8,
-   noiDung: 'Hình thoi có hai trục đối xứng là hai đường chéo và có tâm đối xứng là giao điểm hai đường chéo.'},
+   noiDung: 'Hình thoi có hai trục đối xứng là hai đường chéo và có tâm đối xứng là giao điểm hai đường chéo.',
+   doiChieu: null},
   {ma: 'TC_HV_2',    hinh: 'HINH_VUONG',      lop: 8,
-   noiDung: 'Hình vuông có bốn trục đối xứng: hai đường chéo và hai đường thẳng đi qua trung điểm của hai cặp cạnh đối; tâm đối xứng là giao điểm hai đường chéo.'},
+   noiDung: 'Hình vuông có bốn trục đối xứng: hai đường chéo và hai đường thẳng đi qua trung điểm của hai cặp cạnh đối; tâm đối xứng là giao điểm hai đường chéo.',
+   doiChieu: null},
   {ma: 'TC_HV_3',    hinh: 'HINH_VUONG',      lop: 8,
-   noiDung: 'Hai đường chéo của hình vuông bằng nhau, vuông góc với nhau và là các đường phân giác của các góc của hình vuông.'}
+   noiDung: 'Hai đường chéo của hình vuông bằng nhau, vuông góc với nhau, cắt nhau tại trung điểm của mỗi đường và là các đường phân giác của các góc của hình vuông.',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 14, mục 2, Định lí 3'},
+  {ma: 'TC_HBH_9',   hinh: 'HINH_BINH_HANH',  lop: 8,
+   noiDung: 'Trong hình bình hành, hai góc kề một cạnh bất kì có tổng bằng 180° (bù nhau).',
+   doiChieu: 'SGK Toán 8, tập một (Kết nối tri thức với cuộc sống), Bài 12, mục 1, Nhận xét sau Định lí 1, tr.58'}
 ] AS row
 MERGE (t:DinhLy {ma: row.ma})
 SET t:TinhChat,
     t.noiDung   = row.noiDung,
     t.nguon     = 'Nhóm GeoQuad biên soạn theo CT GDPT 2018 – Toán '
-                  + toString(row.lop) + ' (bổ sung ngoài Phụ lục B)',
+                  + toString(row.lop)
+                  + CASE WHEN row.doiChieu IS NULL THEN '' ELSE '; đối chiếu ' + row.doiChieu END
+                  + ' (bổ sung ngoài Phụ lục B)',
     t.trangThai = 'DA_RA_SOAT'
 WITH t, row
 MATCH (h:KhaiNiem {ma: row.hinh})
