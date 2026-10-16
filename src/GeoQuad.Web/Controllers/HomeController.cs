@@ -68,23 +68,6 @@ public sealed class HomeController : Controller
         return RedirectVeTrangTruoc(tiepTuc);
     }
 
-    // Công tắc "Xem trước kiến thức nâng cao" · POST /Home/NangCao
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult NangCao(bool bat, string? tiepTuc)
-    {
-        if (bat)
-        {
-            Response.Cookies.Append(GqCookie.NangCao, "1", CookieBen());
-        }
-        else
-        {
-            Response.Cookies.Delete(GqCookie.NangCao);
-        }
-
-        return RedirectVeTrangTruoc(tiepTuc);
-    }
-
     // Thông báo quyền riêng tư, liên kết từ biểu mẫu đăng ký (US-05, NFR-06).
     [HttpGet]
     public IActionResult QuyenRiengTu() => View();

@@ -37,8 +37,6 @@ public sealed class BaiTapServiceTests
         public string? BietDanh => null;
         public bool LaQuanTri => false;
         public int Lop { get; init; } = 8;
-        public bool XemNangCao => false;
-        public int LopHienThi => Lop;
     }
 
     [Fact]
@@ -104,9 +102,9 @@ public sealed class BaiTapServiceTests
     [InlineData("CAP_2", 12, new[] { 6, 7, 8, 9 })]
     [InlineData("CAP_3", 8, new int[0])]
     [InlineData("CAP_1", 3, new[] { 1, 2, 3 })]
-    public void CacLopTheoCap_ChiGomLopCuaCapVaKhongVuotLopHienThi(string? cap, int lopHienThi, int[] expected)
+    public void CacLopTheoCap_ChiGomLopCuaCapVaKhongVuotLopHocSinh(string? cap, int lopHocSinh, int[] expected)
     {
-        Assert.Equal(expected, QuyTacCapLop.CacLop(cap, lopHienThi));
+        Assert.Equal(expected, QuyTacCapLop.CacLop(cap, lopHocSinh));
     }
 
     [Fact]

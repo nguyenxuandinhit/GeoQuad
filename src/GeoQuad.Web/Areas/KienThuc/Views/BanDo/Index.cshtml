@@ -23,8 +23,8 @@
         <div class="col-12 col-sm-auto">
             <label class="form-label" for="gq-bd-lop">Xem tới lớp</label>
             <select class="form-select gq-nut" id="gq-bd-lop" name="lop">
-                <option value="">Tất cả (tới lớp @Model.DuLieu.LopHienThi)</option>
-                @for (var i = 1; i <= Model.DuLieu.LopHienThi; i++)
+                <option value="">Tất cả (tới lớp @Model.DuLieu.LopHocSinh)</option>
+                @for (var i = 1; i <= Model.DuLieu.LopHocSinh; i++)
                 {
                     <option value="@i" selected="@(Model.LopLoc == i)">Lớp @i</option>
                 }
@@ -173,7 +173,7 @@
                         </th>
                         <td>@n.Lop</td>
                         <td>@ThuVienQuyTac.TenCap(n.Cap)</td>
-                        <td>@(cha.Count > 0 ? string.Join(", ", cha) : "—")</td>
+                        <td>@(cha.Count > 0 ? string.Join(", ", cha) : "-")</td>
                         <td><a href="/KienThuc/ThuVien/ChiTiet/@n.Ma">Chi tiết</a></td>
                     </tr>
                 }

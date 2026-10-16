@@ -22,7 +22,7 @@
             <label class="form-label" for="loc-lop">Lớp</label>
             <select class="form-select gq-nut" id="loc-lop" name="lop">
                 <option value="">Tất cả</option>
-                @for (var lop = 1; lop <= Model.LopHienThi; lop++)
+                @for (var lop = 1; lop <= Model.LopNguoiDung; lop++)
                 {
                     var capCuaLop = lop <= 5 ? "CAP_1" : lop <= 9 ? "CAP_2" : "CAP_3";
                     var an = !Model.LopChon.Contains(lop);
@@ -93,10 +93,6 @@
                                     "DAP_AN_SO" => "Đáp án số",
                                     _ => "Chứng minh"
                                 })
-                                @if (bai.Lop > Model.LopNguoiDung)
-                                {
-                                    <span class="badge bg-info text-dark">Nâng cao</span>
-                                }
                             </p>
                             @if (Model.DaDangNhap)
                             {

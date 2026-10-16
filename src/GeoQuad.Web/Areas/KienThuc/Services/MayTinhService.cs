@@ -32,8 +32,8 @@ public sealed class MayTinhService : IMayTinhService
     public async Task<MayTinhViewModel> LayAsync(
         string? hinh, string? daiLuong, IReadOnlyDictionary<string, string?> soDo, string? donVi)
     {
-        var lopHienThi = _nguoiDung.LopHienThi;
-        var cacHinh = await _repo.LayCacHinhAsync(lopHienThi, HinhHoTro);
+        var lopHocSinh = _nguoiDung.Lop;
+        var cacHinh = await _repo.LayCacHinhAsync(lopHocSinh, HinhHoTro);
 
         // Chỉ nhận mã hình nằm trong danh sách lấy từ Neo4j.
         var hinhChon = cacHinh.FirstOrDefault(h => h.Ma == hinh);
@@ -44,8 +44,7 @@ public sealed class MayTinhService : IMayTinhService
             CacHinh = cacHinh,
             DonVi = dv,
             SoDoNhap = soDo,
-            LopHienThi = lopHienThi,
-            LopHocSinh = _nguoiDung.Lop
+            LopHocSinh = lopHocSinh
         };
 
         if (hinhChon is null)
@@ -54,7 +53,7 @@ public sealed class MayTinhService : IMayTinhService
         }
 
         // Học sinh cấp 1 chỉ thấy đại lượng có công thức lớp ≤ 5 — truy vấn đã lọc theo $lop.
-        var cacDaiLuong = await _repo.LayDaiLuongAsync(hinhChon.Ma, lopHienThi);
+        var cacDaiLuong = await _repo.LayDaiLuongAsync(hinhChon.Ma, lopHocSinh);
         var congThuc = cacDaiLuong.FirstOrDefault(d => d.DaiLuong == daiLuong)
                        ?? (daiLuong is null ? cacDaiLuong.FirstOrDefault() : null);
 

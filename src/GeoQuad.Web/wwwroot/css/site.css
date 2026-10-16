@@ -10,7 +10,7 @@
     --gq-the: #f3eadc;      /* be – thẻ, khối, thanh điều hướng */
     --gq-vien: #ddc9ae;     /* be đậm – đường viền */
     --gq-nau: #6b4f3a;      /* nâu – màu chính: nút, tiêu đề, thanh nav */
-    --gq-nhan: #a9714a;     /* nâu cam – nhấn: liên kết, nhãn "Nâng cao" */
+    --gq-nhan: #a9714a;     /* nâu cam – nhấn: liên kết, nhãn phụ */
 
     /* ---- Chữ và màu lỗi ---- */
     --gq-chu: #33281f;      /* nâu gần đen – chữ nội dung */
@@ -237,11 +237,6 @@ h1, h2, h3, h4, h5, h6,
     font-size: .925rem;
 }
 
-.gq-thanh-lop--nangcao {
-    background-color: #f6e6d2;
-    border-bottom: 2px solid var(--gq-nhan);
-}
-
 .gq-thanh-lop__trong {
     display: flex;
     flex-wrap: wrap;
@@ -281,51 +276,6 @@ h1, h2, h3, h4, h5, h6,
     min-height: 36px;
     padding: .25rem 2rem .25rem .6rem;
     font-weight: 600;
-}
-
-.gq-pill-nangcao {
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    background: var(--gq-nhan);
-    color: #fff;
-    border-radius: 999px;
-    padding: .25rem .75rem;
-    font-weight: 600;
-}
-
-.gq-nut-bat,
-.gq-nut-tat {
-    border-radius: 999px;
-    min-height: 36px;
-    padding: .3rem .8rem;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.gq-nut-bat {
-    background: transparent;
-    border: 1px dashed var(--gq-nau-nhat);
-    color: var(--gq-nau-dam);
-}
-
-.gq-nut-bat:hover,
-.gq-nut-bat:focus-visible {
-    background: var(--gq-the-dam);
-    border-style: solid;
-    color: var(--gq-nau-dam);
-}
-
-.gq-nut-tat {
-    background: #fffdf9;
-    border: 1px solid var(--gq-nau);
-    color: var(--gq-nau-dam);
-}
-
-.gq-nut-tat:hover,
-.gq-nut-tat:focus-visible {
-    background: var(--gq-nau);
-    color: #fdfaf5;
 }
 
 /* ---- Vùng nội dung và chân trang ---- */
@@ -533,7 +483,7 @@ h1, h2, h3, h4, h5, h6,
     border-color: var(--gq-vien) !important;
 }
 
-/* "Nâng cao" – nâu cam, kèm ký hiệu ▲ */
+/* Nhãn cảnh báo nhẹ (ví dụ "Đang xây dựng") – nâu cam */
 .badge.text-bg-warning {
     background-color: var(--gq-nhan) !important;
     color: #fdfaf5 !important;
@@ -692,11 +642,6 @@ textarea:focus-visible {
 
 .gq-the-loi-tat .card-title {
     color: var(--gq-nhan);
-}
-
-/* Nhãn "Nâng cao" kèm ký hiệu, không chỉ dựa vào màu (NFR-11). */
-.gq-nhan-nang-cao::before {
-    content: "▲ ";
 }
 
 /* Trạng thái trang "Đang xây dựng". */

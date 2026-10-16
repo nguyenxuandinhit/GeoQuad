@@ -334,9 +334,9 @@ Mỗi use case Release 1 được đặc tả theo mẫu: tác nhân, mô tả, 
 | **Tiền điều kiện** | Không có. |
 | **Hậu điều kiện** | Người dùng xem được nội dung; nếu là Học sinh và bấm "Em đã hiểu", khái niệm được đánh dấu đã học. |
 | **Luồng chính** | Người dùng mở "Thư viện kiến thức".<br>Hệ thống hiển thị danh sách khái niệm theo lớp (Học sinh: mặc định lớp của mình; Khách: chọn lớp trên giao diện).<br>Người dùng lọc theo cấp, lớp, loại nội dung (hình, tính chất, dấu hiệu, công thức).<br>Người dùng chọn một khái niệm.<br>Hệ thống hiển thị chi tiết: định nghĩa, hình minh họa, tính chất, dấu hiệu nhận biết, công thức, tình huống thực tế liên quan, bài tập liên quan, các hình liên quan (tổng quát hơn/đặc biệt hơn).<br>Học sinh bấm "Em đã hiểu"; hệ thống ghi nhận đã học. |
-| **Luồng thay thế / ngoại lệ** | 2a. Nội dung thuộc lớp cao hơn: ẩn mặc định; nếu người dùng bật "xem trước kiến thức nâng cao" thì hiển thị kèm nhãn "Nâng cao" (BR-04).<br>5a. Khái niệm chưa có tính chất/dấu hiệu/công thức: ẩn mục tương ứng thay vì hiển thị mục rỗng.<br>6a. Khách bấm "Em đã hiểu": mời đăng nhập, không lưu (BR-09). |
+| **Luồng thay thế / ngoại lệ** | 2a. Nội dung thuộc lớp cao hơn: luôn ẩn, lọc ngay trong truy vấn (BR-04).<br>5a. Khái niệm chưa có tính chất/dấu hiệu/công thức: ẩn mục tương ứng thay vì hiển thị mục rỗng.<br>6a. Khách bấm "Em đã hiểu": mời đăng nhập, không lưu (BR-09). |
 | **Quy tắc nghiệp vụ** | BR-04, BR-09, BR-11, BR-13 |
-| **Tiêu chí chấp nhận** | Cho khái niệm "Hình chữ nhật", khi mở chi tiết thì hiển thị định nghĩa, tính chất, dấu hiệu nhận biết và công thức chu vi, diện tích đúng định dạng toán.<br>Cho học sinh lớp 4, khi duyệt thư viện thì không thấy "Hình thang cân" (lớp 6) trừ khi bật xem trước kiến thức nâng cao. |
+| **Tiêu chí chấp nhận** | Cho khái niệm "Hình chữ nhật", khi mở chi tiết thì hiển thị định nghĩa, tính chất, dấu hiệu nhận biết và công thức chu vi, diện tích đúng định dạng toán.<br>Cho học sinh lớp 4, khi duyệt thư viện thì không thấy "Hình thang cân" (lớp 6). |
 
 ### UC-04 – Tìm kiếm kiến thức
 
@@ -513,7 +513,7 @@ Mỗi use case Release 1 được đặc tả theo mẫu: tác nhân, mô tả, 
 | BR-01 | Tên đăng nhập gồm 4–20 ký tự (chữ không dấu, số, gạch dưới), không phân biệt hoa thường, duy nhất trong hệ thống. |
 | BR-02 | Mật khẩu tối thiểu 8 ký tự; được lưu dưới dạng băm, không lưu bản rõ, không ghi vào nhật ký. |
 | BR-03 | Cấp học: Cấp 1 = lớp 1–5, Cấp 2 = lớp 6–9, Cấp 3 = lớp 10–12. Mỗi học sinh thuộc đúng một lớp tại một thời điểm. |
-| BR-04 | Mặc định chỉ hiển thị nội dung từ lớp hiện tại của học sinh trở xuống. Nội dung lớp cao hơn bị ẩn; khi người dùng bật "xem trước kiến thức nâng cao" thì hiển thị kèm nhãn "Nâng cao". Khách chọn lớp ngay trên giao diện. |
+| BR-04 | Chỉ hiển thị nội dung từ lớp hiện tại của học sinh trở xuống (ví dụ lớp 8 thấy kiến thức lớp 1–8). Nội dung lớp cao hơn luôn bị ẩn, lọc ngay trong truy vấn. Khách chọn lớp ngay trên giao diện. |
 | BR-05 | Chấm bài: trắc nghiệm đúng khi chọn đúng đáp án duy nhất; bài đáp án số đúng khi sai lệch không vượt quá sai số cho phép của bài (mặc định 0,01) và đơn vị khớp yêu cầu của đề. |
 | BR-06 | Khái niệm "cần ôn lại": xét tối đa 5 lần làm gần nhất của các bài liên quan khái niệm đó (tối thiểu 3 lần); tỉ lệ đúng dưới 60% thì xếp vào danh sách cần ôn. Ngưỡng là tham số cấu hình. |
 | BR-07 | Gợi ý dấu hiệu nhận biết xếp theo số điều kiện còn thiếu tăng dần. Hình đã biết thỏa yêu cầu "hình nền" của một dấu hiệu khi là chính hình đó hoặc là trường hợp đặc biệt của hình đó. |
@@ -829,7 +829,7 @@ Màn hình được mô tả bằng lời (không vẽ khung giao diện); hình
 | SCR-01 | **Trang chủ** | Điểm vào: chọn lớp nhanh, tìm kiếm, lối tắt tới các tính năng. | Ô tìm kiếm lớn; thẻ lối tắt (Bản đồ kiến thức, Nên dùng định lý nào?, Hình học quanh ta, Bài tập, Máy tính hình học); bộ chọn lớp (khách); lời chào và gợi ý (học sinh). | UC-03, UC-04 |
 | SCR-02 | **Đăng ký** | Tạo tài khoản học sinh. | Tên đăng nhập, mật khẩu, nhập lại mật khẩu, biệt danh, lớp, ô xác nhận quyền riêng tư và đồng ý của cha mẹ, nút Đăng ký. | UC-01 |
 | SCR-03 | **Đăng nhập** | Xác thực người dùng. | Tên đăng nhập, mật khẩu, nút Đăng nhập, liên kết Đăng ký. | UC-02 |
-| SCR-04 | **Thư viện kiến thức** | Duyệt kiến thức theo lớp. | Bộ lọc cấp/lớp/loại; danh sách thẻ khái niệm; công tắc "xem trước kiến thức nâng cao". | UC-03 |
+| SCR-04 | **Thư viện kiến thức** | Duyệt kiến thức theo lớp. | Bộ lọc cấp/lớp/loại; danh sách thẻ khái niệm. | UC-03 |
 | SCR-05 | **Chi tiết khái niệm** | Đọc đầy đủ một khái niệm. | Các thẻ tab: Định nghĩa · Tính chất · Dấu hiệu nhận biết · Công thức · Ví dụ thực tế · Bài tập; hình SVG; nút "Em đã hiểu"; liên kết hình liên quan. | UC-03, UC-07 |
 | SCR-06 | **Kết quả tìm kiếm** | Hiển thị kết quả tìm. | Danh sách kết quả gom theo loại; đoạn trích; nhãn lớp. | UC-04 |
 | SCR-07 | **Bản đồ kiến thức** | Quan sát quan hệ giữa các hình. | Khung đồ thị; bộ chọn lớp; chú giải màu theo cấp; khung tóm tắt khi chọn nút. | UC-05 |
@@ -1176,7 +1176,7 @@ Ký hiệu sprint: S1 = Sprint 1; S2 = Sprint 2 (cam kết); S2* = Sprint 2, là
 | US-07 | **Là khách, tôi muốn dùng thử tra cứu, tính toán, tình huống, bài tập mà không cần đăng ký.**<br>• Khách làm bài không lưu kết quả và được mời đăng nhập. | FR-03 | 1 | Must | S1 |
 | US-08 | **Là học sinh, tôi muốn đổi biệt danh, lớp, mật khẩu để thông tin luôn đúng.**<br>• Đổi lớp thì nội dung mặc định đổi theo.<br>• Đổi mật khẩu yêu cầu mật khẩu cũ. | FR-04 | 2 | Should | S2* |
 | **EP-02 – Tra cứu kiến thức** |   |   |   |   |   |
-| US-09 | **Là học sinh, tôi muốn duyệt thư viện kiến thức theo lớp để chỉ thấy nội dung phù hợp với mình.**<br>• Học sinh lớp 4 không thấy nội dung lớp 6 trừ khi bật xem trước nâng cao. | FR-10 | 2 | Must | S1 |
+| US-09 | **Là học sinh, tôi muốn duyệt thư viện kiến thức theo lớp để chỉ thấy nội dung phù hợp với mình.**<br>• Học sinh lớp 4 không thấy nội dung lớp 6. | FR-10 | 2 | Must | S1 |
 | US-10 | **Là học sinh, tôi muốn xem chi tiết một hình (định nghĩa, tính chất, dấu hiệu, công thức) để học và ôn lại.**<br>• Công thức hiển thị bằng KaTeX.<br>• Mục rỗng không hiển thị.<br>• Bấm "Em đã hiểu" ghi nhận đã học (học sinh đăng nhập). | FR-11 | 5 | Must | S1 |
 | US-11 | **Là người dùng, tôi muốn tìm kiếm bằng từ khóa có hoặc không dấu để ra ngay kiến thức cần tìm.**<br>• "hinh thoi" và "hình thoi" cùng đưa "Hình thoi" lên đầu.<br>• Ký tự đặc biệt không gây lỗi. | FR-12 | 3 | Must | S1 |
 | US-12 | **Là học sinh, tôi muốn xem bản đồ kiến thức để hiểu hình nào là trường hợp đặc biệt của hình nào.**<br>• Hình vuông nối tới hình chữ nhật và hình thoi.<br>• Lọc theo lớp hoạt động.<br>• Chọn nút mở được chi tiết. | FR-13 | 5 | Must | S1 |

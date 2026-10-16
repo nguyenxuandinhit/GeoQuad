@@ -44,8 +44,6 @@ public class ChiTietServiceTests
         public string? BietDanh { get; init; }
         public bool LaQuanTri { get; init; }
         public int Lop { get; init; } = 8;
-        public bool XemNangCao { get; init; }
-        public int LopHienThi => XemNangCao ? 12 : Lop;
     }
 
     private static ChiTietKhaiNiem HinhThoi(
@@ -84,40 +82,16 @@ public class ChiTietServiceTests
     }
 
     [Fact]
-    public async Task TruyenLopHienThiXuongTruyVan()
+    public async Task TruyenLopCuaHocSinhXuongTruyVan()
     {
+        // BR-04: truy vấn chỉ lấy nội dung tới lớp của em, lọc ngay trong Cypher.
         var repo = new RepoGia { KetQua = HinhThoi() };
-        var service = new ChiTietService(repo, new NguoiDungGia { Lop = 4, XemNangCao = true });
-
-        await service.LayAsync("HINH_THOI");
-
-        Assert.Equal(12, repo.LopNhan);
-    }
-
-    [Fact]
-    public async Task GanNhanNangCaoChoTungMucVuotLopHocSinh()
-    {
-        // Học sinh lớp 4 bật xem trước: tính chất lớp 8 của hình thoi phải mang nhãn "Nâng cao".
-        var repo = new RepoGia
-        {
-            KetQua = HinhThoi(
-                tinhChat:
-                [
-                    new MucTinhChat("TC_THOI_1", "Hai đường chéo vuông góc với nhau.", 8)
-                ],
-                congThuc:
-                [
-                    new MucCongThuc("CT_THOI_CV", "Chu vi hình thoi", "P = 4a", 4),
-                    new MucCongThuc("CT_HCN_CHEO", "Đường chéo", "d = a", 8)
-                ])
-        };
-        var service = new ChiTietService(repo, new NguoiDungGia { Lop = 4, XemNangCao = true });
+        var service = new ChiTietService(repo, new NguoiDungGia { Lop = 4 });
 
         var vm = (await service.LayAsync("HINH_THOI"))!;
 
-        Assert.True(vm.ChiTiet.TinhChat[0].NangCao);
-        Assert.False(vm.ChiTiet.CongThuc.Single(c => c.Ma == "CT_THOI_CV").NangCao);
-        Assert.True(vm.ChiTiet.CongThuc.Single(c => c.Ma == "CT_HCN_CHEO").NangCao);
+        Assert.Equal(4, repo.LopNhan);
+        Assert.Equal(4, vm.LopHocSinh);
     }
 
     [Fact]

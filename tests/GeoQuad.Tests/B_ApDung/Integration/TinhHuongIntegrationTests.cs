@@ -26,9 +26,9 @@ public sealed class TinhHuongIntegrationTests(Neo4jFixture fixture)
         Assert.DoesNotContain("/ApDung/TinhHuong/Xem/TH-01",await lowList.Content.ReadAsStringAsync());
         using var lowDetail = await server.Client.GetAsync("/ApDung/TinhHuong/Xem/TH-01");
         Assert.Equal(HttpStatusCode.NotFound,lowDetail.StatusCode);
-        server.Cookies.Add(server.Client.BaseAddress!,new Cookie("gq_nangcao","1"));
-        using var advanced = await server.Client.GetAsync("/ApDung/TinhHuong/Xem/TH-01");
-        Assert.Contains("DH_HBH_2",await advanced.Content.ReadAsStringAsync());
+        server.Cookies.Add(server.Client.BaseAddress!,new Cookie("gq_lop","12"));
+        using var grade12 = await server.Client.GetAsync("/ApDung/TinhHuong/Xem/TH-01");
+        Assert.Contains("DH_HBH_2",await grade12.Content.ReadAsStringAsync());
         await fixture.Db.WriteAsync("MATCH (d:DinhLy {ma:'DH_HCN_3'})-[r:THUOC_LOP]->() DELETE r");
         using var incomplete = await server.Client.GetAsync("/ApDung/TinhHuong/Xem/TH-01");
         Assert.Equal(HttpStatusCode.NotFound,incomplete.StatusCode);

@@ -9,10 +9,10 @@ public static class BanDoQuyTac
 {
     /// <summary>
     /// Lớp thực sự dùng để truy vấn: lấy lớp người dùng chọn nhưng không bao giờ vượt
-    /// quá lớp người đó được xem (BR-04).
+    /// quá lớp của học sinh (BR-04).
     /// </summary>
-    public static int LopXem(int? lopLoc, int lopHienThi)
-        => lopLoc is null ? lopHienThi : Math.Min(lopLoc.Value, lopHienThi);
+    public static int LopXem(int? lopLoc, int lopHocSinh)
+        => lopLoc is null ? lopHocSinh : Math.Min(lopLoc.Value, lopHocSinh);
 
     /// <summary>
     /// Dựng danh sách mũi tên từ <c>LaDacBietCua</c> của từng nút.

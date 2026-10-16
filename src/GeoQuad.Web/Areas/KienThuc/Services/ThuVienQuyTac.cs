@@ -65,12 +65,6 @@ public static class ThuVienQuyTac
     public static int? ChuanHoaLop(int? lop)
         => lop is >= QuyUoc.LopNhoNhat and <= QuyUoc.LopLonNhat ? lop : null;
 
-    /// <summary>
-    /// Nội dung được gắn nhãn "Nâng cao" khi lớp của nó lớn hơn lớp thật của học sinh
-    /// (README quy ước 2, điểm 7 — BR-04).
-    /// </summary>
-    public static bool LaNangCao(int lopNoiDung, int lopHocSinh) => lopNoiDung > lopHocSinh;
-
     public static string TenLoai(string? loai)
         => loai is not null && TenLoaiTiengViet.TryGetValue(loai, out var ten) ? ten : "Khác";
 
@@ -79,8 +73,8 @@ public static class ThuVienQuyTac
 
     /// <summary>
     /// Lớp nhỏ nhất của một cấp (BR-03): CAP_1 → 1, CAP_2 → 6, CAP_3 → 10.
-    /// Dùng để biết người đang xem tới lớp N có với tới cấp đó không: thư viện chỉ hiện
-    /// nội dung lớp ≤ N (quy ước 2.7), nên chọn một cấp nằm trên N thì chắc chắn rỗng và
+    /// Dùng để biết học sinh lớp N có với tới cấp đó không: thư viện chỉ hiện
+    /// nội dung lớp ≤ N (BR-04), nên chọn một cấp nằm trên N thì chắc chắn rỗng và
     /// phải nói rõ lý do thay vì để trang trống (US-09).
     /// </summary>
     public static int LopNhoNhatCuaCap(string? cap) => cap switch
@@ -91,8 +85,8 @@ public static class ThuVienQuyTac
         _ => QuyUoc.LopNhoNhat
     };
 
-    /// <summary>Đúng khi người đang xem tới <paramref name="lopHienThi"/> có nội dung nào của cấp này.</summary>
-    public static bool CapTrongTam(string? cap, int lopHienThi) => LopNhoNhatCuaCap(cap) <= lopHienThi;
+    /// <summary>Đúng khi học sinh lớp <paramref name="lopHocSinh"/> có nội dung nào của cấp này.</summary>
+    public static bool CapTrongTam(string? cap, int lopHocSinh) => LopNhoNhatCuaCap(cap) <= lopHocSinh;
 
     /// <summary>Cấp học suy ra từ số lớp (BR-03), dùng cho nhãn trên thẻ nội dung.</summary>
     public static string CapTheoLop(int lop) => lop switch

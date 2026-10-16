@@ -54,7 +54,6 @@ public sealed record MayTinhViewModel
     /// <summary>Hình vẽ theo số đo vừa nhập (US-16).</summary>
     public string? Svg { get; init; }
 
-    public int LopHienThi { get; init; }
     public int LopHocSinh { get; init; }
     public bool LaCap1 => LopHocSinh <= 5;
 

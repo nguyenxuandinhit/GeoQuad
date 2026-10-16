@@ -9,4 +9,4 @@ public sealed record GoiYCatalog(IReadOnlyList<HinhItem> Hinh, IReadOnlyList<Die
 public sealed record GoiYRequest(string Nen, string Dich, IReadOnlyList<string> Co);
 public sealed record GoiYThe(DauHieuItem DauHieu, IReadOnlyList<DieuKienItem> DaCo, IReadOnlyList<DieuKienItem> ConThieu);
 public sealed record GoiYViewModel(GoiYCatalog Catalog, GoiYRequest Request, IReadOnlyList<GoiYThe> The,
-    IReadOnlyList<IReadOnlyList<GoiYThe>> Chuoi, string? ThongBao, int Lop, bool NangCao);
+    IReadOnlyList<IReadOnlyList<GoiYThe>> Chuoi, string? ThongBao, int Lop);

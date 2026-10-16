@@ -25,13 +25,13 @@ public sealed class TinhHuongServiceTests
     }
 
     [Fact]
-    public async Task InvalidDetailDoesNotQueryAndAdvancedBadgeUsesActualGrade()
+    public async Task InvalidDetailDoesNotQueryAndReadUsesActualGrade()
     {
         var repo=new ScenarioFake { Detail=new("TH-01","Tên","BC_NHA_CUA","Nhà cửa","Mô tả","Lời giải",true,8,[]) };
-        var service=new TinhHuongService(repo,new CurrentUserGia(3,true));
+        var service=new TinhHuongService(repo,new CurrentUserGia(3));
         Assert.Null(await service.XemAsync(" "));Assert.Equal(0,repo.Reads);
         var model=await service.XemAsync("TH-01");
-        Assert.True(model!.NangCao);Assert.Equal(12,repo.Grade);Assert.Equal("TH-01",repo.Code);
+        Assert.NotNull(model);Assert.Equal(3,repo.Grade);Assert.Equal("TH-01",repo.Code);
     }
 
     private sealed class ScenarioFake : ITinhHuongRepository

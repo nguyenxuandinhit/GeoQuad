@@ -78,9 +78,9 @@ public sealed class LamBaiRepository(IGraphDb db) : ILamBaiRepository
         RETURN n.ma AS ma ORDER BY n.ma LIMIT 1
         """;
 
-    public async Task<KienThucBaiTap> KienThucLienQuanAsync(string ma, int lopHienThi)
+    public async Task<KienThucBaiTap> KienThucLienQuanAsync(string ma, int lopHocSinh)
     {
-        var rows = await db.ReadAsync(CypherKienThucLienQuan, new { ma, lop = lopHienThi });
+        var rows = await db.ReadAsync(CypherKienThucLienQuan, new { ma, lop = lopHocSinh });
         if (rows.Count == 0) return KienThucBaiTap.Rong;
         var kienThuc = rows[0]["kienThuc"].As<List<IDictionary<string, object>>>()
             .Select(x => new KienThucLienQuan(x["ma"].As<string>(), x["ten"].As<string>(),
@@ -92,9 +92,9 @@ public sealed class LamBaiRepository(IGraphDb db) : ILamBaiRepository
         return new KienThucBaiTap(kienThuc, khaiNiem);
     }
 
-    public async Task<BaiTapChiTiet?> ChiTietAsync(string ma, int lopHienThi)
+    public async Task<BaiTapChiTiet?> ChiTietAsync(string ma, int lopHocSinh)
     {
-        var rows = await db.ReadAsync(CypherChiTiet, new { ma, lop = lopHienThi });
+        var rows = await db.ReadAsync(CypherChiTiet, new { ma, lop = lopHocSinh });
         if (rows.Count == 0) return null;
         var r = rows[0];
         return new BaiTapChiTiet(r["ma"].As<string>(), r["de"].As<string>(), r["loai"].As<string>(),
@@ -129,9 +129,9 @@ public sealed class LamBaiRepository(IGraphDb db) : ILamBaiRepository
         return saved;
     }
 
-    public async Task<bool> LaChungMinhCongKhaiAsync(string ma, int lopHienThi)
+    public async Task<bool> LaChungMinhCongKhaiAsync(string ma, int lopHocSinh)
     {
-        var rows = await db.ReadAsync(CypherProofPublic, new { ma, lop = lopHienThi });
+        var rows = await db.ReadAsync(CypherProofPublic, new { ma, lop = lopHocSinh });
         return rows.Count > 0 && rows[0]["ok"].As<bool>();
     }
 
@@ -147,9 +147,9 @@ public sealed class LamBaiRepository(IGraphDb db) : ILamBaiRepository
             r["seconds"].As<int>(), false, r["maBaiTap"].As<string>());
     }
 
-    public async Task<string?> BaiTiepTheoKhachAsync(string maHienTai, int lopHienThi)
+    public async Task<string?> BaiTiepTheoKhachAsync(string maHienTai, int lopHocSinh)
     {
-        var rows = await db.ReadAsync(CypherBaiTiepTheo, new { ma = maHienTai, lop = lopHienThi });
+        var rows = await db.ReadAsync(CypherBaiTiepTheo, new { ma = maHienTai, lop = lopHocSinh });
         return rows.Count == 0 ? null : rows[0]["ma"].As<string>();
     }
 

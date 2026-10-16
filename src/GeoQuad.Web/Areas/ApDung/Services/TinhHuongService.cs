@@ -11,13 +11,13 @@ public sealed class TinhHuongService(ITinhHuongRepository repo,ICurrentUser user
         var contexts = await repo.BoiCanhAsync();
         if (boiCanh != null && !contexts.Any(c => c.Ma == boiCanh))
             throw new ArgumentException("Bối cảnh không nằm trong danh mục.");
-        var scenarios = await repo.DocAsync(user.LopHienThi);
+        var scenarios = await repo.DocAsync(user.Lop);
         return new(contexts,scenarios,boiCanh,user.Lop);
     }
     public async Task<TinhHuongViewModel?> XemAsync(string ma)
     {
         if (string.IsNullOrWhiteSpace(ma) || ma.Length > 64) return null;
-        var item = (await repo.DocAsync(user.LopHienThi,ma)).SingleOrDefault();
-        return item == null ? null : new(item,item.Lop > user.Lop);
+        var item = (await repo.DocAsync(user.Lop,ma)).SingleOrDefault();
+        return item == null ? null : new(item);
     }
 }

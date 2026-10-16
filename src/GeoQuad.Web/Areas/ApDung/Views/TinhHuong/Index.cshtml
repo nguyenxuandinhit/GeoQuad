@@ -12,11 +12,11 @@
 @foreach(var context in Model.BoiCanh.Where(c => Model.Loc == null || c.Ma == Model.Loc)) {
     <section><h2 class="mt-3">@context.Ten</h2>
     @if(!Model.TinhHuong.Any(t => t.MaBoiCanh == context.Ma)) {
-        <p>Chưa có tình huống phù hợp lớp của em ở bối cảnh này. Em thử bối cảnh khác hoặc bật Xem trước kiến thức nâng cao.</p>
+        <p>Chưa có tình huống phù hợp lớp của em ở bối cảnh này. Em thử chọn bối cảnh khác nhé.</p>
     }
     @foreach(var t in Model.TinhHuong.Where(t => t.MaBoiCanh == context.Ma)) {
         <article><h3 class="fs-5"><a asp-action="Xem" asp-route-id="@t.Ma">@t.Ten</a></h3>
-        <p>Lớp @t.Lop @if(t.Lop > Model.Lop) { <span class="badge bg-info text-dark">Nâng cao</span> }</p><p>@t.MoTa</p></article>
+        <p>Lớp @t.Lop</p><p>@t.MoTa</p></article>
     }
     </section>
 }

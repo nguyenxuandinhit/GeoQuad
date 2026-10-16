@@ -36,8 +36,6 @@ public sealed class LoTrinhServiceTests
         public string? BietDanh => "Mai";
         public bool LaQuanTri => false;
         public int Lop => 8;
-        public bool XemNangCao => false;
-        public int LopHienThi => 8;
     }
 
     [Fact]

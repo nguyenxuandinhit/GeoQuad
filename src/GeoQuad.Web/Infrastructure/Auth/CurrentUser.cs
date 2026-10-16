@@ -36,8 +36,4 @@ public sealed class CurrentUser : ICurrentUser
                 : QuyUoc.LopMacDinh;
         }
     }
-
-    public bool XemNangCao => _http?.Request.Cookies[GqCookie.NangCao] == "1";
-
-    public int LopHienThi => XemNangCao ? QuyUoc.LopLonNhat : Lop;
 }

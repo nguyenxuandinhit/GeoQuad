@@ -25,7 +25,7 @@
                     <label class="form-label" for="gq-hinh">Hình</label>
                     <select class="form-select gq-nut" id="gq-hinh" name="hinh"
                             onchange="this.form.submit()">
-                        <option value="">— Em chọn hình —</option>
+                        <option value="">- Em chọn hình -</option>
                         @foreach (var h in Model.CacHinh)
                         {
                             <option value="@h.Ma" selected="@(Model.Hinh == h.Ma)">@h.Ten</option>
@@ -61,7 +61,7 @@
                             @if (ct.TuHinh != Model.TenHinh)
                             {
                                 <p class="form-text mb-0">
-                                    Công thức này là của <strong>@ct.TuHinh.ToLower()</strong> —
+                                    Công thức này là của <strong>@ct.TuHinh.ToLower()</strong> -
                                     @Model.TenHinh?.ToLower() là một trường hợp đặc biệt nên dùng được.
                                 </p>
                             }
@@ -108,7 +108,8 @@
                 <div class="alert alert-info" role="status">
                     <strong>Ở lớp của em chưa có công thức nào cho hình này.</strong>
                     <div class="small mt-1">
-                        Em thử bật "Xem trước kiến thức nâng cao" ở thanh trên để thấy công thức của lớp trên.
+                        Em chọn một hình khác trong danh sách, hoặc xem phần Tính chất của hình này
+                        trong Thư viện kiến thức nhé.
                     </div>
                 </div>
             }

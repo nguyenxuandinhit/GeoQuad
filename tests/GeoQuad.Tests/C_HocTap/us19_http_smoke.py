@@ -85,10 +85,11 @@ def main():
         assert page.count(marker + '_VALID') == 2, 'Multiple concept links duplicated card'
         page = get('/HocTap/BaiTap')
         assert marker + '_HIGH' not in page, 'Student saw class 9'
-        post('/Home/NangCao', {'__RequestVerificationToken':token(page), 'bat':'true'})
-        page = get('/HocTap/BaiTap')
-        assert marker + '_HIGH' in page and 'Nâng cao' in page, 'Advanced preview missing'
-        print('US-19 HTTP/Neo4j: PASS (combined filter, visibility/review/class, guest, history, preview)')
+        # BR-04: no preview mode any more, so class 9 stays hidden from a class 8 account,
+        # including when the filter asks for it explicitly.
+        page = get('/HocTap/BaiTap?lop=9')
+        assert marker + '_HIGH' not in page, 'Class 9 leaked through the grade filter'
+        print('US-19 HTTP/Neo4j: PASS (combined filter, visibility/review/class, guest, history)')
     finally:
         graph(f"MATCH (n) WHERE n.smokeMarker='{marker}' OR "
               f"(n:TaiKhoan AND n.tenDangNhap='{username}') DETACH DELETE n")

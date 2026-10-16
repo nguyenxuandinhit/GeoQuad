@@ -21,8 +21,6 @@ public sealed class GoiYServiceTests
         public string? BietDanh => "An";
         public bool LaQuanTri => false;
         public int Lop => 8;
-        public bool XemNangCao => false;
-        public int LopHienThi => 8;
     }
 
     [Fact]

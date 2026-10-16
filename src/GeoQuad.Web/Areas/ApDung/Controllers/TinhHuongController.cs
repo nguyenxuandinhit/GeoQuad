@@ -52,7 +52,7 @@ public sealed class TinhHuongController(TinhHuongService service,DoDacRepository
             }
             var result=KiemTraHinhDang.KiemTra(input!);
             if(result.Loi != null) { ModelState.AddModelError("",result.Loi); return View("Xem",model); }
-            var grounds=await measurements.DauHieuAsync(result.DauHieu,user.LopHienThi);
+            var grounds=await measurements.DauHieuAsync(result.DauHieu,user.Lop);
             if(!grounds.Select(g => g.Ma).ToHashSet().SetEquals(result.DauHieu))
             {
                 ModelState.AddModelError("","Chưa có đủ căn cứ đã rà soát cho kết luận này. Em thử lại sau nhé.");

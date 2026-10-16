@@ -22,14 +22,14 @@ public class KhungTests
     }
 
     [Theory]
-    [InlineData(8, false, 8)]
-    [InlineData(3, true, 12)]
-    public void GuestKhongCoTaiKhoanVaLopHienThiDung(int lop, bool nangCao, int hienThi)
+    [InlineData(8)]
+    [InlineData(3)]
+    public void GuestKhongCoTaiKhoanVaLopDung(int lop)
     {
-        var user = new CurrentUserGia(lop, nangCao);
+        var user = new CurrentUserGia(lop);
         Assert.False(user.DaDangNhap);
         Assert.Null(user.TaiKhoanId);
-        Assert.Equal(hienThi, user.LopHienThi);
+        Assert.Equal(lop, user.Lop);
     }
 
     [Theory]

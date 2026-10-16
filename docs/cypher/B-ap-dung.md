@@ -167,7 +167,7 @@ trong `SeedBTests.cs`; kết quả chạy là bằng chứng counts, hướng/th
 ### US-07 · CurrentUser và guest
 
 Tái sử dụng `ICurrentUser`: guest mặc định lớp 8, lớp lấy từ cookie `gq_lop`,
-nâng cao từ `gq_nangcao`; `LopHienThi=12` khi bật nâng cao. Public B truyền lớp
+lớp của khách từ `gq_lop`, mặc định 8; không có chế độ xem trước lớp trên. Public B truyền lớp
 hiển thị vào query; `TaiKhoanId=null` của guest không được dùng để ghi học tập.
 Test CurrentUser chung vẫn là bằng chứng middleware/helper gốc; double B chỉ
 cung cấp seam cho service tests. Chưa có buổi kickoff/trình bày nhóm được ghi.
@@ -625,7 +625,7 @@ SHOW TRANSACTIONS YIELD database WHERE database='neo4j' RETURN count(*) AS n;
 ### Checklist bàn giao B
 
 1. C review độc lập nguồn/toán học của seed (đặc biệt căn cứ góc ở CM-04); ghi người/ngày/kết luận rồi mới đổi NHAP thành DA_RA_SOAT. Không copy trạng thái `reviewTestOnly` từ fixture sang dev.
-2. A kiểm tra các URL `/ApDung/GoiY`, `/ApDung/ChungMinh/Xem/CM-01`, `/ApDung/TinhHuong/Xem/TH-01`, `/QuanTri/BaiTap`; dùng cả guest lớp3/8, nâng cao và admin.
+2. A kiểm tra các URL `/ApDung/GoiY`, `/ApDung/ChungMinh/Xem/CM-01`, `/ApDung/TinhHuong/Xem/TH-01`, `/QuanTri/BaiTap`; dùng cả guest lớp 3/8 và admin.
 3. C hoàn thiện reader bài tập/tiến độ trước kiểm thử bài ẩn và ≥2 Cypher C. Bản đồ/trang hình A đã tích hợp từ main95a8519; ngân hàng bài tập và tiến độ C còn controller khung. Link căn cứ B sang trang hình A có test HTTP trên trạng thái tích hợp.
 4. Chạy kiểm tra 360px/desktop, keyboard, KaTeX và network4G; phiên tool hiện không có browser khả dụng nên chưa có evidence visual.
 5. A đưa lệnh backup/restore đã nghiệm thu vào README và kiểm tra máy sạch≤15phút; C đưa bước demo B/recovery vào kịch bản chung. Không đóng US-26/27 chỉ vì test B đạt.

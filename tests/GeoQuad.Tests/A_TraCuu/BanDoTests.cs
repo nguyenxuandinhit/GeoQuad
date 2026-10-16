@@ -193,8 +193,6 @@ public class BanDoTests
         public string? BietDanh { get; init; }
         public bool LaQuanTri { get; init; }
         public int Lop { get; init; } = 8;
-        public bool XemNangCao { get; init; }
-        public int LopHienThi => XemNangCao ? 12 : Lop;
     }
 
     [Fact]

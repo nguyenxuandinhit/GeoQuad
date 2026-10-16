@@ -12,8 +12,6 @@ public sealed record KetQuaTimKiem(
     double Diem,
     string? MaHinh)
 {
-    public bool NangCao { get; init; }
-
     public string Nhom => TimKiemQuyTac.NhomHienThi(Nhan);
 
     public string DoanTrichNgan => TimKiemQuyTac.CatDoanTrich(DoanTrich);
@@ -44,7 +42,6 @@ public sealed class TimKiemViewModel
     /// <summary>Từ khoá rỗng: không gửi truy vấn, chỉ nhắc nhập.</summary>
     public bool ChuaNhapTuKhoa { get; init; }
 
-    public int LopHienThi { get; init; }
     public int LopHocSinh { get; init; }
     public bool LaCap1 => LopHocSinh <= 5;
 

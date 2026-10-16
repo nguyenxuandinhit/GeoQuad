@@ -23,7 +23,6 @@ public sealed class TimKiemService : ITimKiemService
 
     public async Task<TimKiemViewModel> TimAsync(string? tuKhoa)
     {
-        var lopHienThi = _nguoiDung.LopHienThi;
         var lopHocSinh = _nguoiDung.Lop;
 
         // Từ khoá rỗng: không gửi truy vấn, chỉ nhắc người dùng nhập.
@@ -34,12 +33,11 @@ public sealed class TimKiemService : ITimKiemService
             {
                 TuKhoa = tuKhoa,
                 ChuaNhapTuKhoa = true,
-                LopHienThi = lopHienThi,
                 LopHocSinh = lopHocSinh
             };
         }
 
-        var ketQua = await _repo.TimAsync(truyVanAnd, lopHienThi);
+        var ketQua = await _repo.TimAsync(truyVanAnd, lopHocSinh);
         var daNoiLong = false;
 
         // Không có kết quả khi nối bằng AND thì nới sang OR.
@@ -48,18 +46,14 @@ public sealed class TimKiemService : ITimKiemService
             var truyVanOr = TimKiemQuyTac.TaoTruyVan(tuKhoa, TimKiemQuyTac.ToanTuOr);
             if (truyVanOr is not null && truyVanOr != truyVanAnd)
             {
-                ketQua = await _repo.TimAsync(truyVanOr, lopHienThi);
+                ketQua = await _repo.TimAsync(truyVanOr, lopHocSinh);
                 daNoiLong = ketQua.Count > 0;
             }
         }
 
-        var coNhan = ketQua
-            .Select(k => k with { NangCao = ThuVienQuyTac.LaNangCao(k.Lop, lopHocSinh) })
-            .ToList();
-
         var theoNhom = TimKiemQuyTac.ThuTuNhom
             .Select(nhom => (Nhom: nhom,
-                             Muc: (IReadOnlyList<KetQuaTimKiem>)coNhan.Where(k => k.Nhom == nhom).ToList()))
+                             Muc: (IReadOnlyList<KetQuaTimKiem>)ketQua.Where(k => k.Nhom == nhom).ToList()))
             .Where(x => x.Muc.Count > 0)
             .ToList();
 
@@ -67,9 +61,8 @@ public sealed class TimKiemService : ITimKiemService
         {
             TuKhoa = tuKhoa,
             TheoNhom = theoNhom,
-            TongSo = coNhan.Count,
+            TongSo = ketQua.Count,
             DaNoiLong = daNoiLong,
-            LopHienThi = lopHienThi,
             LopHocSinh = lopHocSinh
         };
     }

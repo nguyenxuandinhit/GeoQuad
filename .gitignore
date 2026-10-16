@@ -75,3 +75,7 @@ $RECYCLE.BIN/
 *.log
 outputs/
 work/
+
+## Claude Code (chi dung tren may ca nhan, khong thuoc pham vi 0/A/B/C)
+CLAUDE.md
+.claude/

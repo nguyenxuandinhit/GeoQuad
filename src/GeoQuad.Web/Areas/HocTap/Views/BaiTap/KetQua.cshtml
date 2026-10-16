@@ -17,7 +17,6 @@
                         @kt.Ten
                         @if (!string.IsNullOrWhiteSpace(kt.BieuThuc)) { <span>: @("$" + kt.BieuThuc + "$")</span> }
                         <span class="badge text-bg-light border">Lớp @kt.Lop</span>
-                        @if (kt.Lop > Model.LopHocSinh) { <span class="badge text-bg-warning">Nâng cao</span> }
                     </li>
                 }
             </ul>
@@ -32,7 +31,6 @@
                 {
                     <li class="list-inline-item">
                         <a asp-area="KienThuc" asp-controller="ThuVien" asp-action="ChiTiet" asp-route-id="@k.Ma">@k.Ten</a>
-                        @if (k.Lop > Model.LopHocSinh) { <span class="badge text-bg-warning">Nâng cao</span> }
                     </li>
                 }
             </ul>

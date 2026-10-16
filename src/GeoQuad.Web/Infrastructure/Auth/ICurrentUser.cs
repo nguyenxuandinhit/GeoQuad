@@ -15,15 +15,10 @@ public interface ICurrentUser
 
     bool LaQuanTri { get; }
 
-    /// <summary>Học sinh: claim "lop"; khách: cookie <c>gq_lop</c>; mặc định 8.</summary>
-    int Lop { get; }
-
-    /// <summary>Công tắc "Xem trước kiến thức nâng cao" (cookie <c>gq_nangcao</c>).</summary>
-    bool XemNangCao { get; }
-
     /// <summary>
-    /// Lớp dùng làm tham số <c>$lop</c> khi lọc nội dung (BR-04):
-    /// bằng 12 khi bật xem trước nâng cao, ngược lại bằng <see cref="Lop"/>.
+    /// Học sinh: claim "lop"; khách: cookie <c>gq_lop</c>; mặc định 8.
+    /// Cũng là tham số <c>$lop</c> khi lọc nội dung (BR-04): em chỉ thấy nội dung
+    /// từ lớp 1 tới lớp của mình.
     /// </summary>
-    int LopHienThi { get; }
+    int Lop { get; }
 }

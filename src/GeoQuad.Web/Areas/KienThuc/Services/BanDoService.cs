@@ -26,13 +26,13 @@ public sealed class BanDoService : IBanDoService
 
     public async Task<BanDoDuLieu> LayDuLieuAsync(int? lopLoc)
     {
-        // Lọc theo lớp nhưng không bao giờ vượt quá lớp người dùng được xem (BR-04).
-        var lop = BanDoQuyTac.LopXem(ThuVienQuyTac.ChuanHoaLop(lopLoc), _nguoiDung.LopHienThi);
+        // Lọc theo lớp nhưng không bao giờ vượt quá lớp của học sinh (BR-04).
+        var lop = BanDoQuyTac.LopXem(ThuVienQuyTac.ChuanHoaLop(lopLoc), _nguoiDung.Lop);
 
         var nut = await _repo.LayNutAsync(lop, _nguoiDung.TaiKhoanId);
         var canh = BanDoQuyTac.DungCanh(nut);
 
-        return new BanDoDuLieu(nut, canh, lop, _nguoiDung.Lop);
+        return new BanDoDuLieu(nut, canh, _nguoiDung.Lop);
     }
 
     public async Task<BanDoViewModel> LayTrangAsync(int? lopLoc, string? tu, string? den)

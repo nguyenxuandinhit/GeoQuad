@@ -44,37 +44,23 @@ public sealed class ChiTietService : IChiTietService
             return null;
         }
 
-        var lopHienThi = _nguoiDung.LopHienThi;
-        var chiTiet = await _repo.LayAsync(ma, lopHienThi, _nguoiDung.TaiKhoanId);
+        var lopHocSinh = _nguoiDung.Lop;
+        var chiTiet = await _repo.LayAsync(ma, lopHocSinh, _nguoiDung.TaiKhoanId);
         if (chiTiet is null)
         {
             return null;
         }
 
-        var lienQuan = await _repo.LayLienQuanAsync(ma, lopHienThi);
-        var lopHocSinh = _nguoiDung.Lop;
-
-        // Gắn nhãn "Nâng cao" cho từng mục vượt lớp thật của học sinh (quy ước 2.7).
-        var coNhan = chiTiet with
-        {
-            TinhChat = chiTiet.TinhChat
-                .Select(x => x with { NangCao = ThuVienQuyTac.LaNangCao(x.Lop, lopHocSinh) }).ToList(),
-            CongThuc = chiTiet.CongThuc
-                .Select(x => x with { NangCao = ThuVienQuyTac.LaNangCao(x.Lop, lopHocSinh) }).ToList(),
-            DauHieu = chiTiet.DauHieu
-                .Select(x => x with { NangCao = ThuVienQuyTac.LaNangCao(x.Lop, lopHocSinh) }).ToList()
-        };
+        var lienQuan = await _repo.LayLienQuanAsync(ma, lopHocSinh);
 
         return new ChiTietViewModel
         {
-            ChiTiet = coNhan,
+            ChiTiet = chiTiet,
             LienQuan = lienQuan,
-            Svg = HinhVeSvg.Ve(coNhan.KhaiNiem.Ma),
+            Svg = HinhVeSvg.Ve(chiTiet.KhaiNiem.Ma),
             LopHocSinh = lopHocSinh,
-            LopHienThi = lopHienThi,
             DaDangNhap = _nguoiDung.DaDangNhap,
-            MoiDangNhap = moiDangNhap,
-            NangCao = ThuVienQuyTac.LaNangCao(coNhan.Lop, lopHocSinh)
+            MoiDangNhap = moiDangNhap
         };
     }
 

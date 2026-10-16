@@ -248,7 +248,7 @@ Kiểm tra: sau đổi lớp 7 → 8, `HOC_LOP` chỉ còn trỏ tới lớp 8; 
 
 Kiểm tra bổ sung: URL `lop=abc` và `doKho=abc` báo “Bộ lọc không hợp lệ” qua HTTP, không mở rộng danh sách. Smoke sau sửa tiếp tục `PASS`; build/unit C vẫn 21/21. Kiểm kê CUA trả `apps=[]`, `browsers=[]`, nên phần kiểm tra trực quan 360px/keyboard còn mở, không được coi HTTP smoke là bằng chứng giao diện đã đạt.
 
-Ngày 08/10/2026 đã triển khai repository/service/controller/view. `dotnet test ... --filter FullyQualifiedName~C_HocTap` đạt **21/21** (gồm 5 case dịch vụ bài tập). `python tests/GeoQuad.Tests/C_HocTap/us19_http_smoke.py <container-test> http://localhost:5080` chạy HTTP thật trên Neo4j test cô lập, dùng fixtures mã ngẫu nhiên và dọn trong `finally`: lọc cấp 2 + lớp 8 + đáp án số + mức 2 + Hình thoi có BT-014 và đúng một thẻ fixture; bài lớp 9, ẩn và NHAP không xuất hiện; guest không thấy lịch sử; tài khoản lớp 8 có hai lượt làm/một đúng hiện “Đã làm: 2 lần · Đã đúng”; bật nâng cao thấy bài lớp 9 và nhãn Nâng cao; cấp/lớp mâu thuẫn hiện empty state. Kết quả `PASS`. Controller còn chặn ModelState cho số lớp/độ khó không hợp lệ, regression unit đạt. Chưa kiểm tra trực quan 360px/keyboard nên chưa đóng phase UI.
+Ngày 08/10/2026 đã triển khai repository/service/controller/view. `dotnet test ... --filter FullyQualifiedName~C_HocTap` đạt **21/21** (gồm 5 case dịch vụ bài tập). `python tests/GeoQuad.Tests/C_HocTap/us19_http_smoke.py <container-test> http://localhost:5080` chạy HTTP thật trên Neo4j test cô lập, dùng fixtures mã ngẫu nhiên và dọn trong `finally`: lọc cấp 2 + lớp 8 + đáp án số + mức 2 + Hình thoi có BT-014 và đúng một thẻ fixture; bài lớp 9, ẩn và NHAP không xuất hiện; guest không thấy lịch sử; tài khoản lớp 8 có hai lượt làm/một đúng hiện “Đã làm: 2 lần · Đã đúng”; lọc thẳng `lop=9` cũng không lọt bài lớp 9 (BR-04, không còn chế độ xem trước); cấp/lớp mâu thuẫn hiện empty state. Kết quả `PASS`. Controller còn chặn ModelState cho số lớp/độ khó không hợp lệ, regression unit đạt. Chưa kiểm tra trực quan 360px/keyboard nên chưa đóng phase UI.
 
 Hằng `BaiTapRepository.CypherLoc` (nguyên văn):
 
@@ -293,7 +293,7 @@ RETURN b.ma AS ma,b.de AS de,b.loai AS loai,l.so AS lop,b.doKho AS doKho,
        cm.ma AS maChungMinh LIMIT 1
 ```
 
-Khác README: thêm `trangThai:'DA_RA_SOAT'`, lọc lớp `$lop = LopHienThi` (BR-04) và bắt buộc có `LIEN_QUAN_DEN` (BR-08), để URL gõ tay không mở được bài nháp hay bài lớp cao hơn.
+Khác README: thêm `trangThai:'DA_RA_SOAT'`, lọc lớp `$lop = ICurrentUser.Lop` (BR-04) và bắt buộc có `LIEN_QUAN_DEN` (BR-08), để URL gõ tay không mở được bài nháp hay bài lớp cao hơn.
 
 **Kiến thức liên quan (`CypherKienThucLienQuan`, mới).** Chỉ gọi khi dựng **trang kết quả**, không bao giờ ở GET làm bài, vì tên công thức gợi ý đáp án.
 
@@ -312,7 +312,7 @@ RETURN kienThuc,
           THEN k {.ma, .ten, lop: lopK} END) WHERE i IS NOT NULL] AS khaiNiem
 ```
 
-Ký hiệu: `x {.ma, ten: …}` là *map projection*, lấy một số thuộc tính của nút thành map; `min(lx.so)` lấy lớp xuất hiện đầu tiên khi nút có nhiều `THUOC_LOP`; `[i IN collect(…) WHERE i IS NOT NULL]` là list comprehension bỏ phần tử rỗng do `OPTIONAL MATCH` sinh ra. Mục có `lop > Lop của học sinh` hiện nhãn "Nâng cao" (quy ước 2.7).
+Ký hiệu: `x {.ma, ten: …}` là *map projection*, lấy một số thuộc tính của nút thành map; `min(lx.so)` lấy lớp xuất hiện đầu tiên khi nút có nhiều `THUOC_LOP`; `[i IN collect(…) WHERE i IS NOT NULL]` là list comprehension bỏ phần tử rỗng do `OPTIONAL MATCH` sinh ra. Truy vấn đã lọc `l.so <= $lop` nên mọi mục trả về đều thuộc lớp của học sinh trở xuống (BR-04).
 
 Output thật trên fixture C (09/10/2026):
 

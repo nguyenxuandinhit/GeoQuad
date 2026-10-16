@@ -6,5 +6,5 @@ public sealed record TinhHuongItem(string Ma,string Ten,string MaBoiCanh,string 
     bool ThucHanh,int Lop,IReadOnlyList<KienThucItem> KienThuc);
 public sealed record TinhHuongDanhSach(IReadOnlyList<BoiCanhItem> BoiCanh,IReadOnlyList<TinhHuongItem> TinhHuong,
     string? Loc,int Lop);
-public sealed record TinhHuongViewModel(TinhHuongItem TinhHuong,bool NangCao,
+public sealed record TinhHuongViewModel(TinhHuongItem TinhHuong,
     DoDacForm? DoDac = null,DoDacKetQua? KetQua = null,IReadOnlyList<KienThucItem>? CanCu = null);
